@@ -10,7 +10,7 @@ public class ViewerMain {
 	public static void createGUI() {
 		JFrame frame = new JFrame("Viewer");
 		
-		final int SCREEN_WIDTH = 1920;
+		final int SCREEN_WIDTH = 1900;
 		final int SCREEN_HEIGHT = 1080;
 		// Uncomment for Lab part 2
 //		frame.setLayout(new java.awt.BorderLayout());
