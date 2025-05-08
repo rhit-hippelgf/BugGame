@@ -2,37 +2,77 @@ package roomStuff;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.awt.Point;
+import java.util.*;
 
 public class RoomLogic {
 
 	private int level;
 	private int numRooms;
+	HashMap<Point,Room> roomLayout = new HashMap<>();
 	
 	public RoomLogic(int level, int numRooms) {
 		this.level = level;
 		this.numRooms = numRooms;
+		this.generateLayout();
+		System.out.println(this.roomLayout.keySet());
 	}
 	
 	public RoomLogic() {
 		this.level = 0;
 		this.numRooms = 0;
+		this.generateLayout();
+		System.out.println(this.roomLayout);
 	}
 	
 	private void generateLayout() {
-		ArrayList<int[]> rooms = new ArrayList<>();
+		ArrayList<Point> rooms = new ArrayList<>();
 		Random rand = new Random();
 		if (numRooms == 0) {
-			rooms.add(new int[] {0,0});
+			rooms.add(new Point(0,0));
 		} else {
-			rooms.add(new int[] {0,0});
-			int n = 1;
-			while (n <= numRooms) {
-				int roomPick  = rand.nextInt(n);
+			rooms.add(new Point(0,0));
+			while (rooms.size() <= numRooms) {
+				int roomPick  = rand.nextInt(rooms.size());
+				Point temp = rooms.get(roomPick);
 				int randDirec = rand.nextInt(4);
-//				int[] newroom = rooms.get(roomPick) + 
-				
+				if (randDirec == 0) {
+					if (!rooms.contains(new Point(temp.x-1,temp.y)));
+					rooms.add(new Point(temp.x-1,temp.y));
+				} else if (randDirec == 1) {
+					if (!rooms.contains(new Point(temp.x+1,temp.y)));
+					rooms.add(new Point(temp.x+1,temp.y));
+				} else if (randDirec == 2) {
+					if (!rooms.contains(new Point(temp.x,temp.y-1)));
+					rooms.add(new Point(temp.x,temp.y-1));
+				} else if (randDirec == 3) {
+					if (!rooms.contains(new Point(temp.x,temp.y+1)));
+					rooms.add(new Point(temp.x,temp.y+1));
+				}
 			}
 		}
+		int i = 0;
+		while (i < rooms.size()) {
+			Point temp = rooms.get(i);
+			boolean north = false;
+			boolean east = false;
+			boolean south = false;
+			boolean west = false;
+			for (int j = 0; j < rooms.size(); j++) {
+				if ((rooms.get(j).y == temp.y+1) && (rooms.get(j).x == temp.x)) {
+					north = true;
+				} else if ((rooms.get(j).y == temp.y) && rooms.get(j).x == temp.x+1) {
+					east = true;
+				} else if ((rooms.get(j).y == temp.y-1) && rooms.get(j).x == temp.x) {
+					south = true;
+				} else if ((rooms.get(j).y == temp.y) && rooms.get(j).x == temp.x-1) {
+					west = true;
+				}
+			}
+			roomLayout.put(temp, new Room(north,east,south,west));
+			i++;
+		}
+				
 	}
 
 }
