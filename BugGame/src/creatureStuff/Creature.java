@@ -25,4 +25,8 @@ public abstract class Creature {
 	//public void addItem(Item item) {
 	//	
 	//}
+	
+	//public void shoot(Projectile type) {
+	//	
+	//}
 }
