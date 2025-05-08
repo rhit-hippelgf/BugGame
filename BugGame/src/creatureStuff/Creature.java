@@ -17,7 +17,7 @@ public abstract class Creature {
 	public void takeDamage(int damage) {
 		health-=damage;
 	}
-	public void move(int theta) {
+	public void move(double theta) {
 		x+=speed*Math.cos(theta);
 		y+=speed*Math.sin(theta);
 	}
