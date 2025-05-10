@@ -1,6 +1,6 @@
 package creatureStuff;
 import java.awt.Point;
-import java.util.Random;
+import handlingStuff.RngHandler;
 import itemStuff.Item;
 public class Player extends Creature{
 	private Point roomLoc = new Point(0,0);
@@ -57,10 +57,8 @@ public class Player extends Creature{
 		}
 	
 	public void shoot() {
-		Random r = new Random();
-		int critCheck = r.nextInt(100);
-		boolean isCrit;
-		if (critChance>= critCheck) isCrit = true;
+		boolean isCrit = new RngHandler().handleCheck(critChance);
+		
 		
 	}
 	
