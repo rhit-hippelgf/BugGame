@@ -40,13 +40,13 @@ public class Controller implements KeyListener, MouseListener {
     	
     	Double theta = null;
     	
-    	if (w && d) theta = Math.PI / 4;
-    	else if (w && a) theta = 3 * Math.PI/4; 
-    	else if (s && d) theta = 7 * Math.PI/4;
-    	else if (s && a) theta = 5 * Math.PI/4;
-    	else if (w) theta = Math.PI/2;
+    	if (w && d) theta = 7 * Math.PI / 4;
+    	else if (w && a) theta = 5 * Math.PI/4; 
+    	else if (s && d) theta = Math.PI/4;
+    	else if (s && a) theta = 3 * Math.PI/4;
+    	else if (w) theta = 3 * Math.PI/2;
     	else if (a) theta = Math.PI;
-    	else if (s) theta = 3 * Math.PI/2;
+    	else if (s) theta = Math.PI/2;
     	else if (d) theta = 0.0;
     	
     	if (theta != null) {
