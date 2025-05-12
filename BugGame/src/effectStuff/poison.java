@@ -16,6 +16,6 @@ public class poison implements Effect {
 
     @Override
     public String getName() {
-        return "Poiison";
+        return "Poison";
     }
 }

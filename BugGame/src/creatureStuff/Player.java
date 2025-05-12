@@ -1,5 +1,7 @@
 package creatureStuff;
 import java.awt.Point;
+import java.util.List;
+
 import handlingStuff.RngHandler;
 import itemStuff.Item;
 import effectStuff.effectHelper;
