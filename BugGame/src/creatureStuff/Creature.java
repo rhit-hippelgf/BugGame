@@ -24,6 +24,14 @@ public abstract class Creature {
 		y+=speed*Math.sin(theta);
 	}
 	
+	public int getX() {
+		return x;
+	}	
+	
+	public int getY() {
+		return x;
+	}	
+	
 	//public void addItem(Item item) {
 	//	
 	//}
