@@ -5,13 +5,14 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JPanel;
+import javax.swing.*;
 
+import controllerStuff.Controller;
 import creatureStuff.Enemy;
 import creatureStuff.Player;
 import projectileStuff.Bullet;
 import java.awt.Rectangle;
-public class Room extends JPanel{
+public class Room extends JComponent{
 	
 
 	private List<Enemy> enemies = new ArrayList<>();
@@ -21,6 +22,8 @@ public class Room extends JPanel{
 	private boolean east;
 	private boolean south;
 	private boolean west;
+	
+	private Controller control;
 
 	char[][][] layouts = {
 			{
@@ -46,6 +49,7 @@ public class Room extends JPanel{
 	// mutators
 	public void setPlayer(Player p){
 		this.player = p;
+		this.control = new Controller(this,player);
 	}
 
 	public void addEnemy(Enemy e){
@@ -58,7 +62,10 @@ public class Room extends JPanel{
 
 	//game loop tick
 	public void updateEntities(){
-		if(player != null) player.update();     // player moves / fires
+		if(player != null) {
+			player.update();     // player moves / fires
+			control.moveIfPress();
+		}
 
 		for(Enemy e : enemies) e.update();      // enemies & their bullets
 		enemies.removeIf(e -> e.getHealth() <= 0);

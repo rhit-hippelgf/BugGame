@@ -13,20 +13,15 @@ public class Controller implements KeyListener, MouseListener {
     private final Set<Integer> kPress = new HashSet<>();
     private final JComponent component;
     
-    private Timer movementTimer;
 
     public Controller(JComponent component, Player player) {
         this.player = player;
 		this.component = component;
-		this.movementTimer = null;
 		
 		component.addKeyListener(this);
 		component.setFocusable(true);
 		component.requestFocusInWindow();
 	
-		
-		movementTimer = new Timer(16, e -> moveIfPress());
-		movementTimer.start();
 //		
 //        int scope = JComponent.WHEN_IN_FOCUSED_WINDOW;
 //        InputMap im = component.getInputMap(scope);
@@ -38,7 +33,7 @@ public class Controller implements KeyListener, MouseListener {
 //        bind(im, am, "D", 0);
     }
     
-    private void moveIfPress() {
+    public void moveIfPress() {
     	boolean w = kPress.contains(KeyEvent.VK_W);
     	boolean a = kPress.contains(KeyEvent.VK_A);
     	boolean s = kPress.contains(KeyEvent.VK_S);
@@ -56,6 +51,7 @@ public class Controller implements KeyListener, MouseListener {
     	else if (d) theta = 0.0;
     	
     	if (theta != null) {
+    		System.out.println("check2");
     		player.move(theta);
     		component.repaint(); 
     	}
