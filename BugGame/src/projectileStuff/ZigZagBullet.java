@@ -6,15 +6,15 @@ import java.util.List;
 import creatureStuff.Creature;
 import effectStuff.Effect;
 
-public class ZigZag extends Bullet {
+public class ZigZagBullet extends Bullet {
 
-    private double baseAngle;
     private int frameCount = 0;
-    private double amplitude = 5;
-    private double frequency = 0.3;
+    private final double baseAngle;
+    private final double amplitude = 5;
+    private final double frequency = 0.3;
 
-    public ZigZag(int x, int y, double angle, int speed, int damage, List<Effect> effects) {
-        super(x, y, angle, speed, damage, effects);
+    public ZigZagBullet(int x, int y, double angle, int speed, int damage, Creature source) {
+        super(x, y, angle, speed, damage, source);
         this.baseAngle = angle;
     }
 
@@ -24,6 +24,7 @@ public class ZigZag extends Bullet {
 
         double forwardX = speed * Math.cos(baseAngle);
         double forwardY = speed * Math.sin(baseAngle);
+
         double perpAngle = baseAngle + Math.PI / 2;
         double wiggleOffset = amplitude * Math.sin(frameCount * frequency);
         double wiggleX = wiggleOffset * Math.cos(perpAngle);
@@ -36,6 +37,6 @@ public class ZigZag extends Bullet {
     @Override
     public void draw(Graphics g) {
         g.setColor(Color.CYAN);
-        g.fillOval(x, y, 6, 6);
+        g.fillOval(x - 3, y - 3, 6, 6);
     }
 }

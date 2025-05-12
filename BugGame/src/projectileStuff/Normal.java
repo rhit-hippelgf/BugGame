@@ -2,19 +2,22 @@ package projectileStuff;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.List;
 import creatureStuff.Creature;
-import effectStuff.Effect;
 
 public class Normal extends Bullet {
 
-    public Normal(int x, int y, double angle, int speed, int damage, List<Effect> effects) {
-        super(x, y, angle, speed, damage, effects);
+    public Normal(int x, int y, double angle, int speed, int damage, Creature source) {
+        super(x, y, angle, speed, damage, source);
+    }
+
+    // null if no effects
+    public Normal(int x, int y, double angle, int speed, int damage) {
+        this(x, y, angle, speed, damage, null);
     }
 
     @Override
     public void draw(Graphics g) {
         g.setColor(Color.YELLOW);
-        g.fillOval(x, y, 6, 6);
+        g.fillOval(x - 3, y - 3, 6, 6);
     }
 }

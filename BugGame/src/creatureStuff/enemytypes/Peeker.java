@@ -3,6 +3,8 @@ package creatureStuff.enemytypes;
 import java.awt.*;
 import java.util.*;
 
+import projectileStuff.Bullet;
+import projectileStuff.Normal;
 import creatureStuff.Creature;
 import creatureStuff.Enemy;
 import handlingStuff.LineOfSight;
@@ -28,11 +30,17 @@ public class Peeker extends Enemy {
         super(x, y, 2, 8, player); //goes to creature
         this.player = player;
         this.layout = layout;
+        setBulletClass(Normal.class);
     }
 
     @Override
     public void update() {
-    	// validity of current cover
+        if (health <= 0) {
+            onDeath();
+            return;
+        }
+
+        // validity of current cover
         if (atCover && LineOfSight.hasLineOfSight(hidePosition.x, hidePosition.y, player.getX(), player.getY(), layout, TILE_SIZE)) {
             coverTile = null; // reset cover
             atCover = false;
@@ -40,6 +48,7 @@ public class Peeker extends Enemy {
             returning = false;
             peekTimer = 0;
         }
+
         // reevaluates cover if lost player
         double distToPlayer = Math.hypot(player.getX() - x, player.getY() - y);
         if (distToPlayer > 600) {
@@ -71,8 +80,8 @@ public class Peeker extends Enemy {
             // step out 40 pixels
             double angle = Math.atan2(player.getY() - y, player.getX() - x);
             peekTarget = new Point(
-                (int)(x + 40 * Math.cos(angle)),
-                (int)(y + 40 * Math.sin(angle))
+                (int)(hidePosition.x + 40 * Math.cos(angle)),
+                (int)(hidePosition.y + 40 * Math.sin(angle))
             );
         }
 
@@ -80,7 +89,11 @@ public class Peeker extends Enemy {
             peekTimer--;
             moveToward(peekTarget.x, peekTarget.y);
 
-            if (peekTimer == peekDuration / 2) shoot(); // shoot mid-peek
+            if (peekTimer == peekDuration / 2) {
+                double angle = Math.atan2(player.getY() - y, player.getX() - x);
+                shoot(angle); // shoot mid-peek
+            }
+
             if (peekTimer == 0) {
                 peeking = false;
                 returning = true;
@@ -94,6 +107,11 @@ public class Peeker extends Enemy {
             if (peekTimer == 0) {
                 returning = false;
             }
+        }
+
+        // update bullets
+        for (Bullet b : bullets) {
+            b.update();
         }
     }
 
@@ -111,8 +129,10 @@ public class Peeker extends Enemy {
         move(angle);
     }
 
-    private void shoot() {
-        System.out.println("🔫 Peeker shoots from (" + x + "," + y + ")");
+    @Override
+    public void shoot(double angle) {
+        Bullet b = createBullet(angle, 6, 1);
+        if (b != null) bullets.add(b);
     }
 
     private Point findCoverTile() {
@@ -174,5 +194,15 @@ public class Peeker extends Enemy {
     public void draw(Graphics g) {
         g.setColor(peeking ? Color.ORANGE : returning ? Color.DARK_GRAY : Color.GRAY);
         g.fillRect(x - SPRITE_RADIUS, y - SPRITE_RADIUS, 35, 35);
+
+        // draw bullets
+        for (Bullet b : bullets) {
+            b.draw(g);
+        }
+    }
+
+    @Override
+    public void onDeath() {
+        System.out.println("Peeker enemy has died!");
     }
 }

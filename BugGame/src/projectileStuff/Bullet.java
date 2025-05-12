@@ -10,14 +10,14 @@ public abstract class Bullet {
     protected double dx, dy;
     protected int speed;
     protected int damage;
-    protected List<Effect> effects;
+    protected Creature source;
 
-    public Bullet(int x, int y, double angle, int speed, int damage, List<Effect> effects) {
+    public Bullet(int x, int y, double angle, int speed, int damage, Creature source) {
         this.x = x;
         this.y = y;
         this.speed = speed;
         this.damage = damage;
-        this.effects = effects;
+        this.source = source;
 
         this.dx = speed * Math.cos(angle);
         this.dy = speed * Math.sin(angle);
@@ -31,15 +31,15 @@ public abstract class Bullet {
     public int getX() { return x; }
     public int getY() { return y; }
 
-    public List<Effect> getEffects() {
-        return effects;
-    }
 
     public void onHit(Creature target) {
-        for (Effect e : effects) {
-            e.apply(target);
-        }
         target.takeDamage(damage);
+
+        if (source != null && Math.random() < source.getEffectChance()) {
+            for (Effect e : source.getInherentEffects()) {
+                e.apply(target);
+            }
+        }
     }
 
     public abstract void draw(Graphics g);

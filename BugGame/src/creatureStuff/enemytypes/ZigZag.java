@@ -4,25 +4,60 @@ import creatureStuff.Creature;
 import creatureStuff.Enemy;
 import java.awt.Graphics;
 import java.awt.Color;
-
+import projectileStuff.ZigZagBullet;
+import projectileStuff.Bullet;
+import effectStuff.poison; // default poison
 
 public class ZigZag extends Enemy {
-	private int zigzagCounter = 0;
+    private int zigzagCounter = 0;
+    private boolean poisoned = false;
+
 
     public ZigZag(int x, int y, Creature target) {
         super(x, y, 3, 5, target);
+
+        addEffect(new poison(3)); // built in poison
+        addEffectChance(0.25); // 25% chance
+        setBulletClass(ZigZagBullet.class);
     }
 
     @Override
     public void update() {
+        if (health <= 0) {
+            onDeath();
+            return;
+        }
+
         double angle = Math.atan2(target.getY() - y, target.getX() - x);
         double offset = (zigzagCounter++ / 10 % 2 == 0) ? 0.3 : -0.3;
         move(angle + offset);
+
+        if (zigzagCounter % 50 == 0) {
+            shoot(angle);
+        }
+
+        for (var b : bullets) {
+            b.update();
+        }
+    }
+
+    @Override
+    public void shoot(double angle) {
+        Bullet b = createBullet(angle, 6, 1);
+        if (b != null) bullets.add(b); 
     }
 
     @Override
     public void draw(Graphics g) {
-        g.setColor(Color.BLUE);
-        g.fillOval(x, y, 20, 20);
+        g.setColor(poisoned ? Color.GREEN : Color.BLUE);
+        g.fillOval(x - 10, y - 10, 20, 20);
+        for (var b : bullets) {
+            b.draw(g);
+        }
+    }
+
+    @Override
+    public void onDeath() {
+        System.out.println("ZigZag enemy has died!");
     }
 }

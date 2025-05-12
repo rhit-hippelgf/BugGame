@@ -10,8 +10,16 @@ public abstract class Enemy extends Creature {
         this.target = target;
     }
 
+    public void onDeath() {
+        // Default: no action
+    }
 
     public abstract void update();
 
     public abstract void draw(Graphics g);
+
+	public int getHealth() {
+		// TODO Auto-generated method stub
+		return health;
+	}
 }

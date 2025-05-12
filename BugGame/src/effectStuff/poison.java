@@ -11,11 +11,18 @@ public class poison implements Effect {
 
     @Override
     public void apply(Creature target) {
-        target.takeDamage(poisonDamage); // Simplified version
+        target.takeDamage(poisonDamage);
     }
 
     @Override
     public String getName() {
         return "Poison";
+    }
+
+    @Override
+    public void stack(Effect other) {
+        if (other instanceof poison) {
+            this.poisonDamage += ((poison) other).poisonDamage;
+        }
     }
 }
