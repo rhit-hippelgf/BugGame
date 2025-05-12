@@ -2,6 +2,10 @@ package roomStuff;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import creatureStuff.Creature;
+import creatureStuff.Player;
+
 import java.awt.Point;
 import java.util.*;
 
@@ -10,6 +14,7 @@ public class RoomLogic {
 	private int level;
 	private int numRooms;
 	private Room currentRoom;
+	private Creature hero;
 	HashMap<Point, Room> roomLayout = new HashMap<>();
 
 	public RoomLogic(int level, int numRooms) {
@@ -22,6 +27,7 @@ public class RoomLogic {
 	public RoomLogic() {
 		this.level = 0;
 		this.numRooms = 0;
+		this.hero = new Player(1920/2,1080/2,0,3);
 		this.generateLayout();
 		System.out.println(this.roomLayout);
 	}
@@ -83,11 +89,11 @@ public class RoomLogic {
 			i++;
 		}
 		currentRoom = roomLayout.get(new Point(0,0));
+		currentRoom.setPlayer((Player) hero);
 	}
 
 	public void updateObjects() {
-		// TODO Auto-generated method stub
-		
+		currentRoom.updateEntities();
 	}
 
 	public void drawScreen() {

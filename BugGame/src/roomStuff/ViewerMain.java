@@ -16,7 +16,7 @@ public class ViewerMain {
 		final int SCREEN_WIDTH = 1920;
 		final int SCREEN_HEIGHT = 1080;
 
-		RoomLogic logic = new RoomLogic(1,8);
+		RoomLogic logic = new RoomLogic();
 		GameAdvanceListner listener = new GameAdvanceListner(logic);
 		Timer timer = new Timer(DELAY, listener);
 		
