@@ -101,13 +101,13 @@ public class Player extends Creature{
 		return y;
 	}
 
-	public void update() {                   // NEW ─ makes Room.updateEntities() compile
+	public void update() { 
 	    // 1. move-update all bullets the player has fired
 	    for (Bullet b : bullets) {
 	        b.update();
 	    }
 
-	    // 2. (optional) clean up off-screen bullets
+	    // 2. clean up off-screen bullets
 	    bullets.removeIf(b -> b.getX() < -20 || b.getX() > 1300
 	                       || b.getY() < -20 || b.getY() > 900);
 	}

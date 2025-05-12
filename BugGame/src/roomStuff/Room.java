@@ -12,6 +12,7 @@ import creatureStuff.Player;
 import projectileStuff.Bullet;
 
 public class Room extends JPanel{
+	
 
 	private List<Enemy> enemies = new ArrayList<>();
 	private Player player; // player reference              
@@ -32,6 +33,14 @@ public class Room extends JPanel{
 				{'T','T','T','T','T','T','T','T','T','T','T','T','T'}
 			}
 	};
+	
+	// Constructor
+	public Room(boolean north, boolean east, boolean south, boolean west) {
+		this.north = north;
+		this.east = east;
+		this.south = south;
+		this.west = west;
+	}
 
 	
 	// mutators
@@ -55,9 +64,7 @@ public class Room extends JPanel{
 		enemies.removeIf(e -> e.getHealth() <= 0);
 	}
 
-	// ────────────────────────────────
-	//           RENDER
-	// ────────────────────────────────
+
 	@Override
 	protected void paintComponent(Graphics g){
 		super.paintComponent(g);
@@ -65,7 +72,7 @@ public class Room extends JPanel{
 		if(player != null) player.draw(g);
 
 		for(Enemy e : enemies){
-			e.draw(g);                          // each enemy already draws its bullets
+			e.draw(g);   // each enemy already draws its bullets
 		}
 	}
 }

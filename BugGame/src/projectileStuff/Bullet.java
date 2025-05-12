@@ -11,6 +11,7 @@ public abstract class Bullet {
     protected int speed;
     protected int damage;
     protected Creature source;
+	public boolean markForRemoval = false;
 
     public Bullet(int x, int y, double angle, int speed, int damage, Creature source) {
         this.x = x;
