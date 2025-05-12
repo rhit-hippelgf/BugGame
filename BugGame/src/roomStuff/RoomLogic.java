@@ -9,6 +9,7 @@ public class RoomLogic {
 
 	private int level;
 	private int numRooms;
+	private Room currentRoom;
 	HashMap<Point, Room> roomLayout = new HashMap<>();
 
 	public RoomLogic(int level, int numRooms) {
@@ -81,6 +82,20 @@ public class RoomLogic {
 			roomLayout.put(temp, new Room(north, east, south, west));
 			i++;
 		}
+		currentRoom = roomLayout.get(new Point(0,0));
+	}
+
+	public void updateObjects() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void drawScreen() {
+		currentRoom.drawScreen();
+	}
+	
+	public Room getCurrentRoom() {
+		return currentRoom;
 	}
 }
 

@@ -10,14 +10,14 @@ import javax.swing.JPanel;
 import creatureStuff.Enemy;
 import creatureStuff.Player;
 import projectileStuff.Bullet;
-
+import java.awt.Rectangle;
 public class Room extends JPanel{
 	
 
 	private List<Enemy> enemies = new ArrayList<>();
 	private Player player; // player reference              
 
-	public boolean north;
+	private boolean north;
 	private boolean east;
 	private boolean south;
 	private boolean west;
@@ -68,11 +68,20 @@ public class Room extends JPanel{
 	@Override
 	protected void paintComponent(Graphics g){
 		super.paintComponent(g);
+		Graphics2D g2 = (Graphics2D) g;
+		
+		Rectangle rect = new Rectangle(100,100,100,100);
+		g2.fill(rect);
 
 		if(player != null) player.draw(g);
 
 		for(Enemy e : enemies){
 			e.draw(g);   // each enemy already draws its bullets
 		}
+	}
+
+
+	public void drawScreen() {
+		this.repaint();
 	}
 }
