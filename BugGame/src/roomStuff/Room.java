@@ -69,9 +69,6 @@ public class Room extends JPanel{
 	protected void paintComponent(Graphics g){
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
-		
-		Rectangle rect = new Rectangle(100,100,100,100);
-		g2.fill(rect);
 
 		if(player != null) player.draw(g2);
 
