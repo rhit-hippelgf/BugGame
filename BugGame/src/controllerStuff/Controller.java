@@ -76,6 +76,7 @@ public class Controller implements KeyListener, MouseListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		kPress.add(e.getKeyCode());
+		System.out.println("Presed: " + KeyEvent.getKeyText(e.getKeyCode()));
 
 		
 	}
@@ -83,6 +84,7 @@ public class Controller implements KeyListener, MouseListener {
 	@Override
 	public void keyReleased(KeyEvent e) {
 	       kPress.remove(e.getKeyCode());
+	       System.out.println("Released: " + KeyEvent.getKeyText(e.getKeyCode()));
 
 	}
 
