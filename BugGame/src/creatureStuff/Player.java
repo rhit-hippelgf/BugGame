@@ -105,6 +105,7 @@ public class Player extends Creature{
 	    for (Bullet b : bullets) {
 	        b.update();
 	    }
+	    
 
 	    // 2. clean up off-screen bullets
 	    bullets.removeIf(b -> b.getX() < -20 || b.getX() > 1300

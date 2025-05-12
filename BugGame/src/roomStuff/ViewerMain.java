@@ -37,6 +37,8 @@ public class ViewerMain {
 		
 		frame.setVisible(true);
 		frame.requestFocusInWindow(); // 3) allow frame-level listener see the keys
+		logic.getCurrentRoom().requestFocusInWindow();
+
 	}
 
 	public static void main(String[] args) {

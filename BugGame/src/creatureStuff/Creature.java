@@ -31,6 +31,7 @@ public abstract class Creature {
 	}
 
 	public void move(double theta) {
+		System.out.println("x pos = " + x + " y pos = " + y);
 		x += speed * Math.cos(theta);
 		y += speed * Math.sin(theta);
 	}

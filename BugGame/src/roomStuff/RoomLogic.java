@@ -27,7 +27,7 @@ public class RoomLogic {
 	public RoomLogic() {
 		this.level = 0;
 		this.numRooms = 0;
-		this.hero = new Player(1920/2,1080/2,0,3);
+		this.hero = new Player(1920/2,1080/2,5,3);
 		this.generateLayout();
 		System.out.println(this.roomLayout);
 	}
