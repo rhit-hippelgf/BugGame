@@ -1,5 +1,6 @@
-import java.awt.Graphics;
+package creatureStuff.enemytypes;
 
+import java.awt.Graphics;
 import creatureStuff.Creature;
 import creatureStuff.Enemy;
 
