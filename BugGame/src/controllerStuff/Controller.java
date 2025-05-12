@@ -1,66 +1,136 @@
 package controllerStuff;
 
-import javax.swing.ActionMap;
-import javax.swing.InputMap;
-import javax.swing.JComponent;
+import javax.swing.*;
 
-import Creatures.Player;
+import creatureStuff.Player;
+import javax.swing.*;
+import java.awt.event.*;
+import java.util.HashSet;
+import java.util.Set;
 
-public class Controller {
+public class Controller implements KeyListener, MouseListener {
+    private final Player player;
+    private final Set<Integer> kPress = new HashSet<>();
+    private final JComponent component;
+    
+    private Timer movementTimer;
 
-    public Controller(JComponent listenOn, creatureStuff.Player player) {
-
-        final int scope = JComponent.WHEN_IN_FOCUSED_WINDOW;     // fires even if sub-components steal focus
-        InputMap  im = listenOn.getInputMap(scope);
-        ActionMap am = listenOn.getActionMap();
-
-        // ── W
-        bind(im, am, "W",         true,  player::setUp);
-        bind(im, am, "released W",false,  player::setUp);
-
-        // ── A
-        bind(im, am, "A",         true,  player::setLeft);
-        bind(im, am, "released A",false,  player::setLeft);
-
-        // ── S
-        bind(im, am, "S",         true,  player::setDown);
-        bind(im, am, "released S",false,  player::setDown);
-
-        // ── D
-        bind(im, am, "D",         true,  player::setRight);
-        bind(im, am, "released D",false,  player::setRight);
-    }
-
-    /** Helper: wires one keystroke to an Action that flips a boolean flag. */
-    private void bind(InputMap im,
-                      ActionMap am,
-                      String keystroke,
-                      boolean value,
-                      BooleanConsumer setter) {
-
-        im.put(KeyStroke.getKeyStroke(keystroke), keystroke);
-        am.put(keystroke, new AbstractAction() {
-            @Override public void actionPerformed(ActionEvent e) {
-                setter.accept(value);
-            }
-        });
+    public Controller(JComponent component, Player player) {
+        this.player = player;
+		this.component = component;
+		this.movementTimer = null;
+		
+		component.addKeyListener(this);
+		component.setFocusable(true);
+		component.requestFocusInWindow();
+	
+		
+		movementTimer = new Timer(16, e -> moveIfPress());
+		movementTimer.start();
+//		
+//        int scope = JComponent.WHEN_IN_FOCUSED_WINDOW;
+//        InputMap im = component.getInputMap(scope);
+//        ActionMap am = component.getActionMap();
+//
+//        bind(im, am, "W", Math.PI / 2);
+//        bind(im, am, "A", Math.PI);
+//        bind(im, am, "S", 3 * Math.PI / 2);
+//        bind(im, am, "D", 0);
     }
     
-	 private boolean up, down, left, right;
-	 public void setUp(boolean b)    { up    = b; }
-	 public void setDown(boolean b)  { down  = b; }
-	 public void setLeft(boolean b)  { left  = b; }
-	 public void setRight(boolean b) { right = b; }
-	 
-	 public void update() {
-		 int speed = 4;
-		 int dx = (right ? 1 : 0) - (left ? 1 : 0);
-		 int dy = (down  ? 1 : 0) - (up   ? 1 : 0);
-		 
-		 if (dx != 0 && dy != 0) {
-			 dx *= 0.707;  dy *= 0.707;
-		 }
-		 x += dx * speed;
-		 y += dy * speed;
-	 }
+    private void moveIfPress() {
+    	boolean w = kPress.contains(KeyEvent.VK_W);
+    	boolean a = kPress.contains(KeyEvent.VK_A);
+    	boolean s = kPress.contains(KeyEvent.VK_S);
+    	boolean d = kPress.contains(KeyEvent.VK_D);
+    	
+    	Double theta = null;
+    	
+    	if (w && d) theta = Math.PI / 4;
+    	else if (w && a) theta = 3 * Math.PI/4; 
+    	else if (s && d) theta = 7 * Math.PI/4;
+    	else if (s && a) theta = 5 * Math.PI/4;
+    	else if (w) theta = Math.PI/2;
+    	else if (a) theta = Math.PI;
+    	else if (s) theta = 3 * Math.PI/2;
+    	else if (d) theta = 0.0;
+    	
+    	if (theta != null) {
+    		player.move(theta);
+    		component.repaint(); 
+    	}
+    }
+
+//    private void bind(InputMap im, ActionMap am, String key, double theta) {
+//        im.put(KeyStroke.getKeyStroke(key), key);
+//        am.put(key, new AbstractAction() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//            	player.move(theta);
+//            	System.out.println("Moved to: " + player.getX() + " , " + player.getY());
+//                
+//            }
+//        });
+//    }
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		kPress.add(e.getKeyCode());
+
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+	       kPress.remove(e.getKeyCode());
+
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		int mouseX = e.getX();
+		int mouseY = e.getY();
+		
+		int playerX = player.getX() + 10;
+		int playerY = player.getY() + 10;
+		
+		double dx = mouseX - playerX;
+		double dy = mouseY - playerY;
+		double angle = Math.atan2(dy,dx);
+		
+		System.out.println("Shooting at angle (rad): " + angle);
+		
+		player.shoot(angle);
+		
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 }

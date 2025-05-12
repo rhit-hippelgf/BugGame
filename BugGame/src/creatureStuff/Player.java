@@ -2,6 +2,9 @@ package creatureStuff;
 import java.awt.Point;
 import handlingStuff.RngHandler;
 import itemStuff.Item;
+import effectStuff.effectHelper;
+import effectStuff.poison;
+
 public class Player extends Creature{
 	private Point roomLoc = new Point(0,0);
 	private int critChance = 0;
@@ -11,6 +14,7 @@ public class Player extends Creature{
 	private String damageType = "normal";
 	private int lightingChance = 0;
 	private boolean triShot = false;
+	private effectHelper effectManager = new effectHelper();
 
 	public Player(int startX, int startY, int startSpeed, int startHealth, Point roomLoc) {
 		super(startX, startY, startSpeed, startHealth, startHealth);
@@ -43,6 +47,7 @@ public class Player extends Creature{
 				break;
 			case "poison":
 				damageType  = "poison";
+				effectManager.addEffect(new poison(3));
 				break;
 			case "lightingChance":
 				lightingChance+=item.getStatBoost();
@@ -56,10 +61,18 @@ public class Player extends Creature{
 			}
 		}
 	
-	public void shoot() {
+	public void shoot(double angle) {
 		boolean isCrit = new RngHandler().handleCheck(critChance);
 		
+		System.out.println("Bullet created at angle: " + angle);
 		
+	}
+	public int getX() {
+		return x;
+	}	
+	
+	public int getY() {
+		return y;
 	}
 	
 }
