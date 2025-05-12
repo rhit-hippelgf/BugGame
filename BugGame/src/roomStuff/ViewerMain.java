@@ -8,7 +8,7 @@ import javax.swing.Timer;
 
 public class ViewerMain {
 	
-	public static final int DELAY=40;
+	public static final int DELAY=33;
 	
 	public static void createGUI() {
 		JFrame frame = new JFrame("Viewer");
