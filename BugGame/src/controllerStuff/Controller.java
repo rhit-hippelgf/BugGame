@@ -12,7 +12,6 @@ public class Controller implements KeyListener, MouseListener {
     private final Player player;
     private final Set<Integer> kPress = new HashSet<>();
     private final JComponent component;
-    
 
     public Controller(JComponent component, Player player) {
         this.player = player;
