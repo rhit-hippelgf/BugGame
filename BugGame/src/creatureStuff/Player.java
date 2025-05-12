@@ -22,9 +22,8 @@ public class Player extends Creature{
 	private int lightingChance = 0;
 	private boolean triShot = false;
 
-	public Player(int startX, int startY, int startSpeed, int startHealth, Point roomLoc) {
+	public Player(int startX, int startY, int startSpeed, int startHealth) {
 		super(startX, startY, startSpeed, startHealth, startHealth);
-		this.roomLoc = roomLoc;
 		setBulletClass(Normal.class);
 		// TODO Auto-generated constructor stub
 	}
