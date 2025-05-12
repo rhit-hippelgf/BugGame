@@ -73,7 +73,7 @@ public class Room extends JPanel{
 		Rectangle rect = new Rectangle(100,100,100,100);
 		g2.fill(rect);
 
-		if(player != null) player.draw(g);
+		if(player != null) player.draw(g2);
 
 		for(Enemy e : enemies){
 			e.draw(g);   // each enemy already draws its bullets
