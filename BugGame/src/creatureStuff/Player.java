@@ -64,8 +64,6 @@ public class Player extends Creature{
 	public void shoot(double angle) {
 		boolean isCrit = new RngHandler().handleCheck(critChance);
 		
-		System.out.println("Bullet created at angle: " + angle);
-		
 	}
 	public int getX() {
 		return x;
