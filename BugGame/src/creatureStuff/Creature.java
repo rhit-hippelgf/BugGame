@@ -1,5 +1,6 @@
 package creatureStuff;
 
+import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 import projectileStuff.Bullet;
@@ -93,6 +94,11 @@ public abstract class Creature {
 	    if (effectChance > 1.0) {
 	        effectChance = 1.0;
 	    }
+	}
+
+	public void draw(Graphics g) {
+		// TODO Auto-generated method stub
+		
 	}
 }
 

@@ -29,7 +29,7 @@ public class LineOfSight {
     }
 
     private static boolean isTransparent(char tile) {
-        return tile == '.' || tile == 'T'; // Adjust based on your floor tile types
+        return tile == '.' || tile == 'T'; // adjust based on your floor tile types! Here . and T are transparent 
     }
 
     private static boolean inBounds(int x, int y, char[][] layout) {
