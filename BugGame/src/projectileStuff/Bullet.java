@@ -23,13 +23,13 @@ public abstract class Bullet {
 	    this.dx = speed * Math.cos(angle);
 	    this.dy = speed * Math.sin(angle);
 
-	    System.out.printf("[Bullet Created] x=%d y=%d dx=%.2f dy=%.2f angle=%.2f\n", x, y, dx, dy, angle);
+//	    System.out.printf("[Bullet Created] x=%d y=%d dx=%.2f dy=%.2f angle=%.2f\n", x, y, dx, dy, angle);
 	}
 
 	public void update() {
 	    x += dx;
 	    y += dy;
-	    System.out.printf("[Bullet Update] x=%.2f y=%.2f\n", (double)x, (double)y);
+//	    System.out.printf("[Bullet Update] x=%.2f y=%.2f\n", (double)x, (double)y);
 	}
 
 
