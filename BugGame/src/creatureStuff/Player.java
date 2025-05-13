@@ -106,8 +106,8 @@ public class Player extends Creature {
 
     @Override
     public void shoot(double angle) {
-        System.out.println("Shooting angle: " + angle);
-        System.out.println("Current bullet count: " + bullets.size());
+//        System.out.println("Shooting angle: " + angle);
+//        System.out.println("Current bullet count: " + bullets.size());
 
         int baseDamage = 1;
 
@@ -123,7 +123,7 @@ public class Player extends Creature {
     }
 
     public void update() {
-        System.out.println("Player update called, bullets = " + bullets.size());
+//        System.out.println("Player update called, bullets = " + bullets.size());
 
         List<Bullet> toRemove = new ArrayList<>();
 
