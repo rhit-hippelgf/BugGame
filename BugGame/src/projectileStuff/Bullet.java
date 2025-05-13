@@ -13,21 +13,25 @@ public abstract class Bullet {
     protected Creature source;
 	public boolean markForRemoval = false;
 
-    public Bullet(int x, int y, double angle, int speed, int damage, Creature source) {
-        this.x = x;
-        this.y = y;
-        this.speed = speed;
-        this.damage = damage;
-        this.source = source;
+	public Bullet(int x, int y, double angle, int speed, int damage, Creature source) {
+	    this.x = x;
+	    this.y = y;
+	    this.speed = speed;
+	    this.damage = damage;
+	    this.source = source;
 
-        this.dx = speed * Math.cos(angle);
-        this.dy = speed * Math.sin(angle);
-    }
+	    this.dx = speed * Math.cos(angle);
+	    this.dy = speed * Math.sin(angle);
 
-    public void update() {
-        x += dx;
-        y += dy;
-    }
+	    System.out.printf("[Bullet Created] x=%d y=%d dx=%.2f dy=%.2f angle=%.2f\n", x, y, dx, dy, angle);
+	}
+
+	public void update() {
+	    x += dx;
+	    y += dy;
+	    System.out.printf("[Bullet Update] x=%.2f y=%.2f\n", (double)x, (double)y);
+	}
+
 
     public int getX() { return x; }
     public int getY() { return y; }

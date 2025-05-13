@@ -1,48 +1,62 @@
+// ✅ ViewerMain.java (with square tiles)
 package roomStuff;
 
-import java.awt.BorderLayout;
-
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
-import javax.swing.Timer;
+import javax.swing.*;
+import java.awt.*;
 
 public class ViewerMain {
-	
-	public static final int DELAY=33;
-	
-	public static void createGUI() {
-		JFrame frame = new JFrame("Viewer");
-		
-		final int SCREEN_WIDTH = 1920;
-		final int SCREEN_HEIGHT = 1080;
+    public static final int DELAY = 33;
 
-		RoomLogic logic = new RoomLogic();
-		GameAdvanceListner listener = new GameAdvanceListner(logic);
-		Timer timer = new Timer(DELAY, listener);
-		
-//		frame.setLayout(new java.awt.BorderLayout());
-//		MyCanvas canvas = new MyCanvas();
-//		frame.add(canvas, BorderLayout.CENTER);
-//		ControlPanel control = new ControlPanel(canvas, frame);
-//		frame.add(control, BorderLayout.SOUTH);
+    public static void createGUI() {
+        // Get the actual screen size Java sees
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        final int SCREEN_WIDTH = screenSize.width;
+        final int SCREEN_HEIGHT = screenSize.height;
 
+        // Maintain a 13 x 7 grid — scale square tiles to fit within 90% of both width and height
+        final int NUM_COLS = 13;
+        final int NUM_ROWS = 7;
 
-		frame.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-		frame.setLocationRelativeTo(null); // 2) center on screen
-		
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		timer.start();
-		frame.add(logic.getCurrentRoom());
-		
-		frame.setVisible(true);
-		frame.requestFocusInWindow(); // 3) allow frame-level listener see the keys
-		logic.getCurrentRoom().requestFocusInWindow();
+        final int maxTileWidth = (int)(SCREEN_WIDTH * 0.9 / NUM_COLS);
+        final int maxTileHeight = (int)(SCREEN_HEIGHT * 0.9 / NUM_ROWS);
+        final int TILE_SIZE = Math.min(maxTileWidth, maxTileHeight); // ensure square
 
-	}
+        final int ROOM_WIDTH = TILE_SIZE * NUM_COLS;
+        final int ROOM_HEIGHT = TILE_SIZE * NUM_ROWS;
 
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(() -> createGUI());
-	}
+        final int ROOM_X = (SCREEN_WIDTH - ROOM_WIDTH) / 2;
+        final int ROOM_Y = (SCREEN_HEIGHT - ROOM_HEIGHT) / 2;
 
+        // Debug info
+        System.out.println("Toolkit screen: " + SCREEN_WIDTH + " x " + SCREEN_HEIGHT);
+        System.out.println("Tile size: " + TILE_SIZE + " x " + TILE_SIZE);
+        System.out.println("Room bounds: " + ROOM_X + ", " + ROOM_Y + ", " + ROOM_WIDTH + " x " + ROOM_HEIGHT);
+
+        // Set up window
+        JFrame frame = new JFrame("Viewer");
+        frame.setUndecorated(true);
+        frame.setLayout(null);
+        frame.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+        frame.setLocationRelativeTo(null);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+
+        // Build RoomLogic with square tile size
+        RoomLogic logic = new RoomLogic(TILE_SIZE, TILE_SIZE);
+        Room room = logic.getCurrentRoom();
+        room.setBounds(ROOM_X, ROOM_Y, ROOM_WIDTH, ROOM_HEIGHT);
+        frame.add(room);
+
+        // Game loop
+        GameAdvanceListner listener = new GameAdvanceListner(logic);
+        Timer timer = new Timer(DELAY, listener);
+        timer.start();
+
+        frame.requestFocusInWindow();
+        room.requestFocusInWindow();
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(ViewerMain::createGUI);
+    }
 }

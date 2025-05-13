@@ -10,82 +10,83 @@ import javax.swing.*;
 import controllerStuff.Controller;
 import creatureStuff.Enemy;
 import creatureStuff.Player;
-import projectileStuff.Bullet;
-import java.awt.Rectangle;
-public class Room extends JComponent{
-	
+import java.awt.Dimension;
+import java.awt.Color;
 
-	private List<Enemy> enemies = new ArrayList<>();
-	private Player player; // player reference              
+public class Room extends JComponent {
 
-	private boolean north;
-	private boolean east;
-	private boolean south;
-	private boolean west;
-	
-	private Controller control;
+    private List<Enemy> enemies = new ArrayList<>();
+    private Player player;
 
-	char[][][] layouts = {
-			{
-				{'T','T','T','T','T','T','T','T','T','T','T','T','T'},
-				{'T','T','T','T','T','T','T','T','T','T','T','T','T'},
-				{'T','T','T','T','T','T','T','T','T','T','T','T','T'},
-				{'T','T','T','T','T','T','T','T','T','T','T','T','T'},
-				{'T','T','T','T','T','T','T','T','T','T','T','T','T'},
-				{'T','T','T','T','T','T','T','T','T','T','T','T','T'},
-				{'T','T','T','T','T','T','T','T','T','T','T','T','T'}
-			}
-	};
-	
-	// Constructor
-	public Room(boolean north, boolean east, boolean south, boolean west) {
-		this.north = north;
-		this.east = east;
-		this.south = south;
-		this.west = west;
-	}
+    private boolean north, east, south, west;
+    private Controller control;
+    private char[][] layout;
 
-	
-	// mutators
-	public void setPlayer(Player p){
-		this.player = p;
-		this.control = new Controller(this,player);
-	}
-	
-	public void addEnemy(Enemy e){
-		enemies.add(e);
-	}
+    private final int TILE_SIZE;
 
-	public List<Enemy> getEnemies(){
-		return enemies;
-	}
+    // construc accepts dynamic square tile size
+    public Room(char[][] layout, boolean north, boolean east, boolean south, boolean west, int tileSize) {
+        this.setFocusable(true);
+        this.setOpaque(true);
+        this.layout = layout;
+        this.north = north;
+        this.east = east;
+        this.south = south;
+        this.west = west;
+        this.TILE_SIZE = tileSize;
+    }
 
-	//game loop tick
-	public void updateEntities(){
-		if(player != null) {
-			player.update();     // player moves / fires
-			control.moveIfPress();
-		}
+    public void setPlayer(Player p) {
+        this.player = p;
+        this.control = new Controller(this, player);
+        this.player.setRoomBounds(getWidth(), getHeight());
+    }
 
-		for(Enemy e : enemies) e.update();      // enemies & their bullets
-		enemies.removeIf(e -> e.getHealth() <= 0);
-	}
+    public void addEnemy(Enemy e) {
+        enemies.add(e);
+    }
 
+    public List<Enemy> getEnemies() {
+        return enemies;
+    }
 
-	@Override
-	protected void paintComponent(Graphics g){
-		super.paintComponent(g);
-		Graphics2D g2 = (Graphics2D) g;
+    public Dimension getRoomSize() {
+        int width = layout[0].length * TILE_SIZE;
+        int height = layout.length * TILE_SIZE;
+        return new Dimension(width, height);
+    }
 
-		if(player != null) player.draw(g2);
+    public void updateEntities() {
+        if (player != null) {
+            player.update();
+            control.moveIfPress();
+        }
+        for (Enemy e : enemies) e.update();
+        enemies.removeIf(e -> e.getHealth() <= 0);
+    }
 
-		for(Enemy e : enemies){
-			e.draw(g);   // each enemy already draws its bullets
-		}
-	}
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Graphics2D g2 = (Graphics2D) g;
 
+        for (int row = 0; row < layout.length; row++) {
+            for (int col = 0; col < layout[0].length; col++) {
+                int x = col * TILE_SIZE;
+                int y = row * TILE_SIZE;
 
-	public void drawScreen() {
-		this.repaint();
-	}
+                g2.setColor(Color.LIGHT_GRAY);
+                g2.fillRect(x, y, TILE_SIZE, TILE_SIZE);
+                g2.setColor(Color.BLACK);
+                g2.drawRect(x, y, TILE_SIZE, TILE_SIZE);
+            }
+        }
+
+        if (player != null) player.draw(g2);
+        for (Enemy e : enemies) e.draw(g);
+    }
+
+    public void drawScreen() {
+        this.repaint();
+    }
 }

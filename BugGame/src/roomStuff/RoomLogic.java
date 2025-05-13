@@ -1,110 +1,103 @@
 package roomStuff;
 
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.*;
+import java.awt.Point;
 
 import creatureStuff.Creature;
+import creatureStuff.Enemy;
 import creatureStuff.Player;
-
-import java.awt.Point;
-import java.util.*;
+import creatureStuff.enemytypes.*;
 
 public class RoomLogic {
 
-	private int level;
-	private int numRooms;
-	private Room currentRoom;
-	private Creature hero;
-	HashMap<Point, Room> roomLayout = new HashMap<>();
+    private int level;
+    private int numRooms;
+    private Room currentRoom;
+    private Creature hero;
+    private final int tileSize;
+    HashMap<Point, Room> roomLayout = new HashMap<>();
 
-	public RoomLogic(int level, int numRooms) {
-		this.level = level;
-		this.numRooms = numRooms;
-		this.generateLayout();
-		System.out.println(this.roomLayout.keySet());
-	}
+    public RoomLogic(int tileSizeX, int tileSizeY) {
+        this.level = 0;
+        this.numRooms = 0;
+        this.tileSize = tileSizeX; // square tiles, so X and Y are equal
+        this.hero = new Player((tileSize * 13) / 2, (tileSize * 7) / 2, 10, 3);
+        this.generateLayout();
+        System.out.println(this.roomLayout);
+    }
 
-	public RoomLogic() {
-		this.level = 0;
-		this.numRooms = 0;
-		this.hero = new Player(1920/2,1080/2,10,3);
-		this.generateLayout();
-		System.out.println(this.roomLayout);
-	}
+    char[][] layout0 = {
+            {'T','T','T','T','T','T','T','T','T','T','T','T','T'},
+            {'T','.','.','.','.','.','.','.','.','.','.','.','T'},
+            {'T','.','Z','.','F','.','B','.','.','.','S','.','T'},
+            {'T','.','.','.','.','.','.','.','.','.','.','.','T'},
+            {'T','.','.','B','.','.','.','.','Z','.','.','.','T'},
+            {'T','.','.','.','.','.','.','.','.','.','.','.','T'},
+            {'T','T','T','T','T','T','T','T','T','T','T','T','T'}
+    };
 
-	private void generateLayout() {
-		ArrayList<Point> rooms = new ArrayList<>();
-		Random rand = new Random();
+    private void generateLayout() {
+        char[][] placeholderLayout = layout0;
+        ArrayList<Point> rooms = new ArrayList<>();
+        Random rand = new Random();
 
-		if (numRooms == 0) {
-			rooms.add(new Point(0, 0));
-		} else {
-			rooms.add(new Point(0, 0));
-			while (rooms.size() <= numRooms) {
-				int roomPick = rand.nextInt(rooms.size());
-				Point temp = rooms.get(roomPick);
-				int randDirec = rand.nextInt(4);
+        rooms.add(new Point(0, 0));
 
-				if (randDirec == 0) {
-					if (!rooms.contains(new Point(temp.x - 1, temp.y))) {
-						rooms.add(new Point(temp.x - 1, temp.y));
-					}
-				} else if (randDirec == 1) {
-					if (!rooms.contains(new Point(temp.x + 1, temp.y))) {
-						rooms.add(new Point(temp.x + 1, temp.y));
-					}
-				} else if (randDirec == 2) {
-					if (!rooms.contains(new Point(temp.x, temp.y - 1))) {
-						rooms.add(new Point(temp.x, temp.y - 1));
-					}
-				} else if (randDirec == 3) {
-					if (!rooms.contains(new Point(temp.x, temp.y + 1))) {
-						rooms.add(new Point(temp.x, temp.y + 1));
-					}
-				}
-			}
-		}
+        int i = 0;
+        while (i < rooms.size()) {
+            Point temp = rooms.get(i);
+            boolean north = false, east = false, south = false, west = false;
 
-		int i = 0;
-		while (i < rooms.size()) {
-			Point temp = rooms.get(i);
-			boolean north = false;
-			boolean east = false;
-			boolean south = false;
-			boolean west = false;
+            for (Point p : rooms) {
+                if (p.y == temp.y + 1 && p.x == temp.x) north = true;
+                else if (p.y == temp.y && p.x == temp.x + 1) east = true;
+                else if (p.y == temp.y - 1 && p.x == temp.x) south = true;
+                else if (p.y == temp.y && p.x == temp.x - 1) west = true;
+            }
 
-			for (int j = 0; j < rooms.size(); j++) {
-				if ((rooms.get(j).y == temp.y + 1) && (rooms.get(j).x == temp.x)) {
-					north = true;
-				} else if ((rooms.get(j).y == temp.y) && rooms.get(j).x == temp.x + 1) {
-					east = true;
-				} else if ((rooms.get(j).y == temp.y - 1) && rooms.get(j).x == temp.x) {
-					south = true;
-				} else if ((rooms.get(j).y == temp.y) && rooms.get(j).x == temp.x - 1) {
-					west = true;
-				}
-			}
+            Room r = new Room(placeholderLayout, north, east, south, west, tileSize);
+            r.setPlayer((Player) hero);
+            roomLayout.put(temp, r);
+            i++;
+        }
 
-			roomLayout.put(temp, new Room(north, east, south, west));
-			i++;
-		}
-		currentRoom = roomLayout.get(new Point(0,0));
-		currentRoom.setPlayer((Player) hero);
-	}
+        currentRoom = roomLayout.get(new Point(0,0));
 
-	public void updateObjects() {
-		currentRoom.updateEntities();
-	}
+        List<Enemy> enemyTypes = List.of(
+            new ZigZag(0, 0, hero),
+            new Predictive1(0, 0, hero),
+            new Suicide(0, 0, hero),
+            new WalkingEnemy(0, 0, hero));
 
-	public void drawScreen() {
-		currentRoom.drawScreen();
-	}
-	
-	public Room getCurrentRoom() {
-		return currentRoom;
-	}
+        for (int i1 = 0; i1 < 5; i1++) {
+            int ex = rand.nextInt(tileSize * 13 - 100) + 50;
+            int ey = rand.nextInt(tileSize * 7 - 100) + 50;
+
+            Enemy template = enemyTypes.get(rand.nextInt(enemyTypes.size()));
+            Enemy enemy;
+            if (template instanceof ZigZag) {
+                enemy = new ZigZag(ex, ey, hero);
+            } else if (template instanceof Predictive1) {
+                enemy = new Predictive1(ex, ey, hero);
+            } else if (template instanceof Suicide) {
+                enemy = new Suicide(ex, ey, hero);
+            } else {
+                enemy = new WalkingEnemy(ex, ey, hero);
+            }
+
+            currentRoom.addEnemy(enemy);
+        }
+    }
+
+    public void updateObjects() {
+        currentRoom.updateEntities();
+    }
+
+    public void drawScreen() {
+        currentRoom.drawScreen();
+    }
+
+    public Room getCurrentRoom() {
+        return currentRoom;
+    }
 }
-
-				
-			
-				
