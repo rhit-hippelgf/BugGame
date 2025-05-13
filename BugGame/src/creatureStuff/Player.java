@@ -74,8 +74,8 @@ public class Player extends Creature{
 		}
 	@Override
 	public void draw(Graphics g) {
-	    g.setColor(Color.WHITE);          // player sprite
-	    g.fillOval(x - 12, y - 12, 24, 24);
+	    g.setColor(Color.BLACK);          // player sprite
+	    g.fillOval(x - 30, y - 60, 60, 120);
 
 	    // draw the player’s bullets
 	    for (Bullet b : bullets) {
