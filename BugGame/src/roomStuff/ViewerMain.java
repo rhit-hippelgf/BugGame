@@ -17,7 +17,7 @@ public class ViewerMain {
         final int NUM_COLS = 13;
         final int NUM_ROWS = 7;
 
-        final int maxTileWidth = (int)(SCREEN_WIDTH * 0.9 / NUM_COLS);
+        final int maxTileWidth = (int)(SCREEN_WIDTH * 0.8 / NUM_COLS);
         final int maxTileHeight = (int)(SCREEN_HEIGHT * 0.9 / NUM_ROWS);
         final int TILE_SIZE = Math.min(maxTileWidth, maxTileHeight); // ensure square
 
@@ -34,7 +34,7 @@ public class ViewerMain {
 
         // Set up window
         JFrame frame = new JFrame("Viewer");
-        frame.setUndecorated(true);
+        frame.setUndecorated(false);
         frame.setLayout(null);
         frame.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
         frame.setLocationRelativeTo(null);
