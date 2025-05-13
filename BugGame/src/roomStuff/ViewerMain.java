@@ -8,12 +8,12 @@ public class ViewerMain {
     public static final int DELAY = 33;
 
     public static void createGUI() {
-        // Get the actual screen size Java sees
+        // the actual screen size Java sees
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         final int SCREEN_WIDTH = screenSize.width;
         final int SCREEN_HEIGHT = screenSize.height;
 
-        // Maintain a 13 x 7 grid — scale square tiles to fit within 90% of both width and height
+        // keep 13 x 7 grid — scale square tiles to fit within 90% of both width and height
         final int NUM_COLS = 13;
         final int NUM_ROWS = 7;
 
