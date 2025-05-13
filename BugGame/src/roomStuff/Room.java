@@ -51,7 +51,7 @@ public class Room extends JComponent{
 		this.player = p;
 		this.control = new Controller(this,player);
 	}
-
+	
 	public void addEnemy(Enemy e){
 		enemies.add(e);
 	}

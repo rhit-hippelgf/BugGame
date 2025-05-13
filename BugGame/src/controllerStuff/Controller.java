@@ -31,7 +31,7 @@ public class Controller implements KeyListener, MouseListener {
 //        bind(im, am, "A", Math.PI);
 //        bind(im, am, "S", 3 * Math.PI / 2);
 //        bind(im, am, "D", 0);
-    }
+     }
     
     public void moveIfPress() {
     	boolean w = kPress.contains(KeyEvent.VK_W);
