@@ -6,7 +6,7 @@ import java.awt.Graphics;
 public class Door {
 
 	private Boolean visable;
-	private Boolean state;
+	protected Boolean state;
 	protected char dir;
 	private int x1, y1, x2, y2;
 	private int length, width;

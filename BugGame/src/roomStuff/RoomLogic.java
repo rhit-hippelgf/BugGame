@@ -27,7 +27,7 @@ public class RoomLogic {
 
     public RoomLogic(int tileSize, int roomWidth, int roomHeight, int roomX, int roomY, JFrame frame) {
         this.level = 0;
-        this.numRooms = 10;
+        this.numRooms = 0;
         this.frame = frame;
         this.TILE_SIZE = tileSize; // square tiles, so X and Y are equal
         this.ROOM_WIDTH = roomWidth;
@@ -58,8 +58,11 @@ public class RoomLogic {
         Random rand = new Random();
 
         if (numRooms == 0) {
+//        	This is initial condition generating a Layout with 0 floors
+//        	will put you in the begining room that will contain the door to start
 			rooms.add(new Point(0, 0));
-            Room r = new Room(placeholderLayout, true, true, true, true, TILE_SIZE);
+            Room r = new Room(placeholderLayout, true, false, false, false, TILE_SIZE);
+            currentRoom = r;
             r.setPlayer((Player) hero);
             roomLayout.put(rooms.get(0), r);
             r.setFloorDoor();
@@ -189,8 +192,6 @@ public class RoomLogic {
     	if (Character.isUpperCase(playerHitFloorDoor)) {
     		System.out.println("check 1");
         	this.generateLayout(this.numRooms+4, this.level+1);
-        	hero.setX(200);
-        	hero.setY(200);
     	}
     }
     

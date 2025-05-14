@@ -42,7 +42,7 @@ public class ViewerMain {
 
         // Build RoomLogic with square tile size
         RoomLogic logic = new RoomLogic(TILE_SIZE, ROOM_WIDTH, ROOM_HEIGHT, ROOM_X, ROOM_Y, frame);
-        Room room = logic.getCurrentRoom();
+//        Room room = logic.getCurrentRoom();
 //        room.setBounds(ROOM_X, ROOM_Y, ROOM_WIDTH, ROOM_HEIGHT);
 //        frame.add(room);
 

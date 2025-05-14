@@ -8,6 +8,7 @@ public class FloorDoor extends Door{
 		super(visable, dir);
 		this.dir = Character.toUpperCase(super.dir);
 		this.color = Color.red;
+		this.state = true;
 	}
 	
 	@Override
