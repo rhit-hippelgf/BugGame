@@ -27,14 +27,14 @@ public class RoomLogic {
 
     public RoomLogic(int tileSize, int roomWidth, int roomHeight, int roomX, int roomY, JFrame frame) {
         this.level = 0;
-        this.numRooms = 2;
+        this.numRooms = 10;
         this.frame = frame;
         this.TILE_SIZE = tileSize; // square tiles, so X and Y are equal
         this.ROOM_WIDTH = roomWidth;
         this.ROOM_HEIGHT = roomHeight;
         this.ROOM_X = roomX;
         this.ROOM_Y = roomY;
-        this.hero = new Player((TILE_SIZE * 13) / 2, (TILE_SIZE * 7) / 2, 10, 3);
+        this.hero = new Player((TILE_SIZE * 13) / 2, (TILE_SIZE * 7) / 2, 30, 3);
         this.generateLayout(numRooms, level);
         System.out.println(this.roomLayout.keySet());
     }
@@ -71,19 +71,23 @@ public class RoomLogic {
 				int randDirec = rand.nextInt(4);
 
 				if (randDirec == 0) {
-					if (!rooms.contains(new Point(temp.x - 1, temp.y))) {
+					Point temp2 = new Point(temp.x - 1, temp.y);
+					if (!rooms.contains(temp2) && this.surroundingRoomsCheck(temp, temp2, rooms)) {
 						rooms.add(new Point(temp.x - 1, temp.y));
 					}
 				} else if (randDirec == 1) {
-					if (!rooms.contains(new Point(temp.x + 1, temp.y))) {
+					Point temp2 = new Point(temp.x + 1, temp.y);
+					if (!rooms.contains(temp2) && this.surroundingRoomsCheck(temp, temp2, rooms)) {
 						rooms.add(new Point(temp.x + 1, temp.y));
 					}
 				} else if (randDirec == 2) {
-					if (!rooms.contains(new Point(temp.x, temp.y - 1))) {
+					Point temp2 = new Point(temp.x, temp.y - 1);
+					if (!rooms.contains(temp2) && this.surroundingRoomsCheck(temp, temp2, rooms)) {
 						rooms.add(new Point(temp.x, temp.y - 1));
 					}
 				} else if (randDirec == 3) {
-					if (!rooms.contains(new Point(temp.x, temp.y + 1))) {
+					Point temp2 = new Point(temp.x, temp.y + 1);
+					if (!rooms.contains(temp2) && this.surroundingRoomsCheck(temp, temp2, rooms)) {
 						rooms.add(new Point(temp.x, temp.y + 1));
 					}
 				}
@@ -104,14 +108,12 @@ public class RoomLogic {
 	            Room r = new Room(placeholderLayout, north, east, south, west, TILE_SIZE);
 	            roomLayout.put(temp, r);
 	            i++;
+		        currentRoom = r;
 	        }
 		}
 
         currentPoint = new Point(0,0);
-        currentRoom = roomLayout.get(currentPoint);
-        currentRoom.setPlayer((Player) hero);
-        frame.add(currentRoom);
-        currentRoom.setBounds(ROOM_X, ROOM_Y, ROOM_WIDTH, ROOM_HEIGHT);
+        this.setCurrentRoom(currentPoint,(TILE_SIZE * 13) / 2, (TILE_SIZE * 7) / 2);
 //        frame.remove(currentRoom);
 //        this.setCurrentRoom(currentPoint);
 
@@ -141,6 +143,21 @@ public class RoomLogic {
 //        }
     }
 
+    private boolean surroundingRoomsCheck(Point roomChoice, Point possibleLoc, ArrayList<Point> rooms) {
+    	int x = possibleLoc.x;
+    	int y = possibleLoc.y;
+    	boolean availiable = false;
+    	if (!rooms.contains(new Point(x+1,y)) || roomChoice.equals(new Point(x+1,y))) {
+        	if (!rooms.contains(new Point(x-1,y)) || roomChoice.equals(new Point(x-1,y))) {
+            	if (!rooms.contains(new Point(x,y+1)) || roomChoice.equals(new Point(x,y+1))) {
+                	if (!rooms.contains(new Point(x,y-1)) || roomChoice.equals(new Point(x,y-1))) {
+                		availiable = true;
+                	}
+            	}
+        	}
+    	}
+    	return availiable;
+    }
     public void updateObjects() {
         currentRoom.updateEntities();
         this.goNextFloor(currentRoom.goThroughDoor());
@@ -192,7 +209,6 @@ public class RoomLogic {
     			currentPoint = new Point(currentPoint.x-1,currentPoint.y);
     			this.setCurrentRoom(currentPoint, ROOM_WIDTH-TILE_SIZE, ROOM_HEIGHT/2);
     		}
-            System.out.println("check 1");
     	}
     }
     
@@ -206,7 +222,6 @@ public class RoomLogic {
         hero.setX(x);
         hero.setY(y);
     	currentRoom.repaint();
-    	System.out.println(currentRoom);
     }
 }
 
