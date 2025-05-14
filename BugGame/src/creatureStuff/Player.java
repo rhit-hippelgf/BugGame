@@ -108,7 +108,7 @@ public class Player extends Creature {
         }
 
         // cerate/fire a bullet from player's center
-        Bullet b = createBullet(angle, 8, baseDamage);
+        Bullet b = createBullet(angle, 13, baseDamage);
         if (b == null) System.out.println("Bullet creation failed!");
 
         if (b != null) bullets.add(b);

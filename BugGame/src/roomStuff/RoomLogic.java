@@ -34,7 +34,7 @@ public class RoomLogic {
         this.ROOM_HEIGHT = roomHeight;
         this.ROOM_X = roomX;
         this.ROOM_Y = roomY;
-        this.hero = new Player((TILE_SIZE * 13) / 2, (TILE_SIZE * 7) / 2, 30, 3);
+        this.hero = new Player((TILE_SIZE * 13) / 2, (TILE_SIZE * 7) / 2, 8, 3);
         this.generateLayout(numRooms, level);
         System.out.println(this.roomLayout.keySet());
     }

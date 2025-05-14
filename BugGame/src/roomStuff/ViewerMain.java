@@ -5,7 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ViewerMain {
-    public static final int DELAY = 33;
+    public static final int DELAY = 12;
 
     public static void createGUI() {
         // the actual screen size Java sees

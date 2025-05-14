@@ -42,13 +42,17 @@ public abstract class Creature {
 		double yspeed = speed * Math.sin(theta);
 		if (xspeed < 0 && x <= width/2) {
 			xspeed = 0;
+			x = width/2;
 		} else if (xspeed > 0 && x + width/2 >= roomWidth) {
 			xspeed = 0;
+			x = roomWidth-width/2;
 		}
 		if (yspeed < 0 && y <= height/2) {
 			yspeed = 0;
+			y = height/2;
 		} else if (yspeed > 0 && y + height/2 >= roomHeight) {
 			yspeed = 0;
+			y = roomHeight - height/2;
 		}
 		x += xspeed;
 		y += yspeed;
