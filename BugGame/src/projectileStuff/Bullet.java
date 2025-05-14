@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.util.List;
 import creatureStuff.Creature;
 import effectStuff.Effect;
+import roomStuff.RoomLogic;
 
 public abstract class Bullet {
     protected int x, y;
@@ -30,6 +31,10 @@ public abstract class Bullet {
 	    x += dx;
 	    y += dy;
 //	    System.out.printf("[Bullet Update] x=%.2f y=%.2f\n", (double)x, (double)y);
+	}
+	
+	public void detectOffScreen() {
+		if (x < 0 || y < 0 || x > RoomLogic.getRoomWidth() || y > RoomLogic.getRoomHeight()) markForRemoval = true;
 	}
 
 
