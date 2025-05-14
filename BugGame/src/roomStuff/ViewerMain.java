@@ -42,21 +42,25 @@ public class ViewerMain {
         frame.setVisible(true);
 
         // Build RoomLogic with square tile size
-        RoomLogic logic = new RoomLogic(TILE_SIZE, TILE_SIZE);
-        Room room = logic.getCurrentRoom();
-        room.setBounds(ROOM_X, ROOM_Y, ROOM_WIDTH, ROOM_HEIGHT);
-        frame.add(room);
+        RoomLogic logic = new RoomLogic(TILE_SIZE, ROOM_WIDTH, ROOM_HEIGHT, frame);
 
         // Game loop
         GameAdvanceListner listener = new GameAdvanceListner(logic);
         Timer timer = new Timer(DELAY, listener);
         timer.start();
 
+        Room room = logic.getCurrentRoom();
+        room.setBounds(ROOM_X, ROOM_Y, ROOM_WIDTH, ROOM_HEIGHT);
+        frame.add(room);
+        
         frame.requestFocusInWindow();
         room.requestFocusInWindow();
+        
     }
-
+    
     public static void main(String[] args) {
         SwingUtilities.invokeLater(ViewerMain::createGUI);
     }
+    
+
 }

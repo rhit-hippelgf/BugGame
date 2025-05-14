@@ -13,6 +13,7 @@ import projectileStuff.Bullet;
 import projectileStuff.Normal;
 import projectileStuff.ZigZagBullet;
 import roomStuff.Room; // needed to track room position/dimensions
+import roomStuff.RoomLogic;
 
 public class Player extends Creature {
     private Point roomLoc = new Point(0, 0);
@@ -27,19 +28,11 @@ public class Player extends Creature {
     // ref to Room component for screen coordinates and dimensions
     private Room currentRoom;
 
-    // placeholder fallback values
-    private int roomWidth = 1920;
-    private int roomHeight = 1080;
-
     public Player(int startX, int startY, int startSpeed, int startHealth) {
         super(startX, startY, startSpeed, startHealth, startHealth);
+        width = RoomLogic.getTileSize()/2;
+        height = RoomLogic.getTileSize();
         setBulletClass(Normal.class);
-    }
-
-    // kept for safety. not really used
-    public void setRoomBounds(int width, int height) {
-        this.roomWidth = width;
-        this.roomHeight = height;
     }
 
     // linking player to its room for despawn bounds
@@ -94,7 +87,7 @@ public class Player extends Creature {
     @Override
     public void draw(Graphics g) {
         g.setColor(Color.BLACK); // draw player sprite
-        g.fillOval(x - 30, y - 60, 60, 120);
+        g.fillOval(x - width/2, y - height/2, width, height);
 
         // draw all bullets not marked for removal
         for (Bullet b : bullets) {
@@ -155,13 +148,13 @@ public class Player extends Creature {
     }
 
 
-    @Override
-    public int getX() {
-        return x;
-    }
-
-    @Override
-    public int getY() {
-        return y;
-    }
+//    @Override
+//    public int getX() {
+//        return x;
+//    }
+//
+//    @Override
+//    public int getY() {
+//        return y;
+//    }
 }

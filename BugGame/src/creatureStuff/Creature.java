@@ -4,16 +4,22 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 import projectileStuff.Bullet;
+import roomStuff.RoomLogic;
 import effectStuff.Effect;
 
 public abstract class Creature {
 	protected int x, y;
+	protected int width, height;
 	protected int speed;
 	protected int health;
 	protected int healthCap;
 	protected List<Bullet> bullets = new ArrayList<>();
 	protected List<Effect> inherentEffects = new ArrayList<>();
 	protected double effectChance = 0.0;
+	
+    // getting room width and height to prevent enemies and player from going out of room
+    private int roomWidth = RoomLogic.getRoomWidth();
+    private int roomHeight = RoomLogic.getRoomHeight();
 	
 	// bullet logic
 	protected Class<? extends Bullet> bulletClass;
@@ -31,9 +37,21 @@ public abstract class Creature {
 	}
 
 	public void move(double theta) {
-		System.out.println("x pos = " + x + " y pos = " + y);
-		x += speed * Math.cos(theta);
-		y += speed * Math.sin(theta);
+//		System.out.println("x pos = " + x + " y pos = " + y);
+		double xspeed = speed * Math.cos(theta);
+		double yspeed = speed * Math.sin(theta);
+		if (xspeed < 0 && x <= width/2) {
+			xspeed = 0;
+		} else if (xspeed > 0 && x + width/2 >= roomWidth) {
+			xspeed = 0;
+		}
+		if (yspeed < 0 && y <= height/2) {
+			yspeed = 0;
+		} else if (yspeed > 0 && y + height/2 >= roomHeight) {
+			yspeed = 0;
+		}
+		x += xspeed;
+		y += yspeed;
 	}
 
 	// bullet access
@@ -68,6 +86,14 @@ public abstract class Creature {
 
 	public int getY() {
 		return y; 
+	}
+	
+	public void setX(int x) {
+		this.x = x;
+	}
+	
+	public void setY(int y) {
+		this.y = y;
 	}
 	
 	public List<Effect> getInherentEffects() {
