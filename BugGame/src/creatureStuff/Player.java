@@ -20,7 +20,7 @@ public class Player extends Creature {
     private int fireRate = 1;
     private int dodgeChance = 0;
     private int lives = 1;
-    private String damageType = "normal";
+    //private String damageType = "normal";
     private int lightingChance = 0;
     private boolean triShot = false;
 
@@ -71,7 +71,7 @@ public class Player extends Creature {
                 lives += item.getStatBoost();
                 break;
             case "poison":
-                damageType = "poison";
+                //damageType = "poison";
                 addEffect(new poison(3));
                 break;
             case "lightingChance":
