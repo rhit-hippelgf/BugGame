@@ -49,6 +49,7 @@ public class ViewerMain {
         Timer timer = new Timer(DELAY, listener);
         timer.start();
 
+        System.out.println("hit 1");
         Room room = logic.getCurrentRoom();
         room.setBounds(ROOM_X, ROOM_Y, ROOM_WIDTH, ROOM_HEIGHT);
         frame.add(room);
