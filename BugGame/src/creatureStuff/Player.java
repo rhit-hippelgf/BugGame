@@ -16,7 +16,6 @@ import roomStuff.Room; // needed to track room position/dimensions
 import roomStuff.RoomLogic;
 
 public class Player extends Creature {
-    private Point roomLoc = new Point(0, 0);
     private int critChance = 0;
     private int fireRate = 1;
     private int dodgeChance = 0;
