@@ -160,36 +160,37 @@ public class RoomLogic {
     	return ROOM_HEIGHT;
     }
     
-//    public void goNextFloor(char playerHitFloorDoor) {
-//    	if (Character.isUpperCase(playerHitFloorDoor)) {
-//    		System.out.println("check 1");
-//        	this.generateLayout(this.numRooms+4, this.level+1);
-//        	hero.setX(200);
-//        	hero.setY(200);
-//    	}
-//    }
-//    
-//    public void switchRooms(char hitDoor) {
-//    	if (hitDoor != ' ') {
-//    		if (hitDoor == 'n') {
-//    			currentPoint = new Point(currentPoint.x,currentPoint.y+1);
-//    			this.setCurrentRoom(currentPoint);
-//    		} else if (hitDoor == 'e') {
-//    			currentPoint = new Point(currentPoint.x+1,currentPoint.y);
-//    			this.setCurrentRoom(currentPoint);
-//    		} else if (hitDoor == 's') {
-//    			currentPoint = new Point(currentPoint.x,currentPoint.y-1);
-//    			this.setCurrentRoom(currentPoint);
-//    		}else if (hitDoor == 'w') {
-//    			currentPoint = new Point(currentPoint.x-1,currentPoint.y);
-//    			this.setCurrentRoom(currentPoint);
-//    		}
-//    	}
-//    }
+    public void goNextFloor(char playerHitFloorDoor) {
+    	if (Character.isUpperCase(playerHitFloorDoor)) {
+    		System.out.println("check 1");
+        	this.generateLayout(this.numRooms+4, this.level+1);
+        	hero.setX(200);
+        	hero.setY(200);
+    	}
+    }
+    
+    public void switchRooms(char hitDoor) {
+    	if (hitDoor != ' ') {
+    		if (hitDoor == 'n') {
+    			currentPoint = new Point(currentPoint.x,currentPoint.y+1);
+    			this.setCurrentRoom(currentPoint);
+    		} else if (hitDoor == 'e') {
+    			currentPoint = new Point(currentPoint.x+1,currentPoint.y);
+    			this.setCurrentRoom(currentPoint);
+    		} else if (hitDoor == 's') {
+    			currentPoint = new Point(currentPoint.x,currentPoint.y-1);
+    			this.setCurrentRoom(currentPoint);
+    		}else if (hitDoor == 'w') {
+    			currentPoint = new Point(currentPoint.x-1,currentPoint.y);
+    			this.setCurrentRoom(currentPoint);
+    		}
+    	}
+    }
     
     private void setCurrentRoom(Point point) {
     	frame.remove(currentRoom);
     	currentRoom = roomLayout.get(point);
+    	frame.add(currentRoom);
         currentRoom.setPlayer((Player) hero);
     	currentRoom.repaint();
     }
