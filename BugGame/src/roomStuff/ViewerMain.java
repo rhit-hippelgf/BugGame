@@ -39,23 +39,21 @@ public class ViewerMain {
         frame.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
 
         // Build RoomLogic with square tile size
-        RoomLogic logic = new RoomLogic(TILE_SIZE, ROOM_WIDTH, ROOM_HEIGHT, frame);
+        RoomLogic logic = new RoomLogic(TILE_SIZE, ROOM_WIDTH, ROOM_HEIGHT, ROOM_X, ROOM_Y, frame);
+        Room room = logic.getCurrentRoom();
+//        room.setBounds(ROOM_X, ROOM_Y, ROOM_WIDTH, ROOM_HEIGHT);
+//        frame.add(room);
 
         // Game loop
         GameAdvanceListner listener = new GameAdvanceListner(logic);
         Timer timer = new Timer(DELAY, listener);
         timer.start();
-
-        Room room = logic.getCurrentRoom();
-        room.setBounds(ROOM_X, ROOM_Y, ROOM_WIDTH, ROOM_HEIGHT);
-        frame.add(room);
         
         frame.requestFocusInWindow();
-        room.requestFocusInWindow();
-        
+//        room.requestFocusInWindow();
+        frame.setVisible(true);
     }
     
     public static void main(String[] args) {

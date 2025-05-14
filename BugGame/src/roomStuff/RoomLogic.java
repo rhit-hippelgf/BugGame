@@ -22,18 +22,21 @@ public class RoomLogic {
     private static int TILE_SIZE;
     private static int ROOM_WIDTH;
     private static int ROOM_HEIGHT;
+    private static int ROOM_X, ROOM_Y;
     HashMap<Point, Room> roomLayout = new HashMap<>();
 
-    public RoomLogic(int tileSize, int roomWidth, int roomHeight, JFrame frame) {
+    public RoomLogic(int tileSize, int roomWidth, int roomHeight, int roomX, int roomY, JFrame frame) {
         this.level = 0;
         this.numRooms = 2;
         this.frame = frame;
         this.TILE_SIZE = tileSize; // square tiles, so X and Y are equal
         this.ROOM_WIDTH = roomWidth;
         this.ROOM_HEIGHT = roomHeight;
+        this.ROOM_X = roomX;
+        this.ROOM_Y = roomY;
         this.hero = new Player((TILE_SIZE * 13) / 2, (TILE_SIZE * 7) / 2, 10, 3);
         this.generateLayout(numRooms, level);
-        System.out.println(this.roomLayout);
+        System.out.println(this.roomLayout.keySet());
     }
 
     char[][] layout0 = {
@@ -106,7 +109,11 @@ public class RoomLogic {
 
         currentPoint = new Point(0,0);
         currentRoom = roomLayout.get(currentPoint);
-        this.setCurrentRoom(currentPoint);
+        currentRoom.setPlayer((Player) hero);
+        frame.add(currentRoom);
+        currentRoom.setBounds(ROOM_X, ROOM_Y, ROOM_WIDTH, ROOM_HEIGHT);
+//        frame.remove(currentRoom);
+//        this.setCurrentRoom(currentPoint);
 
 //        List<Enemy> enemyTypes = List.of(
 //            new ZigZag(0, 0, hero),
@@ -136,12 +143,13 @@ public class RoomLogic {
 
     public void updateObjects() {
         currentRoom.updateEntities();
-//        this.goNextFloor(currentRoom.goThroughDoor());
-//        this.switchRooms(currentRoom.goThroughDoor());
+        this.goNextFloor(currentRoom.goThroughDoor());
+        this.switchRooms(currentRoom.goThroughDoor());
     }
 
     public void drawScreen() {
         currentRoom.drawScreen();
+//        System.out.println(currentPoint);
     }
 
     public Room getCurrentRoom() {
@@ -173,26 +181,32 @@ public class RoomLogic {
     	if (hitDoor != ' ') {
     		if (hitDoor == 'n') {
     			currentPoint = new Point(currentPoint.x,currentPoint.y+1);
-    			this.setCurrentRoom(currentPoint);
+    			this.setCurrentRoom(currentPoint, ROOM_WIDTH/2, ROOM_HEIGHT-TILE_SIZE);
     		} else if (hitDoor == 'e') {
     			currentPoint = new Point(currentPoint.x+1,currentPoint.y);
-    			this.setCurrentRoom(currentPoint);
+    			this.setCurrentRoom(currentPoint, TILE_SIZE, ROOM_HEIGHT/2);
     		} else if (hitDoor == 's') {
     			currentPoint = new Point(currentPoint.x,currentPoint.y-1);
-    			this.setCurrentRoom(currentPoint);
+    			this.setCurrentRoom(currentPoint, ROOM_WIDTH/2, TILE_SIZE);
     		}else if (hitDoor == 'w') {
     			currentPoint = new Point(currentPoint.x-1,currentPoint.y);
-    			this.setCurrentRoom(currentPoint);
+    			this.setCurrentRoom(currentPoint, ROOM_WIDTH-TILE_SIZE, ROOM_HEIGHT/2);
     		}
+            System.out.println("check 1");
     	}
     }
     
-    private void setCurrentRoom(Point point) {
+    private void setCurrentRoom(Point point, int x, int y) {
     	frame.remove(currentRoom);
+    	System.out.println(point);
     	currentRoom = roomLayout.get(point);
     	frame.add(currentRoom);
+        currentRoom.setBounds(ROOM_X, ROOM_Y, ROOM_WIDTH, ROOM_HEIGHT);
         currentRoom.setPlayer((Player) hero);
+        hero.setX(x);
+        hero.setY(y);
     	currentRoom.repaint();
+    	System.out.println(currentRoom);
     }
 }
 
