@@ -16,7 +16,7 @@ import java.awt.Color;
 
 public class Room extends JComponent {
 
-    private List<Enemy> enemies = new ArrayList<>();
+    private ArrayList<Enemy> enemies = new ArrayList<>();
     private Player player;
 
     private Door north, east, south, west;
@@ -55,7 +55,7 @@ public class Room extends JComponent {
         enemies.add(e);
     }
 
-    public List<Enemy> getEnemies() {
+    public ArrayList<Enemy> getEnemies() {
         return enemies;
     }
 
@@ -69,6 +69,10 @@ public class Room extends JComponent {
         if (player != null) {
             player.update();
             control.moveIfPress();
+            if (enemies.size() == 0) {
+            	roomCleared = true;
+            	this.roomCleared();
+            }
         }
         for (Enemy e : enemies) e.update();
         enemies.removeIf(e -> e.getHealth() <= 0);

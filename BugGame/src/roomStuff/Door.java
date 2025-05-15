@@ -17,7 +17,7 @@ public class Door {
 		this.state = false;
 		this.dir = dir;
 		this.length = RoomLogic.getTileSize();
-		this.width  = this.length/2;
+		this.width  = this.length/2 + 5;
 		this.color = Color.black;
 		if (visable) {
 			if (dir == 'n') {
@@ -71,5 +71,9 @@ public class Door {
     	} else {
     		return ' ';
     	}
+    }
+    
+    public void setColor(Color color) {
+    	this.color = color;
     }
 }

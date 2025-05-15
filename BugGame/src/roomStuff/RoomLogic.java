@@ -116,8 +116,6 @@ public class RoomLogic {
 
         currentPoint = new Point(0,0);
         this.setCurrentRoom(currentPoint,(TILE_SIZE * 13) / 2, (TILE_SIZE * 7) / 2);
-//        frame.remove(currentRoom);
-//        this.setCurrentRoom(currentPoint);
 
 //        List<Enemy> enemyTypes = List.of(
 //            new ZigZag(0, 0, hero),
