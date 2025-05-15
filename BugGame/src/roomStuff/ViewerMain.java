@@ -33,7 +33,7 @@ public class ViewerMain {
         System.out.println("Room bounds: " + ROOM_X + ", " + ROOM_Y + ", " + ROOM_WIDTH + " x " + ROOM_HEIGHT);
 
         // Set up window
-        JFrame frame = new JFrame("Viewer");
+        JFrame frame = new JFrame("Viewer"); 
         frame.setUndecorated(false);
         frame.setLayout(null);
         frame.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);

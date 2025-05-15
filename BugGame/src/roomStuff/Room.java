@@ -116,16 +116,16 @@ public class Room extends JComponent {
     	boolean pickedFloorDoor = false;
     	while (!pickedFloorDoor) {
     		char dir = directions[rand.nextInt(4)];
-    		if (dir == 'n' && this.north.getVisable()) {
+    		if (dir == 'n' && !this.north.getVisable()) {
     			this.north = new FloorDoor(true,'n');
     			pickedFloorDoor = true;
-    		} else if (dir == 'e' && this.east.getVisable()) {
+    		} else if (dir == 'e' && !this.east.getVisable()) {
     			this.east = new FloorDoor(true,'e');
     			pickedFloorDoor = true;
-    		} else if (dir == 's' && this.south.getVisable()) {
+    		} else if (dir == 's' && !this.south.getVisable()) {
     			this.south = new FloorDoor(true,'s');
     			pickedFloorDoor = true;
-    		} else if (dir == 'w' && this.west.getVisable()) {
+    		} else if (dir == 'w' && !this.west.getVisable()) {
     			this.west = new FloorDoor(true,'w');
     			pickedFloorDoor = true;
     		}

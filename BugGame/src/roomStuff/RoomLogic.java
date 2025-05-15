@@ -29,13 +29,13 @@ public class RoomLogic {
         this.level = 0;
         this.numRooms = 0;
         this.frame = frame;
-        this.TILE_SIZE = tileSize; // square tiles, so X and Y are equal
-        this.ROOM_WIDTH = roomWidth;
-        this.ROOM_HEIGHT = roomHeight;
-        this.ROOM_X = roomX;
-        this.ROOM_Y = roomY;
+        TILE_SIZE = tileSize; // square tiles, so X and Y are equal
+        ROOM_WIDTH = roomWidth;
+        ROOM_HEIGHT = roomHeight;
+        ROOM_X = roomX;
+        ROOM_Y = roomY;
         this.hero = new Player((TILE_SIZE * 13) / 2, (TILE_SIZE * 7) / 2, 8, 3);
-        this.generateLayout(numRooms, level);
+        this.generateLayout(numRooms);
         System.out.println(this.roomLayout.keySet());
     }
 
@@ -49,9 +49,8 @@ public class RoomLogic {
             {'T','T','T','T','T','T','T','T','T','T','T','T','T'}
     };
 
-    private void generateLayout(int numRooms, int level) {
+    private void generateLayout(int numRooms) {
     	System.out.println(level);
-    	this.level = level;
     	this.numRooms = numRooms;
         char[][] placeholderLayout = layout0;
         ArrayList<Point> rooms = new ArrayList<>();
@@ -61,7 +60,7 @@ public class RoomLogic {
 //        	This is initial condition generating a Layout with 0 floors
 //        	will put you in the begining room that will contain the door to start
 			rooms.add(new Point(0, 0));
-            Room r = new Room(placeholderLayout, true, false, false, false, TILE_SIZE);
+            Room r = new Room(placeholderLayout, false, false, false, false, TILE_SIZE);
             currentRoom = r;
             r.setPlayer((Player) hero);
             roomLayout.put(rooms.get(0), r);
@@ -172,26 +171,11 @@ public class RoomLogic {
 //        System.out.println(currentPoint);
     }
 
-    public Room getCurrentRoom() {
-        return currentRoom;
-    }
-    
-    public static int getTileSize() {
-    	return TILE_SIZE;
-	}
-    
-    public static int getRoomWidth() {
-    	return ROOM_WIDTH;
-    }
-    
-    public static int getRoomHeight() {
-    	return ROOM_HEIGHT;
-    }
     
     public void goNextFloor(char playerHitFloorDoor) {
     	if (Character.isUpperCase(playerHitFloorDoor)) {
-    		System.out.println("check 1");
-        	this.generateLayout(this.numRooms+4, this.level+1);
+    		this.level++;
+        	this.generateLayout(this.numRooms+4+3*this.level);
     	}
     }
     
@@ -223,6 +207,22 @@ public class RoomLogic {
         hero.setX(x);
         hero.setY(y);
     	currentRoom.repaint();
+    }
+    
+    public Room getCurrentRoom() {
+        return currentRoom;
+    }
+    
+    public static int getTileSize() {
+    	return TILE_SIZE;
+	}
+    
+    public static int getRoomWidth() {
+    	return ROOM_WIDTH;
+    }
+    
+    public static int getRoomHeight() {
+    	return ROOM_HEIGHT;
     }
 }
 
