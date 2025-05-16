@@ -46,7 +46,7 @@ public class WalkingEnemy extends Enemy {
 
     @Override
     public void shoot(double angle) {
-        Bullet b = createBullet(angle, 6, 1);
+        Bullet b = createBullet(angle, 2, 1);
         if (b != null) bullets.add(b);
     }
 

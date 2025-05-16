@@ -15,7 +15,7 @@ public class ZigZag extends Enemy {
 
 
     public ZigZag(int x, int y, Creature target) {
-        super(x, y, 3, 5, target);
+        super(x, y, 2, 5, target);
 
         addEffect(new poison(3)); // built in poison
         addEffectChance(0.25); // 25% chance
@@ -50,7 +50,7 @@ public class ZigZag extends Enemy {
 
     @Override
     public void shoot(double angle) {
-        Bullet b = createBullet(angle, 6, 1);
+        Bullet b = createBullet(angle, 2, 1);
         if (b != null) bullets.add(b); 
     }
 

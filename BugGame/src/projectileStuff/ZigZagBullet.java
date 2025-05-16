@@ -10,8 +10,8 @@ public class ZigZagBullet extends Bullet {
 
     private int frameCount = 0;
     private final double baseAngle;
-    private final double amplitude = 5;
-    private final double frequency = 0.3;
+    private final double amplitude = 2;
+    private final double frequency = 0.05;
 
     public ZigZagBullet(int x, int y, double angle, int speed, int damage, Creature source) {
         super(x, y, angle, speed, damage, source);
@@ -26,7 +26,7 @@ public class ZigZagBullet extends Bullet {
         double forwardY = speed * Math.sin(baseAngle);
 
         double perpAngle = baseAngle + Math.PI / 2;
-        double wiggleOffset = amplitude * Math.sin(frameCount * frequency);
+        double wiggleOffset = amplitude * Math.sin((frameCount*2) * frequency);
         double wiggleX = wiggleOffset * Math.cos(perpAngle);
         double wiggleY = wiggleOffset * Math.sin(perpAngle);
 

@@ -123,24 +123,24 @@ public class RoomLogic {
             new Suicide(0, 0, hero),
             new WalkingEnemy(0, 0, hero));
 
-        for (int i1 = 0; i1 < 5; i1++) {
-            int ex = rand.nextInt(TILE_SIZE * 13 - 100) + 50;
-            int ey = rand.nextInt(TILE_SIZE * 7 - 100) + 50;
-
-            Enemy template = enemyTypes.get(rand.nextInt(enemyTypes.size()));
-            Enemy enemy;
-            if (template instanceof ZigZag) {
-                enemy = new ZigZag(ex, ey, hero);
-            } else if (template instanceof Predictive1) {
-                enemy = new Predictive1(ex, ey, hero);
-            } else if (template instanceof Suicide) {
-                enemy = new Suicide(ex, ey, hero);
-            } else {
-                enemy = new WalkingEnemy(ex, ey, hero);
-            }
-
-            currentRoom.addEnemy(enemy);
-        }
+//        for (int i1 = 0; i1 < 5; i1++) {
+//            int ex = rand.nextInt(TILE_SIZE * 13 - 100) + 50;
+//            int ey = rand.nextInt(TILE_SIZE * 7 - 100) + 50;
+//
+//            Enemy template = enemyTypes.get(rand.nextInt(enemyTypes.size()));
+//            Enemy enemy;
+//            if (template instanceof ZigZag) {
+//                enemy = new ZigZag(ex, ey, hero);
+//            } else if (template instanceof Predictive1) {
+//                enemy = new Predictive1(ex, ey, hero);
+//            } else if (template instanceof Suicide) {
+//                enemy = new Suicide(ex, ey, hero);
+//            } else {
+//                enemy = new WalkingEnemy(ex, ey, hero);
+//            }
+//
+//            currentRoom.addEnemy(enemy);
+//        }
     }
 
     private boolean surroundingRoomsCheck(Point roomChoice, Point possibleLoc, ArrayList<Point> rooms) {

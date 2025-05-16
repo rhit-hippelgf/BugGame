@@ -11,10 +11,14 @@ import javax.swing.*;
 import controllerStuff.Controller;
 import creatureStuff.Enemy;
 import creatureStuff.Player;
+import creatureStuff.enemytypes.Suicide;
+import creatureStuff.enemytypes.WalkingEnemy;
+import creatureStuff.enemytypes.ZigZag;
 import projectileStuff.Bullet;
 
 import java.awt.Dimension;
 import java.awt.Color;
+import creatureStuff.*; // So it can access ZigZag, Suicide, etc.
 
 public class Room extends JComponent {
 
@@ -51,7 +55,47 @@ public class Room extends JComponent {
     public void setPlayer(Player p) {
         this.player = p;
         this.control = new Controller(this, player);
+        spawnEnemies();
         }
+    
+    private void spawnEnemies() {
+        if (player == null) return; // avoid null on early call
+
+        Dimension roomSize = getRoomSize();
+        int roomWidth = roomSize.width;
+        int roomHeight = roomSize.height;
+
+        Random rand = new Random();
+        int numEnemies = rand.nextInt(5) + 3; // 3 to 7 enemies
+
+        for (int i = 0; i < numEnemies; i++) {
+            int x = rand.nextInt(roomWidth - TILE_SIZE);  // avoid spawning partly out of bounds
+            int y = rand.nextInt(roomHeight - TILE_SIZE);
+
+            Enemy enemy = getRandomEnemy(x, y);
+            if (enemy != null) {
+                enemies.add(enemy);
+            }
+        }
+    }
+
+
+    private Enemy getRandomEnemy(int x, int y) {
+        Random rand = new Random();
+        int choice = rand.nextInt(3); // or however many enemy types you have
+
+        switch (choice) {
+            case 0:
+                return new WalkingEnemy(x, y, player);
+            case 1:
+                return new ZigZag(x, y, player);
+            case 2:
+                return new Suicide(x, y, player);
+            default:
+                return null;
+        }
+    }
+
 
     public void addEnemy(Enemy e) {
         enemies.add(e);
