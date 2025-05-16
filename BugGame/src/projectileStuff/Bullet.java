@@ -6,6 +6,7 @@ import java.util.List;
 
 import creatureStuff.Creature;
 import effectStuff.Effect;
+import roomStuff.RoomLogic;
 
 public abstract class Bullet {
     protected int x, y;
@@ -16,8 +17,8 @@ public abstract class Bullet {
 
     protected boolean markForRemoval = false;
 
-    protected int roomWidth = 1920;
-    protected int roomHeight = 1080;
+    protected int roomWidth = RoomLogic.getRoomWidth();
+    protected int roomHeight = RoomLogic.getRoomHeight();
     protected int width = 10;
     protected int height = 10;
 
