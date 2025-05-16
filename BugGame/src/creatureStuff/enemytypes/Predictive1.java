@@ -7,6 +7,7 @@ import projectileStuff.Bullet;
 //import effectStuff.burn;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.Color;
 
 public class Predictive1 extends Enemy {
@@ -14,8 +15,15 @@ public class Predictive1 extends Enemy {
     public Predictive1(int x, int y, Creature target) {
         super(x, y, 3, 5, target);
         setBulletClass(Normal.class);
+        this.width = 20;
+        this.height = 20;
         //addEffect(new burn(2)); // burns on hit
         //addEffectChance(0.3); // 30% chance
+    }
+    
+    @Override
+    public Rectangle getBounds() {
+        return new Rectangle(x, y, width, height);
     }
 
     @Override

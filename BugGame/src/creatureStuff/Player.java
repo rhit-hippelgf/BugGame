@@ -82,18 +82,26 @@ public class Player extends Creature {
                 break;
         }
     }
+    
+    @Override
+    public void update() {
+        // Placeholder for movement, status effects, cooldowns, etc.
+    }
+
+    public List<Bullet> getBullets() {
+        return bullets;
+    }
+    
+    public List<Bullet> getRawBulletList() {
+        return bullets;
+    }
+
+
 
     @Override
     public void draw(Graphics g) {
         g.setColor(Color.BLACK); // draw player sprite
         g.fillOval(x - width/2, y - height/2, width, height);
-
-        // draw all bullets not marked for removal
-        for (Bullet b : bullets) {
-            if (!b.markForRemoval) {
-                b.draw(g);
-            }
-        }
     }
 
     @Override
@@ -114,37 +122,8 @@ public class Player extends Creature {
         if (b != null) bullets.add(b);
     }
 
-    public void update() {
-//        System.out.println("Player update called, bullets = " + bullets.size());
 
-        List<Bullet> toRemove = new ArrayList<>();
 
-        for (Bullet b : bullets) {
-            b.update(); // always update bullets
-        }
-
-        // do bounds check if currentRoom is valid
-        if (currentRoom != null) {
-            int roomX = currentRoom.getX();
-            int roomY = currentRoom.getY();
-            int roomW = currentRoom.getWidth();
-            int roomH = currentRoom.getHeight();
-
-            int minX = roomX - 50;
-            int maxX = roomX + roomW + 50;
-            int minY = roomY - 50;
-            int maxY = roomY + roomH + 50;
-
-            for (Bullet b : bullets) {
-                if (b.getX() < minX || b.getX() > maxX || b.getY() < minY || b.getY() > maxY) {
-                    System.out.println("Despawning bullet at: " + b.getX() + ", " + b.getY());
-                    toRemove.add(b);
-                }
-            }
-        }
-
-        bullets.removeAll(toRemove);
-    }
 
 
 //    @Override

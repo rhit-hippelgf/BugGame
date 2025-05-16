@@ -117,30 +117,30 @@ public class RoomLogic {
         currentPoint = new Point(0,0);
         this.setCurrentRoom(currentPoint,(TILE_SIZE * 13) / 2, (TILE_SIZE * 7) / 2);
 
-//        List<Enemy> enemyTypes = List.of(
-//            new ZigZag(0, 0, hero),
-//            new Predictive1(0, 0, hero),
-//            new Suicide(0, 0, hero),
-//            new WalkingEnemy(0, 0, hero));
-//
-//        for (int i1 = 0; i1 < 5; i1++) {
-//            int ex = rand.nextInt(tileSize * 13 - 100) + 50;
-//            int ey = rand.nextInt(tileSize * 7 - 100) + 50;
-//
-//            Enemy template = enemyTypes.get(rand.nextInt(enemyTypes.size()));
-//            Enemy enemy;
-//            if (template instanceof ZigZag) {
-//                enemy = new ZigZag(ex, ey, hero);
-//            } else if (template instanceof Predictive1) {
-//                enemy = new Predictive1(ex, ey, hero);
-//            } else if (template instanceof Suicide) {
-//                enemy = new Suicide(ex, ey, hero);
-//            } else {
-//                enemy = new WalkingEnemy(ex, ey, hero);
-//            }
-//
-//            currentRoom.addEnemy(enemy);
-//        }
+        List<Enemy> enemyTypes = List.of(
+            new ZigZag(0, 0, hero),
+            new Predictive1(0, 0, hero),
+            new Suicide(0, 0, hero),
+            new WalkingEnemy(0, 0, hero));
+
+        for (int i1 = 0; i1 < 5; i1++) {
+            int ex = rand.nextInt(TILE_SIZE * 13 - 100) + 50;
+            int ey = rand.nextInt(TILE_SIZE * 7 - 100) + 50;
+
+            Enemy template = enemyTypes.get(rand.nextInt(enemyTypes.size()));
+            Enemy enemy;
+            if (template instanceof ZigZag) {
+                enemy = new ZigZag(ex, ey, hero);
+            } else if (template instanceof Predictive1) {
+                enemy = new Predictive1(ex, ey, hero);
+            } else if (template instanceof Suicide) {
+                enemy = new Suicide(ex, ey, hero);
+            } else {
+                enemy = new WalkingEnemy(ex, ey, hero);
+            }
+
+            currentRoom.addEnemy(enemy);
+        }
     }
 
     private boolean surroundingRoomsCheck(Point roomChoice, Point possibleLoc, ArrayList<Point> rooms) {
@@ -162,6 +162,8 @@ public class RoomLogic {
         currentRoom.updateEntities();
         this.goNextFloor(currentRoom.goThroughDoor());
         this.switchRooms(currentRoom.goThroughDoor());
+        currentRoom.updateEntities();
+        currentRoom.updateBullets();   
     }
 
     public void drawScreen() {

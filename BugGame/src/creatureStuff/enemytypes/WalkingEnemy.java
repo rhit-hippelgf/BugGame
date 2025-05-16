@@ -1,6 +1,7 @@
 package creatureStuff.enemytypes;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.Color;
 
 import creatureStuff.Creature;
@@ -13,6 +14,13 @@ public class WalkingEnemy extends Enemy {
     public WalkingEnemy(int x, int y, Creature target) {
         super(x, y, 2, 10, target);
         setBulletClass(Normal.class);
+        this.width = 20;
+        this.height = 20;
+    }
+    
+    @Override
+    public Rectangle getBounds() {
+        return new Rectangle(x, y, width, height);
     }
 
     @Override

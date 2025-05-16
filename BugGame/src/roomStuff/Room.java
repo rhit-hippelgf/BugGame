@@ -11,6 +11,8 @@ import javax.swing.*;
 import controllerStuff.Controller;
 import creatureStuff.Enemy;
 import creatureStuff.Player;
+import projectileStuff.Bullet;
+
 import java.awt.Dimension;
 import java.awt.Color;
 
@@ -77,6 +79,43 @@ public class Room extends JComponent {
         for (Enemy e : enemies) e.update();
         enemies.removeIf(e -> e.getHealth() <= 0);
         this.handleCollision();
+        this.updateBullets();
+    }
+    
+
+    public void updateBullets() {
+        List<Bullet> playerToRemove = new ArrayList<>();
+
+        // Player Bullet Collision Update
+        for (Bullet b : player.getBullets()) {
+            b.update();
+            for (Enemy e : enemies) {
+                System.out.println("Bullet bounds: " + b.getBounds());
+                System.out.println("Enemy bounds: " + e.getBounds());
+                if (b.getBounds().intersects(e.getBounds())) {
+                    System.out.println("COLLISION DETECTED!");
+                    b.onHit(e);
+                    playerToRemove.add(b);
+                    break;
+                }
+            }
+        }
+
+        // Enemy Bullet Collision Update
+        for (Enemy e : enemies) {
+            for (Bullet b : e.getBullets()) {
+                b.update();
+                if (b.getBounds().intersects(player.getBounds())) {
+                    b.onHit(player);
+                }
+            }
+        }
+
+        // cleanup
+        player.getBullets().removeIf(Bullet::isMarkedForRemoval); 
+        for (Enemy e : enemies) {
+            e.getBullets().removeIf(Bullet::isMarkedForRemoval);
+        }
     }
 
     @Override
@@ -99,6 +138,21 @@ public class Room extends JComponent {
         east.draw(g2);
         south.draw(g2);
         west.draw(g2);
+        
+     // draw player b
+        if (player != null) {
+            for (Bullet b : player.getBullets()) {
+                b.draw(g2);
+            }
+        }
+
+        // draw enemy b
+        for (Enemy e : enemies) {
+            for (Bullet b : e.getBullets()) {
+                b.draw(g2);
+            }
+        }
+
 
         if (player != null) player.draw(g2);
         for (Enemy e : enemies) e.draw(g);
@@ -135,6 +189,8 @@ public class Room extends JComponent {
     		}
     	}
     }
+    
+    
     
     private void handleCollision() {
 //    	Starting handle collision method this will contain all collision logic

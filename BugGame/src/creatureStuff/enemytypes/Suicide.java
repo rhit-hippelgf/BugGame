@@ -4,16 +4,27 @@ import creatureStuff.Creature;
 import creatureStuff.Enemy;
 import java.awt.Graphics;
 import java.awt.Color;
+import java.awt.Rectangle;
 
 public class Suicide extends Enemy {
     private int detonationRange = 30;
     private boolean detonated = false;
     private int explosionX = 0;
     private int explosionY = 0;
+    
 
     public Suicide(int x, int y, Creature target) {
         super(x, y, 3, 5, target);
+        this.width = 20;
+        this.height = 20;
+
     }
+    
+    @Override
+    public Rectangle getBounds() {
+        return new Rectangle(x, y, width, height);
+    }
+
 
     @Override
     public void update() {

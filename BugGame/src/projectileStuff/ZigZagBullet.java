@@ -36,7 +36,8 @@ public class ZigZagBullet extends Bullet {
 
     @Override
     public void draw(Graphics g) {
-        g.setColor(Color.CYAN);
-        g.fillOval(x - 3, y - 3, 6, 6);
+        g.setColor(Color.MAGENTA); // just for flair
+        g.fillRect(x - width / 2, y - height / 2, width, height);
     }
+
 }

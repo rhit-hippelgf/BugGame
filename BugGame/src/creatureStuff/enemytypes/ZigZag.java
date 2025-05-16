@@ -3,6 +3,7 @@ package creatureStuff.enemytypes;
 import creatureStuff.Creature;
 import creatureStuff.Enemy;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.Color;
 import projectileStuff.ZigZagBullet;
 import projectileStuff.Bullet;
@@ -19,6 +20,12 @@ public class ZigZag extends Enemy {
         addEffect(new poison(3)); // built in poison
         addEffectChance(0.25); // 25% chance
         setBulletClass(ZigZagBullet.class);
+        this.width = 20;
+        this.height = 20;
+    }
+    @Override
+    public Rectangle getBounds() {
+        return new Rectangle(x, y, width, height);
     }
 
     @Override

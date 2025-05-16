@@ -1,11 +1,14 @@
 package creatureStuff;
 
 import java.awt.Graphics;
+
 import java.util.ArrayList;
 import java.util.List;
 import projectileStuff.Bullet;
 import roomStuff.RoomLogic;
 import effectStuff.Effect;
+import java.awt.Rectangle;
+
 
 public abstract class Creature {
 	protected int x, y;
@@ -31,6 +34,12 @@ public abstract class Creature {
 		this.health = startHealth;
 		this.healthCap = healthCap;
 	}
+	
+	public Rectangle getBounds() {
+	    return new Rectangle(x - width / 2, y - height / 2, width, height);
+	}
+
+
 
 	public void takeDamage(int damage) {
 		health -= damage;
@@ -128,6 +137,11 @@ public abstract class Creature {
 	}
 
 	public void draw(Graphics g) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void update() {
 		// TODO Auto-generated method stub
 		
 	}

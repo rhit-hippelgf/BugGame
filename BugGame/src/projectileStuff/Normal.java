@@ -18,8 +18,8 @@ public class Normal extends Bullet {
     @Override
     public void draw(Graphics g) {
         g.setColor(Color.RED);
-        g.fillOval(x - 5, y - 5, 10, 10);
-        System.out.printf("[Draw Bullet] x=%d y=%d\n", x, y);
+        g.fillOval(x - width / 2, y - height / 2, width, height);
     }
+
 
 }
