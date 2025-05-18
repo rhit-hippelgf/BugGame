@@ -55,7 +55,7 @@ public class Room extends JComponent {
     public void setPlayer(Player p) {
         this.player = p;
         this.control = new Controller(this, player);
-        spawnEnemies();
+//        spawnEnemies(); // This method should be removed when room layout works
         }
     
     private void spawnEnemies() {
@@ -79,7 +79,7 @@ public class Room extends JComponent {
         }
     }
 
-
+//This seems like a temporary method until room can spawn grid layout
     private Enemy getRandomEnemy(int x, int y) {
         Random rand = new Random();
         int choice = rand.nextInt(3); // or however many enemy types you have
@@ -105,11 +105,12 @@ public class Room extends JComponent {
         return enemies;
     }
 
+//  This method should be unneeded as RoomLogic has a static getter to get the room width and height
     public Dimension getRoomSize() {
         int width = layout[0].length * TILE_SIZE;
         int height = layout.length * TILE_SIZE;
         return new Dimension(width, height);
-    }
+    } 
 
     public void updateEntities() {
         if (player != null) {
@@ -126,8 +127,12 @@ public class Room extends JComponent {
         this.updateBullets();
     }
     
+    private void handleCollision() {
+//    	Starting handle collision method this will contain all collision logic
+    	this.goThroughDoor();
+    }
 
-    public void updateBullets() {
+    private void updateBullets() {
         List<Bullet> playerToRemove = new ArrayList<>();
 
         // Player Bullet Collision Update
@@ -232,13 +237,6 @@ public class Room extends JComponent {
     			pickedFloorDoor = true;
     		}
     	}
-    }
-    
-    
-    
-    private void handleCollision() {
-//    	Starting handle collision method this will contain all collision logic
-    	this.goThroughDoor();
     }
     
     public char goThroughDoor() {

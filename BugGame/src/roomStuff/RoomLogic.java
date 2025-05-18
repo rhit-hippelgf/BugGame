@@ -23,9 +23,11 @@ public class RoomLogic {
     private static int ROOM_WIDTH;
     private static int ROOM_HEIGHT;
     private static int ROOM_X, ROOM_Y;
-    HashMap<Point, Room> roomLayout = new HashMap<>();
+    private static int SCREEN_WIDTH, SCREEN_HEIGHT;
+    private HashMap<Point, Room> roomLayout = new HashMap<>();
+    private BackgroundHud hud;
 
-    public RoomLogic(int tileSize, int roomWidth, int roomHeight, int roomX, int roomY, JFrame frame) {
+    public RoomLogic(int tileSize, int roomWidth, int roomHeight, int roomX, int roomY, JFrame frame, int screenWidth, int screenHeight) {
         this.level = 0;
         this.numRooms = 0;
         this.frame = frame;
@@ -34,7 +36,11 @@ public class RoomLogic {
         ROOM_HEIGHT = roomHeight;
         ROOM_X = roomX;
         ROOM_Y = roomY;
+        SCREEN_WIDTH = screenWidth;
+        SCREEN_HEIGHT = screenHeight;
         this.hero = new Player((TILE_SIZE * 13) / 2, (TILE_SIZE * 7) / 2, 8, 3);
+        hud = new BackgroundHud((Player) hero);
+//        this.frame.add(hud);
         this.generateLayout(numRooms);
         System.out.println(this.roomLayout.keySet());
     }
@@ -50,6 +56,7 @@ public class RoomLogic {
     };
 
     private void generateLayout(int numRooms) {
+    	frame.add(hud);
     	System.out.println(level);
     	this.numRooms = numRooms;
         char[][] placeholderLayout = layout0;
@@ -158,16 +165,18 @@ public class RoomLogic {
     	}
     	return availiable;
     }
+    
     public void updateObjects() {
         currentRoom.updateEntities();
         this.goNextFloor(currentRoom.goThroughDoor());
         this.switchRooms(currentRoom.goThroughDoor());
-        currentRoom.updateEntities();
-        currentRoom.updateBullets();   
+//        currentRoom.updateEntities();
+//        currentRoom.updateBullets();   
     }
 
     public void drawScreen() {
         currentRoom.drawScreen();
+//    	hud.drawHud();
 //        System.out.println(currentPoint);
     }
 
@@ -209,20 +218,17 @@ public class RoomLogic {
     	currentRoom.repaint();
     }
     
-    public Room getCurrentRoom() {
-        return currentRoom;
-    }
+    public Room getCurrentRoom() {return currentRoom;}
+    public Point getRoomLoc() {return currentPoint;}
     
-    public static int getTileSize() {
-    	return TILE_SIZE;
-	}
+    public static int getTileSize() {return TILE_SIZE;}
     
-    public static int getRoomWidth() {
-    	return ROOM_WIDTH;
-    }
+    public static int getRoomWidth() {return ROOM_WIDTH;}
     
-    public static int getRoomHeight() {
-    	return ROOM_HEIGHT;
-    }
+    public static int getRoomHeight() {return ROOM_HEIGHT;}
+    
+    public static int getScreenWidth() {return SCREEN_WIDTH;}
+    
+    public static int getScreenHeight() {return SCREEN_HEIGHT;}
 }
 

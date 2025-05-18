@@ -72,7 +72,7 @@ public class Controller implements MouseListener {
 
         if (theta != null) {
             player.move(theta);
-            component.repaint();
+//            component.repaint();
         }
     }
 

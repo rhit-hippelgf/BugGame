@@ -122,6 +122,14 @@ public class Player extends Creature {
         if (b != null) bullets.add(b);
     }
 
+	public int getCurrentHealth() {
+		return super.health;
+	}
+	
+	public int getMaxHealth() {
+		return super.healthCap;
+	}
+
 
 
 

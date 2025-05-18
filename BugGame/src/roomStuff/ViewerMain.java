@@ -41,7 +41,7 @@ public class ViewerMain {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Build RoomLogic with square tile size
-        RoomLogic logic = new RoomLogic(TILE_SIZE, ROOM_WIDTH, ROOM_HEIGHT, ROOM_X, ROOM_Y, frame);
+        RoomLogic logic = new RoomLogic(TILE_SIZE, ROOM_WIDTH, ROOM_HEIGHT, ROOM_X, ROOM_Y, frame, SCREEN_WIDTH, SCREEN_HEIGHT);
 //        Room room = logic.getCurrentRoom();
 //        room.setBounds(ROOM_X, ROOM_Y, ROOM_WIDTH, ROOM_HEIGHT);
 //        frame.add(room);
