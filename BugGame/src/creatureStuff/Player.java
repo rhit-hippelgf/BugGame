@@ -28,7 +28,7 @@ public class Player extends Creature {
     private Room currentRoom;
 
     public Player(int startX, int startY, int startSpeed, int startHealth) {
-        super(startX, startY, startSpeed, startHealth, startHealth);
+        super(startX, startY, startSpeed, startHealth);
         width = RoomLogic.getTileSize()/2;
         height = RoomLogic.getTileSize();
         setBulletClass(Normal.class);

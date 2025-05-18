@@ -27,12 +27,12 @@ public abstract class Creature {
 	// bullet logic
 	protected Class<? extends Bullet> bulletClass;
 
-	public Creature(int startX, int startY, int startSpeed, int startHealth, int healthCap) {
+	public Creature(int startX, int startY, int startSpeed, int startHealth) {
 		this.x = startX;
 		this.y = startY;
 		this.speed = startSpeed;
 		this.health = startHealth;
-		this.healthCap = healthCap;
+		this.healthCap = startHealth;
 	}
 	
 	public Rectangle getBounds() {
