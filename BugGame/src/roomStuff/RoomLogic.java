@@ -208,14 +208,14 @@ public class RoomLogic {
     
     private void setCurrentRoom(Point point, int x, int y) {
     	frame.remove(currentRoom);
-    	System.out.println(point);
     	currentRoom = roomLayout.get(point);
     	frame.add(currentRoom);
         currentRoom.setBounds(ROOM_X, ROOM_Y, ROOM_WIDTH, ROOM_HEIGHT);
         currentRoom.setPlayer((Player) hero);
         hero.setX(x);
         hero.setY(y);
-    	currentRoom.repaint();
+        hud.updateRoom(point);
+//    	currentRoom.repaint();
     }
     
     public Room getCurrentRoom() {return currentRoom;}

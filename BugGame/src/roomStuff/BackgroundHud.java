@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 import creatureStuff.Player;
 import java.awt.Point;
-
+import java.awt.Color;
 
 public class BackgroundHud extends JComponent {
 
@@ -15,14 +15,23 @@ public class BackgroundHud extends JComponent {
 	private int health;
 	private int maxHealth;
 	private boolean updateHud = false;
-	private ArrayList<Point> exploredMap;
+	private ArrayList<Point> exploredMap = new ArrayList<>();
 	private Point currentRoom;
+	private int mapPaintWidth = 32;
+	private int mapPaintHeight = 16;
+	private int sideGapX = (RoomLogic.getScreenWidth()-RoomLogic.getRoomWidth())/2;
+	private int sideGapY = (RoomLogic.getScreenHeight()-RoomLogic.getRoomHeight())/2;
+	private int mapPaintOX = RoomLogic.getRoomWidth() + sideGapX - mapPaintWidth/2;
+	private int mapPaintOY = sideGapY/2 - mapPaintHeight/2;
+
 	
 	public BackgroundHud(Player player) {
 		this.player = player;
 		this.health = player.getCurrentHealth();
 		this.maxHealth = player.getMaxHealth();
 		this.setBounds(0, 0, RoomLogic.getScreenWidth(), RoomLogic.getScreenHeight());
+
+		
 	}
 	
 	@Override
@@ -32,6 +41,27 @@ public class BackgroundHud extends JComponent {
         
         g2.drawString("Current Health: " + health, 50, 50);
         g2.drawString("Max Health: " + health, 50, 70);
+        
+        for (Point point : exploredMap) {
+        	if (!point.equals(currentRoom)) {
+	        	int x = point.x;
+	        	int y = point.y;
+	        	g2.setColor(Color.BLUE);
+	        	g2.fillRect(mapPaintOX + mapPaintWidth*x, mapPaintOY - mapPaintHeight*y, mapPaintWidth, mapPaintHeight);
+	        }
+        }
+        g2.setColor(Color.RED);
+        g2.fillRect(mapPaintOX + mapPaintWidth*currentRoom.x, mapPaintOY - mapPaintHeight*currentRoom.y, mapPaintWidth, mapPaintHeight);
+        
+        
+	}
+	
+	public void updateRoom(Point currLoc) {
+		this.currentRoom = currLoc;
+		if (!exploredMap.contains(currLoc)) {
+			exploredMap.add(currLoc);
+		}
+		this.repaint();
 	}
 	
 	public void detectChange() {
