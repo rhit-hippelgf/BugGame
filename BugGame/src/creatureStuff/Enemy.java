@@ -8,7 +8,7 @@ public abstract class Enemy extends Creature {
     protected Creature target; // usually the player
 
     public Enemy(int startX, int startY, int startSpeed, int startHealth, Creature target) {
-        super(startX, startY, startSpeed, startHealth, startHealth);
+        super(startX, startY, startSpeed, startHealth);
         this.target = target;
     }
 
