@@ -33,6 +33,7 @@ public class Player extends Creature {
 
     // ref to Room component for screen coordinates and dimensions
 //    private Room currentRoom;
+    
 	private File fileIdle;
 	private BufferedImage idleImage;
 	private boolean spriteLoaded;
@@ -42,6 +43,7 @@ public class Player extends Creature {
 	private Image walkRightImage;
 	private File fileLeft;
 	private File fileRight;
+	private Room room;
 
     public Player(int startX, int startY, int startSpeed, int startHealth) {
         super(startX, startY, startSpeed, startHealth);
@@ -157,20 +159,23 @@ public class Player extends Creature {
 
     @Override
     public void shoot(double angle) {
-//        System.out.println("Shooting angle: " + angle);
-//        System.out.println("Current bullet count: " + bullets.size());
-
         int baseDamage = 1;
 
         if (new RngHandler().handleCheck(critChance)) {
             baseDamage *= 2;
         }
 
-        // cerate/fire a bullet from player's center
+        System.out.println("Calling shoot!");
+
         Bullet b = createBullet(angle, 5, baseDamage);
+        System.out.println("Bullet created: " + b);
         if (b == null) System.out.println("Bullet creation failed!");
 
-        if (b != null) bullets.add(b);
+        if (b != null && room != null) {
+            room.getPlayerBullets().add(b);
+        } else {
+            System.out.println("Room is null in Player");
+        }
     }
 
 	public int getCurrentHealth() {
@@ -184,6 +189,21 @@ public class Player extends Creature {
 	public void setIsWalking(boolean bool) {
 		isWalking = bool;
 	}
+	
+	public void setRoom(Room r) {
+	    this.room = r;
+	}
+	
+	public double getWidth() {
+	    return this.width;
+	}
+
+	public double getHeight() {
+	    return this.height;
+	}
+	
+	
+
 
 
 

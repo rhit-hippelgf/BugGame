@@ -1,43 +1,42 @@
 package projectileStuff;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.util.List;
+import java.awt.*;
 import creatureStuff.Creature;
-import effectStuff.Effect;
 
 public class ZigZagBullet extends Bullet {
+    private int tick = 0;
+    private double zigzagAmplitude = 10.0;
+    private double zigzagFrequency = 0.3;
 
-    private int frameCount = 0;
-    private final double baseAngle;
-    private final double amplitude = 2;
-    private final double frequency = 0.05;
-
-    public ZigZagBullet(int x, int y, double angle, int speed, int damage, Creature source) {
+    public ZigZagBullet(double x, double y, double angle, int speed, int damage, Creature source) {
         super(x, y, angle, speed, damage, source);
-        this.baseAngle = angle;
     }
 
     @Override
     public void update() {
-        frameCount++;
+        tick++;
 
-        double forwardX = speed * Math.cos(baseAngle);
-        double forwardY = speed * Math.sin(baseAngle);
+        // Move forward
+        double forwardX = Math.cos(angle) * speed;
+        double forwardY = Math.sin(angle) * speed;
 
-        double perpAngle = baseAngle + Math.PI / 2;
-        double wiggleOffset = amplitude * Math.sin((frameCount*2) * frequency);
-        double wiggleX = wiggleOffset * Math.cos(perpAngle);
-        double wiggleY = wiggleOffset * Math.sin(perpAngle);
+        // Offset perpendicular to direction (oscillates)
+        double offset = Math.sin(tick * zigzagFrequency) * zigzagAmplitude;
+        double perpX = -Math.sin(angle);
+        double perpY = Math.cos(angle);
 
-        x += (int)(forwardX + wiggleX);
-        y += (int)(forwardY + wiggleY);
+        // Final position
+        x += forwardX;
+        y += forwardY;
+
+        // Apply lateral wiggle as displacement from the center path
+        x += perpX * Math.cos(tick * zigzagFrequency) * 0.5;
+        y += perpY * Math.cos(tick * zigzagFrequency) * 0.5;
     }
 
     @Override
     public void draw(Graphics g) {
-        g.setColor(Color.MAGENTA); // just for flair
-        g.fillRect(x - width / 2, y - height / 2, width, height);
+        g.setColor(Color.MAGENTA);
+        g.fillOval((int)x - width / 2, (int)y - height / 2, width, height);
     }
-
 }

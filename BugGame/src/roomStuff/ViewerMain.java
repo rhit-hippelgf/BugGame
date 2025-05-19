@@ -3,11 +3,16 @@ package roomStuff;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 
 public class ViewerMain {
     public static final int DELAY = 12;
+    
 
     public static void createGUI() {
+    	System.setProperty("sun.java2d.uiScale", "1.0");
+    	System.setProperty("sun.java2d.dpiaware", "true");
+
         // the actual screen size Java sees
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         final int SCREEN_WIDTH = screenSize.width;
@@ -57,6 +62,13 @@ public class ViewerMain {
     }
     
     public static void main(String[] args) {
+        GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+        GraphicsConfiguration gc = gd.getDefaultConfiguration();
+        AffineTransform t = gc.getDefaultTransform();
+
+        System.out.println("DPI Scale X: " + t.getScaleX());
+        System.out.println("DPI Scale Y: " + t.getScaleY());
+        System.setProperty("sun.java2d.uiScale", "1.0");
         SwingUtilities.invokeLater(ViewerMain::createGUI);
     }
     

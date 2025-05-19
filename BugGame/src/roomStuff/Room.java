@@ -31,6 +31,7 @@ public class Room extends JComponent {
 	private static final char HOLE = 'o';
 	private static final char ZIGZIG = 'z';
 	private static final char STANDARD_ENEMY = 'e';
+	private static final char LEGENDARY_ITEM = 'L';
 	private static final char EPIC_ITEM = 'E';
 	private static final char RARE_ITEM = 'R';
 	private static final char COMMON_ITEM = 'C';
@@ -50,6 +51,8 @@ public class Room extends JComponent {
 
     private final int TILE_SIZE;
     private int level;
+    private List<Bullet> playerBullets = new ArrayList<>();
+    private List<Bullet> enemyBullets = new ArrayList<>();
 
     // construc accepts dynamic square tile size
     public Room(boolean north, boolean east, boolean south, boolean west, int tileSize, int level, Creature player) {
@@ -73,7 +76,9 @@ public class Room extends JComponent {
     public void setPlayer(Player p) {
         this.player = p;
         this.control = new Controller(this, (Player) player);
-//        spawnEnemies(); // This method should be removed when room layout works
+        this.player.setRoom(this);
+        this.addMouseListener(control);
+        control.setRoom(this);
         }
     
     public void generateLayout() {
@@ -193,7 +198,7 @@ public class Room extends JComponent {
         List<Bullet> playerToRemove = new ArrayList<>();
 
         // Player Bullet Collision Update
-        for (Bullet b : player.getBullets()) {
+        for (Bullet b : playerBullets) {
             b.update();
             for (Creature e : enemies) {
                 System.out.println("Bullet bounds: " + b.getBounds());
@@ -218,7 +223,7 @@ public class Room extends JComponent {
         }
 
         // cleanup
-        player.getBullets().removeIf(Bullet::isMarkedForRemoval); 
+        playerBullets.removeIf(Bullet::isMarkedForRemoval);
         for (Creature e : enemies) {
             e.getBullets().removeIf(Bullet::isMarkedForRemoval);
         }
@@ -242,7 +247,7 @@ public class Room extends JComponent {
         
      // draw player b
         if (player != null) {
-            for (Bullet b : player.getBullets()) {
+        	for (Bullet b : playerBullets) {
                 b.draw(g2);
             }
         }
@@ -325,4 +330,7 @@ public class Room extends JComponent {
     public int getTileSize(){
     	return TILE_SIZE;
     }
+    
+    public List<Bullet> getPlayerBullets() { return playerBullets; }
+    public List<Bullet> getEnemyBullets() { return enemyBullets; }
 }
