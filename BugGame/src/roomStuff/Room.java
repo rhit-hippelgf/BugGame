@@ -269,4 +269,8 @@ public class Room extends JComponent {
     	west.openDoor();
     	south.openDoor();
     }
+    
+    public int getTileSize(){
+    	return TILE_SIZE;
+    }
 }

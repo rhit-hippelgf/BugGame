@@ -1,9 +1,15 @@
 package creatureStuff;
 
 import java.awt.Point;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.List;
+
+import javax.imageio.ImageIO;
+
 import java.util.ArrayList;
 
 import handlingStuff.RngHandler;
@@ -26,12 +32,23 @@ public class Player extends Creature {
 
     // ref to Room component for screen coordinates and dimensions
     private Room currentRoom;
+	private File file;
+	private BufferedImage image;
+	private boolean spriteLoaded;
 
     public Player(int startX, int startY, int startSpeed, int startHealth) {
         super(startX, startY, startSpeed, startHealth);
         width = RoomLogic.getTileSize()/2;
         height = RoomLogic.getTileSize();
         setBulletClass(Normal.class);
+        file = new File("assets/sprites/creatures/Beetle1.png");
+        try {
+			image = ImageIO.read(file);
+			spriteLoaded = true;
+		} catch (IOException e) {
+			spriteLoaded = false;
+		}
+        System.out.println(spriteLoaded);
     }
 
     // linking player to its room for despawn bounds
@@ -100,8 +117,20 @@ public class Player extends Creature {
 
     @Override
     public void draw(Graphics g) {
-        g.setColor(Color.BLACK); // draw player sprite
-        g.fillOval(x - width/2, y - height/2, width, height);
+    	super.draw(g);
+		java.awt.Graphics2D g2 = (java.awt.Graphics2D) g;
+		if (spriteLoaded == true) {
+			//System.out.println("PLAYER DRAWN");
+			int scaleWidth = RoomLogic.getTileSize();
+			g2.drawImage(image, this.getX() - scaleWidth/2, this.getY() - scaleWidth/2, scaleWidth, scaleWidth, null);
+		} else {
+			
+			g2.setColor(Color.BLACK);
+			g2.fillOval(getX() - image.getWidth()/2, getY() - image.getHeight()/2, image.getWidth(), image.getHeight());
+		}
+    	
+        //g.setColor(Color.BLACK); // draw player sprite
+        //g.fillOval(x - width/2, y - height/2, width, height);
     }
 
     @Override
