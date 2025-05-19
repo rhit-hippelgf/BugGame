@@ -56,11 +56,11 @@ public class Tile {
 		this.color = Color.WHITE;
 		r = new Random();
 		if (level <= 2) {
-			int n = r.nextInt(8);
+			n = r.nextInt(8);
 		} else if (level <= 4 && level >= 3) {
-			int n = r.nextInt(4);
+			n = r.nextInt(4);
 		} else {
-			int n = r.nextInt(7);
+			n = r.nextInt(7);
 		}
 		try {
 			dirt1 = ImageIO.read(new File("assets/sprites/floors/dirtfloor1.png"));
