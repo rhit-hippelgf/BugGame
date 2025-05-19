@@ -41,6 +41,7 @@ public class Tile {
 	private BufferedImage lava5;
 	private BufferedImage lava6;
 	private BufferedImage lava7;
+	private int n;
 	private boolean spriteLoaded;
 	private Random r;
 	protected int level;
@@ -53,6 +54,14 @@ public class Tile {
 		this.x2 = x1+TILE;
 		this.y2 = y1+TILE;
 		this.color = Color.WHITE;
+		r = new Random();
+		if (level <= 2) {
+			int n = r.nextInt(8);
+		} else if (level <= 4 && level >= 3) {
+			int n = r.nextInt(4);
+		} else {
+			int n = r.nextInt(7);
+		}
 		try {
 			dirt1 = ImageIO.read(new File("assets/sprites/floors/dirtfloor1.png"));
 			dirt2 = ImageIO.read(new File("assets/sprites/floors/dirtfloor2.png"));
@@ -87,7 +96,7 @@ public class Tile {
 		
 		if (spriteLoaded == true) {
 			if (level <= 2) {
-				int n = r.nextInt(8);
+			
 				if (n==0) {
 					g2.drawImage(dirt1, x1, y1, TILE, TILE, null);
 				} else if (n==1) {
@@ -106,7 +115,7 @@ public class Tile {
 					g2.drawImage(dirt8, x1, y1, TILE, TILE, null);
 				} 
 			} else if (level <= 4 && level >= 3) {
-				int n = r.nextInt(4);
+				
 				if (n==0) {
 					g2.drawImage(stone1, x1, y1, TILE, TILE, null);
 				} else if (n==1) {
@@ -117,7 +126,6 @@ public class Tile {
 					g2.drawImage(stone4, x1, y1, TILE, TILE, null);
 				}
 			} else {
-				int n = r.nextInt(7);
 				if (n==0) {
 					g2.drawImage(lava1, x1, y1, TILE, TILE, null);
 				} else if (n==1) {
