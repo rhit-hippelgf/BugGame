@@ -34,6 +34,7 @@ public class Room extends JComponent {
 	private static final char SMALL_HEALTH = 'h';
 	private static final char BIG_HEALTH = 'H';
 	
+//	private Tile[][] gridTiles = 
     private ArrayList<Creature> enemies = new ArrayList<>();
     private Creature player;
 
@@ -45,10 +46,9 @@ public class Room extends JComponent {
     private final int TILE_SIZE;
 
     // construc accepts dynamic square tile size
-    public Room(char[][] layout, boolean north, boolean east, boolean south, boolean west, int tileSize, int level) {
+    public Room(boolean north, boolean east, boolean south, boolean west, int tileSize, int level) {
         this.setFocusable(true);
         this.setOpaque(true);
-        this.layout = layout;
         this.north = new Door(north,'n');
         this.east = new Door(east,'e');
         this.south = new Door(south,'s');
@@ -66,6 +66,10 @@ public class Room extends JComponent {
         this.control = new Controller(this, (Player) player);
 //        spawnEnemies(); // This method should be removed when room layout works
         }
+    
+    public void generateLayout() {
+//    	for 
+    }
     
 //    private void spawnEnemies() {
 //        if (player == null) return; // avoid null on early call

@@ -15,7 +15,7 @@ import java.awt.*;
 
 public class RoomLogic {
 
-    private static int level = 0;
+    private int level = 0;
     private int numRooms;
     private Room currentRoom;
     private Point currentPoint;
@@ -46,21 +46,11 @@ public class RoomLogic {
         System.out.println(this.roomLayout.keySet());
     }
 
-    char[][] layout0 = {
-            {'T','T','T','T','T','T','T','T','T','T','T','T','T'},
-            {'T','.','.','.','.','.','.','.','.','.','.','.','T'},
-            {'T','.','Z','.','F','.','B','.','.','.','S','.','T'},
-            {'T','.','.','.','.','.','.','.','.','.','.','.','T'},
-            {'T','.','.','B','.','.','.','.','Z','.','.','.','T'},
-            {'T','.','.','.','.','.','.','.','.','.','.','.','T'},
-            {'T','T','T','T','T','T','T','T','T','T','T','T','T'}
-    };
 
     private void generateLayout(int numRooms) {
     	frame.add(hud);
     	System.out.println(level);
     	this.numRooms = numRooms;
-        char[][] placeholderLayout = layout0;
         ArrayList<Point> rooms = new ArrayList<>();
         Random rand = new Random();
 
@@ -68,7 +58,7 @@ public class RoomLogic {
 //        	This is initial condition generating a Layout with 0 floors
 //        	will put you in the begining room that will contain the door to start
 			rooms.add(new Point(0, 0));
-            Room r = new Room(placeholderLayout, false, false, false, false, TILE_SIZE, this.level);
+            Room r = new Room(false, false, false, false, TILE_SIZE, this.level);
             currentRoom = r;
             r.setPlayer((Player) hero);
             roomLayout.put(rooms.get(0), r);
@@ -117,7 +107,7 @@ public class RoomLogic {
 	                else if (p.y == temp.y && p.x == temp.x - 1) west = true;
 	            }
 	
-	            Room r = new Room(placeholderLayout, north, east, south, west, TILE_SIZE, this.level);
+	            Room r = new Room(north, east, south, west, TILE_SIZE, this.level);
 	            if (temp.equals(shopLoc)) {
 	            	r.setDoorColor('n', Color.YELLOW);
 	            	r.setDoorColor('e', Color.YELLOW);
@@ -252,7 +242,5 @@ public class RoomLogic {
     public static int getScreenWidth() {return SCREEN_WIDTH;}
     
     public static int getScreenHeight() {return SCREEN_HEIGHT;}
-    
-    public static int getLevel() {return level;}
 }
 
