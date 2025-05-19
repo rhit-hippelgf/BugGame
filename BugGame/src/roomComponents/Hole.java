@@ -8,8 +8,4 @@ public class Hole extends Tile{
 		super(x1, y1);
 		super.color = Color.GRAY;
 	}
-
-	public void checkCollisions(int x, int y) {
-		
-	}
 }
