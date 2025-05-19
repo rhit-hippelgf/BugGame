@@ -179,6 +179,10 @@ public abstract class Creature {
 	        effectChance = 1.0;
 	    }
 	}
+	
+	public int getHealth() {
+		return health;
+	}
 
 	public void draw(Graphics2D g2) {
 		// TODO Auto-generated method stub

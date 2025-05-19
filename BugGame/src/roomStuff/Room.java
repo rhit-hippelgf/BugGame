@@ -34,7 +34,7 @@ public class Room extends JComponent {
 	private static final char SMALL_HEALTH = 'h';
 	private static final char BIG_HEALTH = 'H';
 	
-    private ArrayList<Enemy> enemies = new ArrayList<>();
+    private ArrayList<Creature> enemies = new ArrayList<>();
     private Creature player;
 
     private Door north, east, south, west;
@@ -54,7 +54,7 @@ public class Room extends JComponent {
         this.south = new Door(south,'s');
         this.west = new Door(west,'w');
         FileReader pickLayout = new FileReader(north, east, south, west, false, false, false, false, level);
-
+        layout = pickLayout.getLayout();
         this.TILE_SIZE = tileSize;
         
 //      Temporary testing line remove when adding enimies adding to walk through doors
@@ -67,50 +67,50 @@ public class Room extends JComponent {
 //        spawnEnemies(); // This method should be removed when room layout works
         }
     
-    private void spawnEnemies() {
-        if (player == null) return; // avoid null on early call
-
-        Dimension roomSize = getRoomSize();
-        int roomWidth = roomSize.width;
-        int roomHeight = roomSize.height;
-
-        Random rand = new Random();
-        int numEnemies = rand.nextInt(5) + 3; // 3 to 7 enemies
-
-        for (int i = 0; i < numEnemies; i++) {
-            int x = rand.nextInt(roomWidth - TILE_SIZE);  // avoid spawning partly out of bounds
-            int y = rand.nextInt(roomHeight - TILE_SIZE);
-
-            Enemy enemy = getRandomEnemy(x, y);
-            if (enemy != null) {
-                enemies.add(enemy);
-            }
-        }
-    }
-
-//This seems like a temporary method until room can spawn grid layout
-    private Enemy getRandomEnemy(int x, int y) {
-        Random rand = new Random();
-        int choice = rand.nextInt(3); // or however many enemy types you have
-
-        switch (choice) {
-            case 0:
-                return new WalkingEnemy(x, y, player);
-            case 1:
-                return new ZigZag(x, y, player);
-            case 2:
-                return new Suicide(x, y, player);
-            default:
-                return null;
-        }
-    }
+//    private void spawnEnemies() {
+//        if (player == null) return; // avoid null on early call
+//
+//        Dimension roomSize = getRoomSize();
+//        int roomWidth = roomSize.width;
+//        int roomHeight = roomSize.height;
+//
+//        Random rand = new Random();
+//        int numEnemies = rand.nextInt(5) + 3; // 3 to 7 enemies
+//
+//        for (int i = 0; i < numEnemies; i++) {
+//            int x = rand.nextInt(roomWidth - TILE_SIZE);  // avoid spawning partly out of bounds
+//            int y = rand.nextInt(roomHeight - TILE_SIZE);
+//
+//            Enemy enemy = getRandomEnemy(x, y);
+//            if (enemy != null) {
+//                enemies.add(enemy);
+//            }
+//        }
+//    }
+//
+////This seems like a temporary method until room can spawn grid layout
+//    private Enemy getRandomEnemy(int x, int y) {
+//        Random rand = new Random();
+//        int choice = rand.nextInt(3); // or however many enemy types you have
+//
+//        switch (choice) {
+//            case 0:
+//                return new WalkingEnemy(x, y, player);
+//            case 1:
+//                return new ZigZag(x, y, player);
+//            case 2:
+//                return new Suicide(x, y, player);
+//            default:
+//                return null;
+//        }
+//    }
 
 
     public void addEnemy(Enemy e) {
         enemies.add(e);
     }
 
-    public ArrayList<Enemy> getEnemies() {
+    public ArrayList<Creature> getEnemies() {
         return enemies;
     }
 
@@ -133,7 +133,7 @@ public class Room extends JComponent {
             	this.roomCleared();
             }
         }
-        for (Enemy e : enemies) e.update();
+        for (Creature e : enemies) e.update();
         enemies.removeIf(e -> e.getHealth() <= 0);
         this.handleCollision();
         this.updateBullets();
@@ -150,7 +150,7 @@ public class Room extends JComponent {
         // Player Bullet Collision Update
         for (Bullet b : player.getBullets()) {
             b.update();
-            for (Enemy e : enemies) {
+            for (Creature e : enemies) {
                 System.out.println("Bullet bounds: " + b.getBounds());
                 System.out.println("Enemy bounds: " + e.getBounds());
                 if (b.getBounds().intersects(e.getBounds())) {
@@ -163,7 +163,7 @@ public class Room extends JComponent {
         }
 
         // Enemy Bullet Collision Update
-        for (Enemy e : enemies) {
+        for (Creature e : enemies) {
             for (Bullet b : e.getBullets()) {
                 b.update();
                 if (b.getBounds().intersects(player.getBounds())) {
@@ -174,7 +174,7 @@ public class Room extends JComponent {
 
         // cleanup
         player.getBullets().removeIf(Bullet::isMarkedForRemoval); 
-        for (Enemy e : enemies) {
+        for (Creature e : enemies) {
             e.getBullets().removeIf(Bullet::isMarkedForRemoval);
         }
     }
@@ -208,7 +208,7 @@ public class Room extends JComponent {
         }
 
         // draw enemy b
-        for (Enemy e : enemies) {
+        for (Creature e : enemies) {
             for (Bullet b : e.getBullets()) {
                 b.draw(g2);
             }
@@ -216,7 +216,7 @@ public class Room extends JComponent {
 
 
         if (player != null) player.draw(g2);
-        for (Enemy e : enemies) e.draw(g2);
+        for (Creature e : enemies) e.draw(g2);
         
 
     }

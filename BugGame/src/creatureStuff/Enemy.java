@@ -30,10 +30,4 @@ public abstract class Enemy extends Creature {
         System.out.println("Enemy health now: " + health);
     }
 
-
-
-	public int getHealth() {
-		// TODO Auto-generated method stub
-		return health;
-	}
 }
