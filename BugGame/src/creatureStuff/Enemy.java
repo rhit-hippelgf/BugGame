@@ -1,6 +1,7 @@
 package creatureStuff;
 
 import java.awt.Graphics;
+import java.awt.*;
 import java.awt.Rectangle;
 
 

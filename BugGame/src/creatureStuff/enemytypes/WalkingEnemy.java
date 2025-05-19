@@ -1,6 +1,6 @@
 package creatureStuff.enemytypes;
 
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Color;
 
@@ -51,7 +51,7 @@ public class WalkingEnemy extends Enemy {
     }
 
     @Override
-    public void draw(Graphics g) {
+    public void draw(Graphics2D g) {
         g.setColor(Color.MAGENTA);
         g.fillRect(x - 10, y - 10, 20, 20); // center the enemy
 

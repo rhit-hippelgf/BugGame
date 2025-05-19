@@ -1,6 +1,6 @@
 package creatureStuff;
 
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -136,7 +136,7 @@ public abstract class Creature {
 	    }
 	}
 
-	public void draw(Graphics g) {
+	public void draw(Graphics2D g2) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -2,7 +2,7 @@ package creatureStuff.enemytypes;
 
 import creatureStuff.Creature;
 import creatureStuff.Enemy;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Color;
 import projectileStuff.ZigZagBullet;
@@ -55,7 +55,7 @@ public class ZigZag extends Enemy {
     }
 
     @Override
-    public void draw(Graphics g) {
+    public void draw(Graphics2D g) {
         g.setColor(poisoned ? Color.GREEN : Color.BLUE);
         g.fillOval(x - 10, y - 10, 20, 20);
         for (var b : bullets) {

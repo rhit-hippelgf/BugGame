@@ -6,7 +6,7 @@ import projectileStuff.Normal;
 import projectileStuff.Bullet;
 //import effectStuff.burn;
 
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Color;
 
@@ -54,7 +54,7 @@ public class Predictive1 extends Enemy {
     }
 
     @Override
-    public void draw(Graphics g) {
+    public void draw(Graphics2D g) {
         g.setColor(Color.BLUE);
         g.fillOval(x - 10, y - 10, 20, 20); // centered
 

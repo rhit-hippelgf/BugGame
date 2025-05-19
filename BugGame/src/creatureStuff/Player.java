@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.util.List;
 
@@ -124,11 +124,10 @@ public class Player extends Creature {
     }
 
 
-
     @Override
-    public void draw(Graphics g) {
-    	super.draw(g);
-		java.awt.Graphics2D g2 = (java.awt.Graphics2D) g;
+    public void draw(Graphics2D g2) {
+//    	super.draw(g);
+//		java.awt.Graphics2D g2 = (java.awt.Graphics2D) g;
 		int scaleWidth = RoomLogic.getTileSize();
 		frameCount+=1;
 		

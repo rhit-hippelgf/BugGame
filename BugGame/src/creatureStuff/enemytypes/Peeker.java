@@ -191,7 +191,7 @@ public class Peeker extends Enemy {
     }
 
     @Override
-    public void draw(Graphics g) {
+    public void draw(Graphics2D g) {
         g.setColor(peeking ? Color.ORANGE : returning ? Color.DARK_GRAY : Color.GRAY);
         g.fillRect(x - SPRITE_RADIUS, y - SPRITE_RADIUS, 35, 35);
 

@@ -2,7 +2,7 @@ package creatureStuff.enemytypes;
 
 import creatureStuff.Creature;
 import creatureStuff.Enemy;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Color;
 import java.awt.Rectangle;
 
@@ -50,7 +50,7 @@ public class Suicide extends Enemy {
     }
 
     @Override
-    public void draw(Graphics g) {
+    public void draw(Graphics2D g) {
         if (detonated) {
             g.setColor(new Color(255, 0, 0, 100)); // see through red
             g.fillOval(explosionX - detonationRange, explosionY - detonationRange, 
