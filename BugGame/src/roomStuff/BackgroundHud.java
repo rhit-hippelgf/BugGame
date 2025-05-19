@@ -21,7 +21,7 @@ public class BackgroundHud extends JComponent {
 	private int mapPaintHeight = 16;
 	private int sideGapX = (RoomLogic.getScreenWidth()-RoomLogic.getRoomWidth())/2;
 	private int sideGapY = (RoomLogic.getScreenHeight()-RoomLogic.getRoomHeight())/2;
-	private int mapPaintOX = RoomLogic.getRoomWidth() + sideGapX - mapPaintWidth/2;
+	private int mapPaintOX = RoomLogic.getRoomWidth() + sideGapX + mapPaintWidth/2;
 	private int mapPaintOY = sideGapY/2 - mapPaintHeight/2;
 
 	

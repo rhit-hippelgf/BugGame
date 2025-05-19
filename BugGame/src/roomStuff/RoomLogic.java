@@ -194,6 +194,7 @@ public class RoomLogic {
     public void goNextFloor(char playerHitFloorDoor) {
     	if (Character.isUpperCase(playerHitFloorDoor)) {
     		this.level++;
+    		frame.remove(currentRoom);
         	this.generateLayout(this.numRooms+4+3*this.level);
     	}
     }
