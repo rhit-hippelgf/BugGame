@@ -15,7 +15,7 @@ import java.awt.*;
 
 public class RoomLogic {
 
-    private int level;
+    private static int level;
     private int numRooms;
     private Room currentRoom;
     private Point currentPoint;
@@ -253,5 +253,7 @@ public class RoomLogic {
     public static int getScreenWidth() {return SCREEN_WIDTH;}
     
     public static int getScreenHeight() {return SCREEN_HEIGHT;}
+    
+    public static int getLevel() {return level;}
 }
 
