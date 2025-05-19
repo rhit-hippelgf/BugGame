@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -32,23 +33,32 @@ public class Player extends Creature {
 
     // ref to Room component for screen coordinates and dimensions
     private Room currentRoom;
-	private File file;
-	private BufferedImage image;
+	private File fileIdle;
+	private BufferedImage idleImage;
 	private boolean spriteLoaded;
+	private boolean isWalking;
+	private int frameCount;
+	private Image walkLeftImage;
+	private Image walkRightImage;
+	private File fileLeft;
+	private File fileRight;
 
     public Player(int startX, int startY, int startSpeed, int startHealth) {
         super(startX, startY, startSpeed, startHealth);
         width = RoomLogic.getTileSize()/2;
         height = RoomLogic.getTileSize();
         setBulletClass(Normal.class);
-        file = new File("assets/sprites/creatures/Beetle1.png");
+        fileIdle = new File("assets/sprites/creatures/Beetle1.png");
+        fileLeft = new File("assets/sprites/creatures/Beetle2.png");
+        fileRight = new File("assets/sprites/creatures/Beetle3.png");
         try {
-			image = ImageIO.read(file);
+			idleImage = ImageIO.read(fileIdle);
+			walkLeftImage = ImageIO.read(fileLeft);
+			walkRightImage = ImageIO.read(fileRight);
 			spriteLoaded = true;
 		} catch (IOException e) {
 			spriteLoaded = false;
 		}
-        System.out.println(spriteLoaded);
     }
 
     // linking player to its room for despawn bounds
@@ -119,14 +129,26 @@ public class Player extends Creature {
     public void draw(Graphics g) {
     	super.draw(g);
 		java.awt.Graphics2D g2 = (java.awt.Graphics2D) g;
-		if (spriteLoaded == true) {
+		int scaleWidth = RoomLogic.getTileSize();
+		frameCount+=1;
+		
+		if (spriteLoaded == true && isWalking==false) {
 			//System.out.println("PLAYER DRAWN");
-			int scaleWidth = RoomLogic.getTileSize();
-			g2.drawImage(image, this.getX() - scaleWidth/2, this.getY() - scaleWidth/2, scaleWidth, scaleWidth, null);
+			
+			g2.drawImage(idleImage, this.getX() - scaleWidth/2, this.getY() - scaleWidth/2, scaleWidth, scaleWidth, null);
+		} else if (spriteLoaded == true && isWalking==true) {
+			if (frameCount < 10) {
+			g2.drawImage(walkLeftImage, this.getX() - scaleWidth/2, this.getY() - scaleWidth/2, scaleWidth, scaleWidth, null);
+			} else if (frameCount >= 10 && frameCount <= 20) {
+			g2.drawImage(idleImage, this.getX() - scaleWidth/2, this.getY() - scaleWidth/2, scaleWidth, scaleWidth, null);
+			} else if (frameCount > 20) {
+			g2.drawImage(walkRightImage, this.getX() - scaleWidth/2, this.getY() - scaleWidth/2, scaleWidth, scaleWidth, null);
+			if (frameCount >= 30) frameCount=0;
+			} 
 		} else {
 			
 			g2.setColor(Color.BLACK);
-			g2.fillOval(getX() - image.getWidth()/2, getY() - image.getHeight()/2, image.getWidth(), image.getHeight());
+			g2.fillOval(getX() - idleImage.getWidth()/2, getY() - idleImage.getHeight()/2, idleImage.getWidth(), idleImage.getHeight());
 		}
     	
         //g.setColor(Color.BLACK); // draw player sprite
@@ -159,7 +181,9 @@ public class Player extends Creature {
 		return super.healthCap;
 	}
 
-
+	public void setIsWalking(boolean bool) {
+		isWalking = bool;
+	}
 
 
 
