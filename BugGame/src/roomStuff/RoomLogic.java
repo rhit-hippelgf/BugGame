@@ -1,6 +1,7 @@
 package roomStuff;
 
 import java.util.*;
+import java.util.List;
 
 import javax.swing.JFrame;
 
@@ -10,6 +11,7 @@ import creatureStuff.Creature;
 import creatureStuff.Enemy;
 import creatureStuff.Player;
 import creatureStuff.enemytypes.*;
+import java.awt.*;
 
 public class RoomLogic {
 
@@ -102,6 +104,8 @@ public class RoomLogic {
 				}
 			}
 
+			Point shopLoc = this.setShopRoom(rooms);
+			
 	        int i = 0;
 	        while (i < rooms.size()) {
 	            Point temp = rooms.get(i);
@@ -115,6 +119,12 @@ public class RoomLogic {
 	            }
 	
 	            Room r = new Room(placeholderLayout, north, east, south, west, TILE_SIZE);
+	            if (temp.equals(shopLoc)) {
+	            	r.setDoorColor('n', Color.YELLOW);
+	            	r.setDoorColor('e', Color.YELLOW);
+	            	r.setDoorColor('s', Color.YELLOW);
+	            	r.setDoorColor('w', Color.YELLOW);
+	            }
 	            roomLayout.put(temp, r);
 	            i++;
 		        currentRoom = r;
@@ -206,6 +216,17 @@ public class RoomLogic {
     	}
     }
     
+    private Point setShopRoom(ArrayList<Point> points) {
+    	ArrayList<Point> validPoints = new ArrayList<>();
+    	for (Point point : points) {
+    		if (Math.abs(point.x) >= 2 || Math.abs(point.y) >= 2) {
+    			validPoints.add(point);
+    		}
+    	}
+    	Random rand = new Random();
+    	return validPoints.get(rand.nextInt(validPoints.size()));
+    }
+    
     private void setCurrentRoom(Point point, int x, int y) {
     	frame.remove(currentRoom);
     	currentRoom = roomLayout.get(point);
@@ -219,6 +240,7 @@ public class RoomLogic {
     }
     
     public Room getCurrentRoom() {return currentRoom;}
+    
     public Point getRoomLoc() {return currentPoint;}
     
     public static int getTileSize() {return TILE_SIZE;}
