@@ -4,14 +4,27 @@ import creatureStuff.Creature;
 import creatureStuff.Enemy;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 import java.awt.Color;
 import projectileStuff.ZigZagBullet;
+import roomStuff.RoomLogic;
 import projectileStuff.Bullet;
 import effectStuff.poison; // default poison
 
 public class ZigZag extends Enemy {
     private int zigzagCounter = 0;
     private boolean poisoned = false;
+    private boolean spriteLoaded;
+	private int frameCount;
+	private File file1;
+	private File file2;
+	private BufferedImage image1;
+	private BufferedImage image2;
 
 
     public ZigZag(int x, int y, Creature target) {
@@ -22,6 +35,16 @@ public class ZigZag extends Enemy {
         setBulletClass(ZigZagBullet.class);
         this.width = 20;
         this.height = 20;
+        
+        file1 = new File("assets/sprites/creatures/Moth1.png");
+        file2 = new File("assets/sprites/creatures/Moth2.png");
+        try {
+			image1 = ImageIO.read(file1);
+			image2 = ImageIO.read(file2);
+			spriteLoaded = true;
+		} catch (IOException e) {
+			spriteLoaded = false;
+		}
     }
     @Override
     public Rectangle getBounds() {
@@ -56,11 +79,24 @@ public class ZigZag extends Enemy {
 
     @Override
     public void draw(Graphics2D g) {
-        g.setColor(poisoned ? Color.GREEN : Color.BLUE);
+    	int scaleWidth = RoomLogic.getTileSize();
+		frameCount+=1;
+		if (spriteLoaded == true) {
+			if (frameCount <= 15) {
+			g.drawImage(image1, this.getX() - scaleWidth/2, this.getY() - scaleWidth/2, scaleWidth, scaleWidth, null);
+			} else if (frameCount > 15 && frameCount <= 30) {
+			g.drawImage(image2, this.getX() - scaleWidth/2, this.getY() - scaleWidth/2, scaleWidth, scaleWidth, null);
+			if (frameCount >= 30) frameCount=0;
+			}
+		} else {
+    	
+    	g.setColor(poisoned ? Color.GREEN : Color.BLUE);
         g.fillOval(x - 10, y - 10, 20, 20);
+		}
         for (var b : bullets) {
             b.draw(g);
         }
+		
     }
 
     @Override
