@@ -28,7 +28,7 @@ public class Hole extends Tile {
 		}
 	}
 	
-	
+	@Override
 	public void draw(Graphics2D g2) {
 		
 		if (spriteLoaded == true) {

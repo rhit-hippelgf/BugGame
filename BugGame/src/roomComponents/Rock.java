@@ -27,7 +27,7 @@ public class Rock extends Hole {
 			spriteLoaded = false;
 		}
 	}
-
+	@Override
 	public void draw(Graphics2D g2) {
 		
 		if (spriteLoaded == true) {
