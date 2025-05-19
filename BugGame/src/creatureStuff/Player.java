@@ -32,7 +32,7 @@ public class Player extends Creature {
     private boolean triShot = false;
 
     // ref to Room component for screen coordinates and dimensions
-    private Room currentRoom;
+//    private Room currentRoom;
 	private File fileIdle;
 	private BufferedImage idleImage;
 	private boolean spriteLoaded;
@@ -61,10 +61,11 @@ public class Player extends Creature {
 		}
     }
 
-    // linking player to its room for despawn bounds
-    public void setCurrentRoom(Room room) {
-        this.currentRoom = room;
-    }
+    // linking player to its room for despawn bounds 
+//    Removed as the player should not need to know what room but the room knows the player is in its room.
+//    public void setCurrentRoom(Room room) {
+//        this.currentRoom = room;
+//    }
 
     public void addItem(Item item) {
         switch (item.getStatCat()) {

@@ -1,7 +1,7 @@
 package roomStuff;
 
 import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 public class Door {
 
@@ -51,9 +51,11 @@ public class Door {
 	}
 	
 	
-    public void draw(Graphics g) {
+    public void draw(Graphics2D g) {
+    	Color old = g.getBackground();
         g.setColor(color); // draw player sprite
         g.fillRect(x1, y1, x2-x1, y2-y1);
+        g.setColor(old);
 	}
     
     public boolean getVisable() {

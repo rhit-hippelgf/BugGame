@@ -66,6 +66,7 @@ public abstract class Creature {
 		x += xspeed;
 		y += yspeed;
 	}
+	
 
 	// bullet access
 	public List<Bullet> getBullets() {
