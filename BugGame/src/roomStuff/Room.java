@@ -15,6 +15,9 @@ import creatureStuff.enemytypes.Suicide;
 import creatureStuff.enemytypes.WalkingEnemy;
 import creatureStuff.enemytypes.ZigZag;
 import projectileStuff.Bullet;
+import roomComponents.Hole;
+import roomComponents.Rock;
+import roomComponents.Tile;
 
 import java.awt.Dimension;
 import java.awt.Color;
@@ -34,7 +37,9 @@ public class Room extends JComponent {
 	private static final char SMALL_HEALTH = 'h';
 	private static final char BIG_HEALTH = 'H';
 	
-//	private Tile[][] gridTiles = 
+	private Tile[][] gridTiles = new Tile[7][13];
+	private ArrayList<Hole> Obsticles = new ArrayList<>();
+	private ArrayList<Rock> BulletObsticles = new ArrayList<>(); // could use previous list but don't know how to differentiate between hole and rock
     private ArrayList<Creature> enemies = new ArrayList<>();
     private Creature player;
 
@@ -44,6 +49,7 @@ public class Room extends JComponent {
     private boolean roomCleared;
 
     private final int TILE_SIZE;
+    private int level;
 
     // construc accepts dynamic square tile size
     public Room(boolean north, boolean east, boolean south, boolean west, int tileSize, int level) {
@@ -56,6 +62,8 @@ public class Room extends JComponent {
         FileReader pickLayout = new FileReader(north, east, south, west, false, false, false, false, level);
         layout = pickLayout.getLayout();
         this.TILE_SIZE = tileSize;
+        this.level = level;
+        this.generateLayout();
         
 //      Temporary testing line remove when adding enimies adding to walk through doors
         this.roomCleared();
@@ -68,7 +76,39 @@ public class Room extends JComponent {
         }
     
     public void generateLayout() {
-//    	for 
+    	for (int row = 0; row < gridTiles.length; row++) {
+    		for (int col = 0; col < gridTiles[0].length; col++) {
+    			char i = layout[row][col];
+    			int y = row*TILE_SIZE;
+    			int x = col*TILE_SIZE;
+    			if (i == '.') {
+    				gridTiles[row][col] = new Tile(x,y,level);
+    			} else if (i == 'r') {
+    				Tile rock = new Rock(x,y,level);
+    				gridTiles[row][col] = rock;
+    				Obsticles.add((Hole)rock);
+    				BulletObsticles.add((Rock)rock);
+    			} else if (i == 'o') {
+    				Tile hole = new Hole(x,y,level);
+    				gridTiles[row][col] = hole;
+    				Obsticles.add((Hole)hole);
+    			} else if (i == 's') {
+    				gridTiles[row][col] = new Tile(x,y,level);
+    				Creature e = new Suicide(x,y,player);
+    				this.addEnemy(e);
+    			} else if (i == 'z') {
+    				gridTiles[row][col] = new Tile(x,y,level);
+    				Creature e = new ZigZag(x,y,player);
+    				this.addEnemy(e);
+    			} else if (i == 'e') {
+    				gridTiles[row][col] = new Tile(x,y,level);
+    				Creature e = new WalkingEnemy(x,y,player);
+    				this.addEnemy(e);
+    			} else {
+    				gridTiles[row][col] = new Tile(x,y,level);
+    			}
+    		}
+    	}
     }
     
 //    private void spawnEnemies() {
@@ -110,7 +150,7 @@ public class Room extends JComponent {
 //    }
 
 
-    public void addEnemy(Enemy e) {
+    public void addEnemy(Creature e) {
         enemies.add(e);
     }
 
@@ -190,15 +230,10 @@ public class Room extends JComponent {
 
         for (int row = 0; row < layout.length; row++) {
             for (int col = 0; col < layout[0].length; col++) {
-                int x = col * TILE_SIZE;
-                int y = row * TILE_SIZE;
-
-                g2.setColor(Color.LIGHT_GRAY);
-                g2.fillRect(x, y, TILE_SIZE, TILE_SIZE);
-                g2.setColor(Color.BLACK);
-                g2.drawRect(x, y, TILE_SIZE, TILE_SIZE);
+            	gridTiles[row][col].draw(g2);
             }
         }
+        
         north.draw(g2);
         east.draw(g2);
         south.draw(g2);
