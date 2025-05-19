@@ -22,19 +22,30 @@ import creatureStuff.*; // So it can access ZigZag, Suicide, etc.
 
 public class Room extends JComponent {
 
+	private static final char TILE = '.';
+	private static final char SUICIDE = 's';
+	private static final char ROCK = 'r';
+	private static final char HOLE = 'o';
+	private static final char ZIGZIG = 'z';
+	private static final char STANDARD_ENEMY = 'e';
+	private static final char EPIC_ITEM = 'E';
+	private static final char RARE_ITEM = 'R';
+	private static final char COMMON_ITEM = 'C';
+	private static final char SMALL_HEALTH = 'h';
+	private static final char BIG_HEALTH = 'H';
+	
     private ArrayList<Enemy> enemies = new ArrayList<>();
     private Creature player;
 
     private Door north, east, south, west;
     private Controller control;
     private char[][] layout;
-    private int numDoors;
     private boolean roomCleared;
 
     private final int TILE_SIZE;
 
     // construc accepts dynamic square tile size
-    public Room(char[][] layout, boolean north, boolean east, boolean south, boolean west, int tileSize) {
+    public Room(char[][] layout, boolean north, boolean east, boolean south, boolean west, int tileSize, int level) {
         this.setFocusable(true);
         this.setOpaque(true);
         this.layout = layout;
@@ -42,10 +53,8 @@ public class Room extends JComponent {
         this.east = new Door(east,'e');
         this.south = new Door(south,'s');
         this.west = new Door(west,'w');
-        if (north) numDoors++;
-        if (east) numDoors++;
-        if (south) numDoors++;
-        if (east) numDoors++;
+        FileReader pickLayout = new FileReader(north, east, south, west, false, false, false, false, level);
+
         this.TILE_SIZE = tileSize;
         
 //      Temporary testing line remove when adding enimies adding to walk through doors

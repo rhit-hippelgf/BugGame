@@ -69,7 +69,7 @@ public class RoomLogic {
 //        	This is initial condition generating a Layout with 0 floors
 //        	will put you in the begining room that will contain the door to start
 			rooms.add(new Point(0, 0));
-            Room r = new Room(placeholderLayout, false, false, false, false, TILE_SIZE);
+            Room r = new Room(placeholderLayout, false, false, false, false, TILE_SIZE, this.level);
             currentRoom = r;
             r.setPlayer((Player) hero);
             roomLayout.put(rooms.get(0), r);
@@ -118,7 +118,7 @@ public class RoomLogic {
 	                else if (p.y == temp.y && p.x == temp.x - 1) west = true;
 	            }
 	
-	            Room r = new Room(placeholderLayout, north, east, south, west, TILE_SIZE);
+	            Room r = new Room(placeholderLayout, north, east, south, west, TILE_SIZE, this.level);
 	            if (temp.equals(shopLoc)) {
 	            	r.setDoorColor('n', Color.YELLOW);
 	            	r.setDoorColor('e', Color.YELLOW);
