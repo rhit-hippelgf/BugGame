@@ -62,62 +62,62 @@ public class FileReader {
 				this.loadLayouts("GenericLayouts");
 			} catch (IOException e) {
 				e.printStackTrace();
-			}
-			if (!north) {
-				try {
-					this.loadLayouts("NotNorthLayouts");
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			if (!east) {
-				try {
-					this.loadLayouts("NotEastLayouts");
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			if (!south) {
-				try {
-					this.loadLayouts("NotSouthLayouts");
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			if (!west) {
-				try {
-					this.loadLayouts("NotWestLayouts");
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			if (north && !east && !south && !west) {
-				try {
-					this.loadLayouts("OnlyNorthLayouts");
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			if (!north && east && !south && !west) {
-				try {
-					this.loadLayouts("OnlyEastLayouts");
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			if (!north && !east && south && !west) {
-				try {
-					this.loadLayouts("OnlySouthLayouts");
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			if (!north && !east && !south && west) {
-				try {
-					this.loadLayouts("OnlyWestLayouts");
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+//			}
+//			if (!north) {
+//				try {
+//					this.loadLayouts("NotNorthLayouts");
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//			if (!east) {
+//				try {
+//					this.loadLayouts("NotEastLayouts");
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//			if (!south) {
+//				try {
+//					this.loadLayouts("NotSouthLayouts");
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//			if (!west) {
+//				try {
+//					this.loadLayouts("NotWestLayouts");
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//			if (north && !east && !south && !west) {
+//				try {
+//					this.loadLayouts("OnlyNorthLayouts");
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//			if (!north && east && !south && !west) {
+//				try {
+//					this.loadLayouts("OnlyEastLayouts");
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//			if (!north && !east && south && !west) {
+//				try {
+//					this.loadLayouts("OnlySouthLayouts");
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//			if (!north && !east && !south && west) {
+//				try {
+//					this.loadLayouts("OnlyWestLayouts");
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
 			}
 		}
 		int choice = rand.nextInt(layouts.size());

@@ -52,7 +52,7 @@ public class Room extends JComponent {
     private int level;
 
     // construc accepts dynamic square tile size
-    public Room(boolean north, boolean east, boolean south, boolean west, int tileSize, int level) {
+    public Room(boolean north, boolean east, boolean south, boolean west, int tileSize, int level, Creature player) {
         this.setFocusable(true);
         this.setOpaque(true);
         this.north = new Door(north,'n');
@@ -63,6 +63,7 @@ public class Room extends JComponent {
         layout = pickLayout.getLayout();
         this.TILE_SIZE = tileSize;
         this.level = level;
+        this.player = player;
         this.generateLayout();
         
 //      Temporary testing line remove when adding enimies adding to walk through doors
