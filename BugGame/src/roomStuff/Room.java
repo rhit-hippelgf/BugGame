@@ -256,6 +256,13 @@ public class Room extends JComponent {
     	return dir;
     }
     
+    public void setDoorColor(char dir, Color color) {
+    	if (dir == 'n') {north.setColor(color);}
+    	if (dir == 'e') {east.setColor(color);}
+    	if (dir == 's') {south.setColor(color);}
+    	if (dir == 'w') {west.setColor(color);}
+    }
+    
     private void roomCleared() {
     	north.openDoor();
     	east.openDoor();
