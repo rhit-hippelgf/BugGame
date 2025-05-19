@@ -30,13 +30,24 @@ public class Tile {
 	private BufferedImage dirt6;
 	private BufferedImage dirt7;
 	private BufferedImage dirt8;
+	private BufferedImage stone1;
+	private BufferedImage stone2;
+	private BufferedImage stone3;
+	private BufferedImage stone4;
+	private BufferedImage lava1;
+	private BufferedImage lava2;
+	private BufferedImage lava3;
+	private BufferedImage lava4;
+	private BufferedImage lava5;
+	private BufferedImage lava6;
+	private BufferedImage lava7;
 	private boolean spriteLoaded;
 	private Random r;
 	protected int level;
 	
 	
 //	When constructing use the top left of the grid so a tile or boulder, or hole in top left represents a position of x=0 and y=0
-	public Tile(int x1, int y1) {
+	public Tile(int x1, int y1, int level) {
 		this.x1 = x1;
 		this.y1 = y1;
 		this.x2 = x1+TILE;
@@ -51,6 +62,17 @@ public class Tile {
 			dirt6 = ImageIO.read(new File("assets/sprites/floors/dirtfloor6.png"));
 			dirt7 = ImageIO.read(new File("assets/sprites/floors/dirtfloor7.png"));
 			dirt8 = ImageIO.read(new File("assets/sprites/floors/dirtfloor8.png"));
+			stone1 = ImageIO.read(new File("assets/sprites/floors/stonefloor1.png"));
+			stone2 = ImageIO.read(new File("assets/sprites/floors/stonefloor2.png"));
+			stone3 = ImageIO.read(new File("assets/sprites/floors/stonefloor3.png"));
+			stone4 = ImageIO.read(new File("assets/sprites/floors/stonefloor4.png"));
+			lava1 = ImageIO.read(new File("assets/sprites/floors/lavafloor1.png"));
+			lava2 = ImageIO.read(new File("assets/sprites/floors/lavafloor2.png"));
+			lava3 = ImageIO.read(new File("assets/sprites/floors/lavafloor3.png"));
+			lava4 = ImageIO.read(new File("assets/sprites/floors/lavafloor4.png"));
+			lava5 = ImageIO.read(new File("assets/sprites/floors/lavafloor5.png"));
+			lava6 = ImageIO.read(new File("assets/sprites/floors/lavafloor6.png"));
+			lava7 = ImageIO.read(new File("assets/sprites/floors/lavafloor7.png"));
 			spriteLoaded = true;
 		} catch (IOException e) {
 			spriteLoaded = false;
@@ -62,9 +84,10 @@ public class Tile {
 //	Every floor tile component will be drawn with this method but subclasses (rock and hole) uses its own color/image
 //	each component will load its own image and run the super version of the method I can handle it with room generation
 	public void draw(Graphics2D g2) {
-		int n = r.nextInt(8);
+		
 		if (spriteLoaded == true) {
-			if (level <= 1) {
+			if (level <= 2) {
+				int n = r.nextInt(8);
 				if (n==0) {
 					g2.drawImage(dirt1, x1, y1, TILE, TILE, null);
 				} else if (n==1) {
@@ -81,6 +104,34 @@ public class Tile {
 					g2.drawImage(dirt7, x1, y1, TILE, TILE, null);
 				} else {
 					g2.drawImage(dirt8, x1, y1, TILE, TILE, null);
+				} 
+			} else if (level <= 4 && level >= 3) {
+				int n = r.nextInt(4);
+				if (n==0) {
+					g2.drawImage(stone1, x1, y1, TILE, TILE, null);
+				} else if (n==1) {
+					g2.drawImage(stone2, x1, y1, TILE, TILE, null);
+				} else if (n==2) {
+					g2.drawImage(stone3, x1, y1, TILE, TILE, null);
+				} else {
+					g2.drawImage(stone4, x1, y1, TILE, TILE, null);
+				}
+			} else {
+				int n = r.nextInt(7);
+				if (n==0) {
+					g2.drawImage(lava1, x1, y1, TILE, TILE, null);
+				} else if (n==1) {
+					g2.drawImage(lava2, x1, y1, TILE, TILE, null);
+				} else if (n==2) {
+					g2.drawImage(lava3, x1, y1, TILE, TILE, null);
+				} else if (n==3) {
+					g2.drawImage(lava4, x1, y1, TILE, TILE, null);
+				} else if (n==4) {
+					g2.drawImage(lava5, x1, y1, TILE, TILE, null);
+				} else if (n==5) {
+					g2.drawImage(lava6, x1, y1, TILE, TILE, null);
+				} else {
+					g2.drawImage(lava7, x1, y1, TILE, TILE, null);
 				} 
 			}
 		} else {
