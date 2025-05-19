@@ -37,8 +37,8 @@ public class ZigZag extends Enemy {
 
         double angle = Math.atan2(target.getY() - y, target.getX() - x);
         double offset = (zigzagCounter++ / 10 % 2 == 0) ? 0.3 : -0.3;
-        move(angle + offset);
-
+        super.calculateSpeeds(angle + offset);
+        super.move();
         if (zigzagCounter % 50 == 0) {
             shoot(angle);
         }

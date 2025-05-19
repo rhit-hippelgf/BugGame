@@ -32,8 +32,8 @@ public class WalkingEnemy extends Enemy {
 
         double angle = Math.atan2(target.getY() - y, target.getX() - x);
         angle += (Math.random() - 0.5) * 0.4; // slight wobble
-        move(angle);
-
+        super.calculateSpeeds(angle);
+        super.move();
         // shoot occasionally
         if (Math.random() < 0.005) {
             shoot(angle);

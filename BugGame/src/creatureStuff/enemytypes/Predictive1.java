@@ -36,8 +36,8 @@ public class Predictive1 extends Enemy {
         double futureX = target.getX() + 10;
         double futureY = target.getY() + 10;
         double angle = Math.atan2(futureY - y, futureX - x);
-        move(angle);
-
+        super.calculateSpeeds(angle);
+        super.move();
         if (Math.random() < 0.01) {
             shoot(angle);
         }

@@ -45,7 +45,8 @@ public class Suicide extends Enemy {
             this.detonated = true; // explosion effect
         } else {
             double angle = Math.atan2(target.getY() - y, target.getX() - x);
-            move(angle);
+            super.calculateSpeeds(angle);
+            super.move();
         }
     }
 

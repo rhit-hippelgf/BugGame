@@ -6,11 +6,14 @@ package roomComponents;
  * for easier access in collisions t
  */
 import roomStuff.RoomLogic;
+import java.awt.Graphics2D;
+import java.awt.Color;
 
 public class Tile {
 
-	private int x1,x2;
-	private int y1,y2;
+	protected int x1,x2;
+	protected int y1,y2;
+	protected Color color;
 	protected static int TILE = RoomLogic.getTileSize();
 	
 //	When constructing use the top left of the grid so a tile or boulder, or hole in top left represents a position of x=0 and y=0
@@ -19,11 +22,27 @@ public class Tile {
 		this.y1 = y1;
 		this.x2 = x1+TILE;
 		this.y2 = y1+TILE;
+		this.color = Color.WHITE;
 //		for different tile styles can run random to randomly assign one of the n different tile styles applies to boulder and hole
 	}
 	
-	public void draw() {
-		
+//	Every floor tile component will be drawn with this method but subclasses (rock and hole) uses its own color/image
+//	each component will load its own image and run the super version of the method I can handle it with room generation
+	public void draw(Graphics2D g2) {
+		Color old = g2.getBackground();
+		g2.setColor(color);
+		g2.fillRect(x1, y1, TILE, TILE);
+		g2.setColor(old);
+	}
+	
+	public int[] getXs() {
+		int[] xs = {x1,x2};
+		return xs;
+	}
+	
+	public int[] getYs() {
+		int[] ys = {y1,y2};
+		return ys;
 	}
 	
 }

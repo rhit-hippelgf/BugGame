@@ -126,7 +126,8 @@ public class Peeker extends Enemy {
 
     private void moveToward(int targetX, int targetY) {
         double angle = Math.atan2(targetY - y, targetX - x);
-        move(angle);
+        super.calculateSpeeds(angle);
+        super.move();
     }
 
     @Override

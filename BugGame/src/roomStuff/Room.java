@@ -23,7 +23,7 @@ import creatureStuff.*; // So it can access ZigZag, Suicide, etc.
 public class Room extends JComponent {
 
     private ArrayList<Enemy> enemies = new ArrayList<>();
-    private Player player;
+    private Creature player;
 
     private Door north, east, south, west;
     private Controller control;
@@ -54,7 +54,7 @@ public class Room extends JComponent {
 
     public void setPlayer(Player p) {
         this.player = p;
-        this.control = new Controller(this, player);
+        this.control = new Controller(this, (Player) player);
 //        spawnEnemies(); // This method should be removed when room layout works
         }
     
@@ -116,6 +116,9 @@ public class Room extends JComponent {
         if (player != null) {
             player.update();
             control.moveIfPress();
+//          Need line looping through an arrayList of Holes (Holes, and Rocks) to grap there xs and ys and run
+//          checkValidSpeed in creature class this is where we update player then below same for enemies
+            player.move();
             if (enemies.size() == 0) {
             	roomCleared = true;
             	this.roomCleared();

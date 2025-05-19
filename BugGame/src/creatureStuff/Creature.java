@@ -14,6 +14,7 @@ public abstract class Creature {
 	protected int x, y;
 	protected int width, height;
 	protected int speed;
+	protected double xspeed, yspeed;
 	protected int health;
 	protected int healthCap;
 	protected List<Bullet> bullets = new ArrayList<>();
@@ -45,10 +46,12 @@ public abstract class Creature {
 		health -= damage;
 	}
 
-	public void move(double theta) {
+	public void calculateSpeeds(double theta) {
 //		System.out.println("x pos = " + x + " y pos = " + y);
-		double xspeed = speed * Math.cos(theta);
-		double yspeed = speed * Math.sin(theta);
+		this.xspeed = speed * Math.cos(theta);
+		this.yspeed = speed * Math.sin(theta);
+
+//		Below is code for wall collisions to prevent duplications using separate method if performance is bad keep this instead
 		if (xspeed < 0 && x <= width/2) {
 			xspeed = 0;
 			x = width/2;
@@ -63,10 +66,50 @@ public abstract class Creature {
 			yspeed = 0;
 			y = roomHeight - height/2;
 		}
-		x += xspeed;
-		y += yspeed;
+//		int[] topWallx = {0,roomWidth};
+//		int[] topWally = {-1,0};
+//		int[] bottomWally = {roomHeight, roomHeight+1};
+//		int[] rightWallx = {roomWidth,roomWidth+1};
+//		int[] leftWallx = {-1,0};
+//		int[] sideWally = {0,roomHeight};
+//		checkValidSpeed(topWallx,topWally);
+//		checkValidSpeed(rightWallx,sideWally);
+//		checkValidSpeed(topWallx,bottomWally);
+//		checkValidSpeed(leftWallx,sideWally);
+		
 	}
 	
+	public void move() {
+		x += xspeed;
+		y += yspeed;
+		xspeed = 0;
+		yspeed = 0;
+	}
+	
+//	This method is to check if the creature is moving at a valid speed based on locations of rocks and holes in room
+//	I don't want to implement falling into a pit and would rather treat it as an obstacle the player can't cross but bullets can
+//	We can add a wing item that allows the player to fly over holes and then this method will simply not be ran
+	public void checkValidSpeed(int[] xs, int[] ys) {
+		if (y > ys[0] && y < ys[1]) {
+			if (xspeed < 0 && x-width/2 <= xs[1]) {
+				xspeed = 0;
+				x = width/2 + xs[1];
+			} else if (xspeed > 0 && x+width/2 >= xs[0]) {
+				xspeed = 0;
+				x = xs[0]-width/2;
+			}
+		}
+		if (x > xs[0] && x < xs[1]) {
+			if (yspeed < 0 && y < ys[1]) {
+				yspeed = 0;
+				y = ys[1];
+			} else if (yspeed > 0 && y >= ys[0]) {
+				yspeed = 0;
+				y = ys[0] - height/2;
+			}
+		}
+		
+	}
 
 	// bullet access
 	public List<Bullet> getBullets() {

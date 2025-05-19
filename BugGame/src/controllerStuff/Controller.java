@@ -71,7 +71,7 @@ public class Controller implements MouseListener {
         else if (d) theta = 0.0;
 
         if (theta != null) {
-            player.move(theta);
+            player.calculateSpeeds(theta);
             player.setIsWalking(true);
 //            component.repaint();
         } else {
