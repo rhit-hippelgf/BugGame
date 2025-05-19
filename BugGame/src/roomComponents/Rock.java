@@ -19,9 +19,9 @@ public class Rock extends Hole {
 		super(x1, y1, level);
 		super.color = Color.BLACK;
 		try {
-			rock1 = ImageIO.read(new File("assets/sprites/floors/dirtfloor1.png"));
-			rock2 = ImageIO.read(new File("assets/sprites/floors/dirtfloor2.png"));
-			rock3 = ImageIO.read(new File("assets/sprites/floors/dirtfloor3.png"));
+			rock1 = ImageIO.read(new File("assets/sprites/objects/newBoulder1.png"));
+			rock2 = ImageIO.read(new File("assets/sprites/objects/newBoulder2.png"));
+			rock3 = ImageIO.read(new File("assets/sprites/objects/newBoulder3.png"));
 			spriteLoaded = true;
 		} catch (IOException e) {
 			spriteLoaded = false;
