@@ -82,7 +82,7 @@ public class Room extends JComponent {
     			char i = layout[row][col];
     			int y = row*TILE_SIZE;
     			int x = col*TILE_SIZE;
-    			if (i == '.') {
+    			if (i == TILE) {
     				gridTiles[row][col] = new Tile(x,y,level);
     			} else if (i == 'r') {
     				Tile rock = new Rock(x,y,level);
