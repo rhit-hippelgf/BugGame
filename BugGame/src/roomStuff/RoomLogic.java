@@ -15,7 +15,7 @@ import java.awt.*;
 
 public class RoomLogic {
 
-    private static int level;
+    private static int level = 0;
     private int numRooms;
     private Room currentRoom;
     private Point currentPoint;
@@ -30,7 +30,6 @@ public class RoomLogic {
     private BackgroundHud hud;
 
     public RoomLogic(int tileSize, int roomWidth, int roomHeight, int roomX, int roomY, JFrame frame, int screenWidth, int screenHeight) {
-        this.level = 0;
         this.numRooms = 0;
         this.frame = frame;
         TILE_SIZE = tileSize; // square tiles, so X and Y are equal
