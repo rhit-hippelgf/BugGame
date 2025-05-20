@@ -12,8 +12,8 @@ public class ZigZagBullet extends Bullet {
     // Controls how fast it oscillates
     private double zigzagFrequency = 0.25;
 
-    public ZigZagBullet(double x, double y, double angle, int speed, int damage, Creature source) {
-        super(x, y, angle, speed, damage, source);
+    public ZigZagBullet(double x, double y, double dx, double dy, int speed, int damage, Creature source) {
+        super(x, y, dx, dy, speed, damage, source);
     }
 
     @Override
@@ -21,17 +21,17 @@ public class ZigZagBullet extends Bullet {
         tick++;
 
         // Move forward in the direction of the angle
-        double forwardX = Math.cos(angle) * speed;
-        double forwardY = Math.sin(angle) * speed;
+        double forwardX = dx * speed;
+        double forwardY = dy * speed;
 
         // Offset perpendicular to the direction (oscillates side-to-side)
-        double perpX = -Math.sin(angle);
-        double perpY = Math.cos(angle);
+        double perpX = -dy;
+        double perpY = dx;
 
         // Wait a few frames before applying the zigzag
         double lateralWiggle = 0;
         if (tick >= 10) {
-            lateralWiggle = Math.sin(tick * zigzagFrequency) * zigzagAmplitude * 0.1; // small wiggle
+            lateralWiggle = Math.sin(tick * zigzagFrequency) * zigzagAmplitude; // small wiggle
         }
 
         // Final position = forward step + lateral offset

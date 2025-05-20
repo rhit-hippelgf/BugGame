@@ -36,8 +36,8 @@ public class Suicide extends Enemy {
 
     public Suicide(int x, int y, Creature target, Room room) {
         super(x, y, 3, 5, target);
-        this.width = 20;
-        this.height = 20;
+        this.width = RoomLogic.getTileSize();
+        this.height = RoomLogic.getTileSize();
         this.room = room;
 
         file1 = new File("assets/sprites/creatures/BBeetle1.png");
@@ -60,7 +60,7 @@ public class Suicide extends Enemy {
     
     @Override
     public Rectangle getBounds() {
-        return new Rectangle(x, y, width, height);
+        return new Rectangle(x - width/2, y - height/2, width, height);
     }
 
     @Override
@@ -72,7 +72,9 @@ public class Suicide extends Enemy {
 
         if (detonated) return; 
 
-        double dist = Math.hypot(target.getX() - x, target.getY() - y);
+        double xDist = target.getX() - x;
+        double yDist = target.getY() - y;
+        double dist = Math.hypot(xDist, yDist);
 
         if (dist <= detonationRange) {
             target.takeDamage(10);
@@ -81,15 +83,15 @@ public class Suicide extends Enemy {
             this.health = 0;       // suicide
             this.detonated = true; // explosion effect
         } else {
-            double angle = Math.atan2(target.getY() - y, target.getX() - x);
-            super.calculateSpeeds(angle);
+//            double angle = Math.atan2(target.getY() - y, target.getX() - x);
+            super.calculateSpeeds(xDist/dist,yDist/dist);
             super.move();
         }
     }
 
     @Override
     public void draw(Graphics2D g) {
-    	int scaleWidth = RoomLogic.getTileSize();
+//    	int scaleWidth = RoomLogic.getTileSize();
 		frameCount+=1;
         if (detonated) {
             g.setColor(new Color(255, 0, 0, 100)); // see through red
@@ -98,15 +100,15 @@ public class Suicide extends Enemy {
         }
 		if (spriteLoaded == true) {
 			if (frameCount <= 10) {
-			g.drawImage(image1, this.getX() - scaleWidth/2, this.getY() - scaleWidth/2, scaleWidth, scaleWidth, null);
+			g.drawImage(image1, this.getX() - width/2, this.getY() - height/2, width, height, null);
 			} else if (frameCount > 10 && frameCount <= 20) {
-			g.drawImage(image2, this.getX() - scaleWidth/2, this.getY() - scaleWidth/2, scaleWidth, scaleWidth, null);
+			g.drawImage(image2, this.getX() - width/2, this.getY() - height/2, width, height, null);
 			} else if (frameCount > 20 && frameCount <= 30) {
-			g.drawImage(image3, this.getX() - scaleWidth/2, this.getY() - scaleWidth/2, scaleWidth, scaleWidth, null);
+			g.drawImage(image3, this.getX() - width/2, this.getY() - height/2, width, height, null);
 			} else if (frameCount > 30 && frameCount <= 40) {
-			g.drawImage(image4, this.getX() - scaleWidth/2, this.getY() - scaleWidth/2, scaleWidth, scaleWidth, null);
+			g.drawImage(image4, this.getX() - width/2, this.getY() - height/2, width, height, null);
 			} else if (frameCount > 40 && frameCount <= 50) {
-				g.drawImage(image5, this.getX() - scaleWidth/2, this.getY() - scaleWidth/2, scaleWidth, scaleWidth, null);
+				g.drawImage(image5, this.getX() - width/2, this.getY() - height/2, width, height, null);
 				if (frameCount >= 50) frameCount=0;
 			}
 		} else {
@@ -117,7 +119,7 @@ public class Suicide extends Enemy {
     }
 
     @Override
-    public void shoot(double angle) {
+    public void shoot(double dx, double dy) {
         // doesnt shoot
     }
 

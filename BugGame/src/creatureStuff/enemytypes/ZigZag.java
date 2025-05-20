@@ -36,8 +36,8 @@ public class ZigZag extends Enemy {
         addEffect(new poison(3)); // built in poison
         addEffectChance(0.25); // 25% chance
         setBulletClass(ZigZagBullet.class);
-        this.width = 20;
-        this.height = 20;
+        this.width = RoomLogic.getTileSize();
+        this.height = RoomLogic.getTileSize();
         
         file1 = new File("assets/sprites/creatures/Moth1.png");
         file2 = new File("assets/sprites/creatures/Moth2.png");
@@ -52,7 +52,7 @@ public class ZigZag extends Enemy {
 
     @Override
     public Rectangle getBounds() {
-        return new Rectangle(x, y, width, height);
+        return new Rectangle(x-width/2, y-height/2, width, height);
     }
 
     @Override
@@ -67,8 +67,13 @@ public class ZigZag extends Enemy {
         double ty = target.getY();
         double ex = this.getX();
         double ey = this.getY();
+        
+        double xTemp = tx-ex;
+        double yTemp = ty-ey;
+        double mag = Math.sqrt(xTemp*xTemp + yTemp*yTemp);
+        
 
-        double angle = Math.atan2(ty - ey, tx - ex);
+//        double angle = Math.atan2(ty - ey, tx - ex);
         double offset = (zigzagCounter++ / 10 % 2 == 0) ? 0.3 : -0.3;
 
         // Debug output
@@ -79,12 +84,12 @@ public class ZigZag extends Enemy {
 //        System.out.println("Offset: " + offset);
 //        System.out.println("Final Angle Used To Move: " + (angle + offset));
 
-        super.calculateSpeeds(angle + offset);
+        super.calculateSpeeds(xTemp/mag,yTemp/mag);
         super.move();
 
         if (zigzagCounter % 50 == 0) {
-            System.out.println(">>> SHOOTING at angle: " + angle);
-            shoot(angle);  
+//            System.out.println(">>> SHOOTING at angle: ");
+            shoot(xTemp/mag, yTemp/mag);  
         }
 
         // bullets are now updated in Room, not here
@@ -92,8 +97,8 @@ public class ZigZag extends Enemy {
 
 
     @Override
-    public void shoot(double angle) {
-        Bullet b = createBullet(angle, 2, 1);
+    public void shoot(double dx, double dy) {
+        Bullet b = createBullet(dx, dy, 2, 1);
         if (b != null && room != null) {
             room.getEnemyBullets().add(b);
         }
@@ -105,9 +110,9 @@ public class ZigZag extends Enemy {
 		frameCount += 1;
 		if (spriteLoaded == true) {
 			if (frameCount <= 15) {
-				g.drawImage(image1, this.getX() - scaleWidth / 2, this.getY() - scaleWidth / 2, scaleWidth, scaleWidth, null);
+				g.drawImage(image1, this.getX() - width / 2, this.getY() - height / 2, width, height, null);
 			} else if (frameCount > 15 && frameCount <= 30) {
-				g.drawImage(image2, this.getX() - scaleWidth / 2, this.getY() - scaleWidth / 2, scaleWidth, scaleWidth, null);
+				g.drawImage(image2, this.getX() - width / 2, this.getY() - height / 2, width, height, null);
 				if (frameCount >= 30) frameCount = 0;
 			}
 		} else {

@@ -51,10 +51,10 @@ public abstract class Creature {
 	}
 	
 
-	public void calculateSpeeds(double theta) {
+	public void calculateSpeeds(double dx, double dy) {
 //		System.out.println("x pos = " + x + " y pos = " + y);
-		this.xspeed = speed * Math.cos(theta);
-		this.yspeed = speed * Math.sin(theta);
+		this.xspeed = speed * dx;
+		this.yspeed = speed * dy;
 
 //		Below is code for wall collisions to prevent duplications using separate method if performance is bad keep this instead
 		if (xspeed < 0 && x <= width/2) {
@@ -85,6 +85,7 @@ public abstract class Creature {
 	}
 	
 	public void move() {
+		System.out.println("xspeed: " + xspeed + " yspeed: " + yspeed);
 		x += xspeed;
 		y += yspeed;
 		xspeed = 0;
@@ -127,11 +128,11 @@ public abstract class Creature {
 	}
 
 	// helper to create a bullet of the assigned type
-	protected Bullet createBullet(double angle, int speed, int damage) {
+	protected Bullet createBullet(double dx, double dy, int speed, int damage) {
 	    try {
 	        return bulletClass
-	            .getConstructor(double.class, double.class, double.class, int.class, int.class, Creature.class)
-	            .newInstance((double) x, (double) y, angle, speed, damage, this);
+	            .getConstructor(double.class, double.class, double.class, double.class, int.class, int.class, Creature.class)
+	            .newInstance((double) x, (double) y, dx, dy, speed, damage, this);
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	        return null;
@@ -141,7 +142,7 @@ public abstract class Creature {
 
 
 	// required for all subclasses
-	public abstract void shoot(double angle);
+	public abstract void shoot(double dx, double dy);
 
 	public int getX() {
 		return x;

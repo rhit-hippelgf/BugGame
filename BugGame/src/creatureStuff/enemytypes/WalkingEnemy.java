@@ -66,6 +66,7 @@ public class WalkingEnemy extends Enemy {
 			onDeath();
 			return;
 		}
+		
 
 		// use center of both enemy and target
 		double tx = target.getX();
@@ -73,28 +74,33 @@ public class WalkingEnemy extends Enemy {
 		double ex = this.getX();
 		double ey = this.getY();
 
-		double angle = Math.atan2(ty - ey, tx - ex);
+		double xTemp = tx - ex;
+		double yTemp = ty - ey;
+		double mag = Math.sqrt(xTemp*xTemp + yTemp*yTemp);
+		double dx = xTemp/mag;
+		double dy = yTemp/mag;
+//		double angle = Math.atan2(ty - ey, tx - ex);
 
 		// apply a slight angle variation to simulate imperfect tracking
 		//angle += (Math.random() - 0.5) * 0.4;
 
 		// update speed vector using calculated angle
-		super.calculateSpeeds(angle);
+		super.calculateSpeeds(dx, dy);
 
 		// move based on calculated vector
 		super.move();
 
 		// occasionally shoot at the player
 		if (Math.random() < 0.005) {
-			shoot(angle);
+			shoot(dx, dy);
 		}
 
 		// bullet updates are now handled by Room, not here
 	}
 
 	@Override
-	public void shoot(double angle) {
-		Bullet b = createBullet(angle, 2, 1);
+	public void shoot(double dx, double dy) {
+		Bullet b = createBullet(dx, dy, 2, 1);
 		if (b != null && room != null) {
 			room.getEnemyBullets().add(b);
 		}

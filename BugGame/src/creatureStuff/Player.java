@@ -158,16 +158,16 @@ public class Player extends Creature {
     }
 
     @Override
-    public void shoot(double angle) {
+    public void shoot(double dx, double dy) {
         int baseDamage = 1;
 
         if (new RngHandler().handleCheck(critChance)) {
             baseDamage *= 2;
         }
 
-        System.out.println("Calling shoot!");
+//        System.out.println("Calling shoot!");
 
-        Bullet b = createBullet(angle, 5, baseDamage);
+        Bullet b = createBullet(dx, dy, 5, baseDamage);
         System.out.println("Bullet created: " + b);
         if (b == null) System.out.println("Bullet creation failed!");
 

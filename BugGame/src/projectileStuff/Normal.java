@@ -5,13 +5,13 @@ import creatureStuff.Creature;
 
 public class Normal extends Bullet {
 
-    public Normal(double x, double y, double angle, int speed, int damage, Creature source) {
-        super(x, y, angle, speed, damage, source);
+    public Normal(double x, double y, double dx, double dy, int speed, int damage, Creature source) {
+        super(x, y, dx, dy, speed, damage, source);
     }
 
     // Optional overloaded constructor (e.g., for effects)
-    public Normal(double x, double y, double angle, int speed, int damage) {
-        this(x, y, angle, speed, damage, null);
+    public Normal(double x, double y, double dx, double dy, int speed, int damage) {
+        this(x, y, dx, dy, speed, damage, null);
     }
 
     @Override

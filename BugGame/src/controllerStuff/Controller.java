@@ -71,19 +71,44 @@ public class Controller implements MouseListener {
         boolean s = kPress.contains(KeyEvent.VK_S);
         boolean d = kPress.contains(KeyEvent.VK_D);
 
-        Double theta = null;
+        Double dx = null;
+        Double dy = null;
 
-        if (w && d) theta = 7 * Math.PI / 4;
-        else if (w && a) theta = 5 * Math.PI / 4;
-        else if (s && d) theta = Math.PI / 4;
-        else if (s && a) theta = 3 * Math.PI / 4;
-        else if (w) theta = 3 * Math.PI / 2;
-        else if (a) theta = Math.PI;
-        else if (s) theta = Math.PI / 2;
-        else if (d) theta = 0.0;
+        if (w && d) {
+        	dx = 0.7071;
+        	dy = -0.7071;
+        }
+        else if (w && a) {
+        	dx = -0.7071;
+        	dy = -0.7071;
+        }
+        else if (s && d) {
+        	dx = 0.7071;
+        	dy = 0.7071;
+        }
+        else if (s && a) {
+        	dx = -0.7071;
+        	dy = 0.7071;
+        }
+        else if (w) {
+        	dx = 0.0;
+        	dy = -1.0;
+        }
+        else if (a) {
+        	dx = -1.0;
+        	dy = 0.0;
+        }
+        else if (s) {
+        	dx = 0.0;
+        	dy = 1.0;
+        }
+        else if (d) {
+        	dx = 1.0;
+        	dy = 0.0;
+        }
 
-        if (theta != null) {
-            player.calculateSpeeds(theta);
+        if (dx != null && dx != null) {
+            player.calculateSpeeds(dx,dy);
             player.setIsWalking(true);
 //            component.repaint();
         } else {
@@ -98,14 +123,21 @@ public class Controller implements MouseListener {
 
         double px = player.getX();
         double py = player.getY();
+        
+        double dx = mouse.x - player.getX();
+        double dy = mouse.y - player.getY();
+        double mag = Math.sqrt(dx*dx+dy*dy);
+        
+        dx = dx/mag;
+        dy = dy/mag;
 
-        double angle = Math.atan2(mouse.y - player.getY(), mouse.x - player.getX());
+//        double angle = Math.atan2(mouse.y - player.getY(), mouse.x - player.getX());
 
 
         System.out.printf("Mouse local: (%d, %d), Player center: (%.2f, %.2f), Angle: %.3f\n",
-                          mouse.x, mouse.y, px, py, angle);
+                          mouse.x, mouse.y, px, py, dx, dy);
 
-        player.shoot(angle);
+        player.shoot(dx, dy);
     }
 
 

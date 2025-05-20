@@ -11,34 +11,36 @@ import roomStuff.RoomLogic;
 public abstract class Bullet {
     protected double x, y;
     protected double dx, dy;
+    protected double xspeed, yspeed;
     protected int speed;
     protected int damage;
     protected Creature source;
 
     protected boolean markForRemoval = false;
 
-    protected int roomWidth = RoomLogic.getRoomWidth();
-    protected int roomHeight = RoomLogic.getRoomHeight();
+    protected static int roomWidth = RoomLogic.getRoomWidth();
+    protected static int roomHeight = RoomLogic.getRoomHeight();
     protected int width = 10;
     protected int height = 10;
-    protected double angle;
+//    protected double angle;
 
 
-    public Bullet(double x, double y, double angle, int speed, int damage, Creature source) {
+    public Bullet(double x, double y, double dx, double dy, int speed, int damage, Creature source) {
         this.x = x;
         this.y = y;
-        this.angle = angle;
+        this.dx = dx;
+        this.dy = dy;
         this.speed = speed;
         this.damage = damage;
         this.source = source;
 
-        this.dx = speed * Math.cos(angle);
-        this.dy = speed * Math.sin(angle);
+        this.xspeed = speed * this.dx;
+        this.yspeed = speed * this.dy;
     }
 
     public void update() {
-        x += dx;
-        y += dy;
+        x += xspeed;
+        y += yspeed;
 
         // offscreen logic moved here directly:
         if (x < 0 || x > roomWidth || y < 0 || y > roomHeight) {
@@ -50,10 +52,10 @@ public abstract class Bullet {
         return new Rectangle((int)x - width / 2, (int)y - height / 2, width, height);
     }
 
-    public void setRoomBounds(int w, int h) {
-        this.roomWidth = w;
-        this.roomHeight = h;
-    }
+//    public void setRoomBounds(int w, int h) {
+//        this.roomWidth = w;
+//        this.roomHeight = h;
+//    }
     
     public boolean isMarkedForRemoval() {
         return markForRemoval;
