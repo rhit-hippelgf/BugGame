@@ -93,9 +93,10 @@ public class RoomLogic {
 				}
 			}
 
+			Point shopLoc = this.setShopRoom(rooms);
 			Point bossLoc = this.setBossRoom(rooms);
 			rooms.add(bossLoc);
-			Point shopLoc = this.setShopRoom(rooms);
+
 			
 	        int i = 0;
 	        while (i < rooms.size()) {
@@ -215,9 +216,9 @@ public class RoomLogic {
     	}
     	Random rand = new Random();
     	Point preBoss = validPoints.get(rand.nextInt(validPoints.size()));
-    	if (surroundingRoomsCheck(new Point(preBoss.x,preBoss.y+1),preBoss,points)) return new Point(preBoss.x,preBoss.y+1);
-    	else if (surroundingRoomsCheck(new Point(preBoss.x+1,preBoss.y),preBoss,points)) return new Point(preBoss.x+1,preBoss.y);
-    	else if (surroundingRoomsCheck(new Point(preBoss.x-1,preBoss.y),preBoss,points)) return new Point(preBoss.x-1,preBoss.y);
+    	if (surroundingRoomsCheck(preBoss,new Point(preBoss.x,preBoss.y+1),points)) return new Point(preBoss.x,preBoss.y+1);
+    	else if (surroundingRoomsCheck(preBoss,new Point(preBoss.x+1,preBoss.y),points)) return new Point(preBoss.x+1,preBoss.y);
+    	else if (surroundingRoomsCheck(preBoss,new Point(preBoss.x-1,preBoss.y),points)) return new Point(preBoss.x-1,preBoss.y);
     	else return new Point(preBoss.x,preBoss.y-1);
     }
     

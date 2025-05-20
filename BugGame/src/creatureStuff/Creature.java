@@ -85,7 +85,6 @@ public abstract class Creature {
 	}
 	
 	public void move() {
-		System.out.println("xspeed: " + xspeed + " yspeed: " + yspeed);
 		x += xspeed;
 		y += yspeed;
 		xspeed = 0;
