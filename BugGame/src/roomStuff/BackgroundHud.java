@@ -43,22 +43,23 @@ public class BackgroundHud extends JComponent {
 		if (this.loading) {
 			g2.fillRect(0, 0, RoomLogic.getScreenWidth(), RoomLogic.getScreenHeight());
 			g2.drawString("Loading...", 400,400);
-		}
-        
-        g2.drawString("Current Health: " + health, 50, 50);
-        g2.drawString("Max Health: " + health, 50, 70);
-        g2.drawString("Level: " + level, 500, 70);
-        
-        for (Point point : exploredMap) {
-        	if (!point.equals(currentRoom)) {
-	        	int x = point.x;
-	        	int y = point.y;
-	        	g2.setColor(Color.BLUE);
-	        	g2.fillRect(mapPaintOX + mapPaintWidth*x, mapPaintOY - mapPaintHeight*y, mapPaintWidth, mapPaintHeight);
+		} else {
+	        
+	        g2.drawString("Current Health: " + health, 50, 50);
+	        g2.drawString("Max Health: " + health, 50, 70);
+	        g2.drawString("Level: " + level, 500, 70);
+	        
+	        for (Point point : exploredMap) {
+	        	if (!point.equals(currentRoom)) {
+		        	int x = point.x;
+		        	int y = point.y;
+		        	g2.setColor(Color.BLUE);
+		        	g2.fillRect(mapPaintOX + mapPaintWidth*x, mapPaintOY - mapPaintHeight*y, mapPaintWidth, mapPaintHeight);
+		        }
 	        }
-        }
-        g2.setColor(Color.RED);
-        g2.fillRect(mapPaintOX + mapPaintWidth*currentRoom.x, mapPaintOY - mapPaintHeight*currentRoom.y, mapPaintWidth, mapPaintHeight);
+	        g2.setColor(Color.RED);
+	        g2.fillRect(mapPaintOX + mapPaintWidth*currentRoom.x, mapPaintOY - mapPaintHeight*currentRoom.y, mapPaintWidth, mapPaintHeight);
+		}
         
         
 	}
