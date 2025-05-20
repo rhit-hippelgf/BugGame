@@ -42,7 +42,9 @@ public class BackgroundHud extends JComponent {
         Graphics2D g2 = (Graphics2D) g;
 		if (this.loading) {
 			g2.fillRect(0, 0, RoomLogic.getScreenWidth(), RoomLogic.getScreenHeight());
+			g2.setColor(Color.WHITE);
 			g2.drawString("Loading...", 400,400);
+			g2.setColor(Color.BLACK);
 		} else {
 	        
 	        g2.drawString("Current Health: " + health, 50, 50);
