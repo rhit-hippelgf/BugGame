@@ -27,6 +27,7 @@ public abstract class Bullet {
     public Bullet(double x, double y, double angle, int speed, int damage, Creature source) {
         this.x = x;
         this.y = y;
+        this.angle = angle;
         this.speed = speed;
         this.damage = damage;
         this.source = source;
@@ -39,7 +40,7 @@ public abstract class Bullet {
         x += dx;
         y += dy;
 
-        // Offscreen logic moved here directly:
+        // offscreen logic moved here directly:
         if (x < 0 || x > roomWidth || y < 0 || y > roomHeight) {
             markForRemoval = true;
         }
@@ -85,7 +86,7 @@ public abstract class Bullet {
             }
         }
 
-        // Mark this bullet for removal after hit
+        // mark this bullet for removal after hit
         markForRemoval = true;
     }
 

@@ -3,6 +3,7 @@ package creatureStuff.enemytypes;
 import creatureStuff.Creature;
 import creatureStuff.Enemy;
 import roomStuff.RoomLogic;
+import roomStuff.Room;
 
 import java.awt.Graphics2D;
 import java.awt.Color;
@@ -31,17 +32,19 @@ public class Suicide extends Enemy {
 	private BufferedImage image4;
 	private BufferedImage image5;
 
-    public Suicide(int x, int y, Creature target) {
+	private Room room; // reference to room
+
+    public Suicide(int x, int y, Creature target, Room room) {
         super(x, y, 3, 5, target);
         this.width = 20;
         this.height = 20;
+        this.room = room;
 
         file1 = new File("assets/sprites/creatures/BBeetle1.png");
         file2 = new File("assets/sprites/creatures/BBeetle2.png");
         file3 = new File("assets/sprites/creatures/BBeetle3.png");
         file4 = new File("assets/sprites/creatures/BBeetle4.png");
         file5 = new File("assets/sprites/creatures/BBeetle5.png");
-        
         
         try {
 			image1 = ImageIO.read(file1);
@@ -59,7 +62,6 @@ public class Suicide extends Enemy {
     public Rectangle getBounds() {
         return new Rectangle(x, y, width, height);
     }
-
 
     @Override
     public void update() {
@@ -123,4 +125,16 @@ public class Suicide extends Enemy {
     public void onDeath() {
         System.out.println("Suicide enemy has detonated and died!");
     }
+
+	@Override
+	public double getWidth() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double getHeight() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

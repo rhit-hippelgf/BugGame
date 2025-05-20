@@ -5,8 +5,12 @@ import creatureStuff.Creature;
 
 public class ZigZagBullet extends Bullet {
     private int tick = 0;
-    private double zigzagAmplitude = 10.0;
-    private double zigzagFrequency = 0.3;
+
+    // Controls how wide the zigzag motion is
+    private double zigzagAmplitude = 4.0;
+
+    // Controls how fast it oscillates
+    private double zigzagFrequency = 0.25;
 
     public ZigZagBullet(double x, double y, double angle, int speed, int damage, Creature source) {
         super(x, y, angle, speed, damage, source);
@@ -16,22 +20,23 @@ public class ZigZagBullet extends Bullet {
     public void update() {
         tick++;
 
-        // Move forward
+        // Move forward in the direction of the angle
         double forwardX = Math.cos(angle) * speed;
         double forwardY = Math.sin(angle) * speed;
 
-        // Offset perpendicular to direction (oscillates)
-        double offset = Math.sin(tick * zigzagFrequency) * zigzagAmplitude;
+        // Offset perpendicular to the direction (oscillates side-to-side)
         double perpX = -Math.sin(angle);
         double perpY = Math.cos(angle);
 
-        // Final position
-        x += forwardX;
-        y += forwardY;
+        // Wait a few frames before applying the zigzag
+        double lateralWiggle = 0;
+        if (tick >= 10) {
+            lateralWiggle = Math.sin(tick * zigzagFrequency) * zigzagAmplitude * 0.1; // small wiggle
+        }
 
-        // Apply lateral wiggle as displacement from the center path
-        x += perpX * Math.cos(tick * zigzagFrequency) * 0.5;
-        y += perpY * Math.cos(tick * zigzagFrequency) * 0.5;
+        // Final position = forward step + lateral offset
+        x += forwardX + perpX * lateralWiggle;
+        y += forwardY + perpY * lateralWiggle;
     }
 
     @Override

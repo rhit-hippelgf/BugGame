@@ -115,7 +115,7 @@ public class Player extends Creature {
     
     @Override
     public void update() {
-        // Placeholder for movement, status effects, cooldowns, etc.
+        // placeholder for movement, status effects, cooldowns, etc.
     }
 
     public List<Bullet> getBullets() {
