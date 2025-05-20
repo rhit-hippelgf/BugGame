@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
 import projectileStuff.Bullet;
+import roomStuff.Room;
 import roomStuff.RoomLogic;
 import effectStuff.Effect;
 import java.awt.Rectangle;
@@ -20,6 +21,7 @@ public abstract class Creature {
 	protected List<Bullet> bullets = new ArrayList<>();
 	protected List<Effect> inherentEffects = new ArrayList<>();
 	protected double effectChance = 0.0;
+	protected Room room;
 	
     // getting room width and height to prevent enemies and player from going out of room
     private int roomWidth = RoomLogic.getRoomWidth();
@@ -40,11 +42,14 @@ public abstract class Creature {
 	    return new Rectangle(x - width / 2, y - height / 2, width, height);
 	}
 
-
+	public void setRoom(Room room) {
+	    this.room = room;
+	}
 
 	public void takeDamage(int damage) {
 		health -= damage;
 	}
+	
 
 	public void calculateSpeeds(double theta) {
 //		System.out.println("x pos = " + x + " y pos = " + y);
@@ -125,13 +130,14 @@ public abstract class Creature {
 	protected Bullet createBullet(double angle, int speed, int damage) {
 	    try {
 	        return bulletClass
-	            .getConstructor(int.class, int.class, double.class, int.class, int.class, Creature.class)
-	            .newInstance(x, y, angle, speed, damage, this);
+	            .getConstructor(double.class, double.class, double.class, int.class, int.class, Creature.class)
+	            .newInstance((double) x, (double) y, angle, speed, damage, this);
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	        return null;
 	    }
 	}
+
 
 
 	// required for all subclasses
@@ -193,6 +199,10 @@ public abstract class Creature {
 		// TODO Auto-generated method stub
 		
 	}
+
+	public abstract double getWidth();
+
+	public abstract double getHeight();
 }
 
 

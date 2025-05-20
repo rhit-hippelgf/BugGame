@@ -14,6 +14,7 @@ import creatureStuff.Creature;
 import creatureStuff.Enemy;
 import projectileStuff.Normal;
 import roomStuff.RoomLogic;
+import roomStuff.Room;
 import projectileStuff.Bullet;
 
 public class WalkingEnemy extends Enemy {
@@ -28,18 +29,22 @@ public class WalkingEnemy extends Enemy {
 	private BufferedImage image2;
 	private BufferedImage image3;
 	private BufferedImage image4;
-	
-    public WalkingEnemy(int x, int y, Creature target) {
-        super(x, y, 2, 10, target);
-        setBulletClass(Normal.class);
-        this.width = 20;
-        this.height = 20;
-        file1 = new File("assets/sprites/creatures/BulletAnt1.png");
-        file2 = new File("assets/sprites/creatures/BulletAnt2.png");
-        file3 = new File("assets/sprites/creatures/BulletAnt3.png");
-        file4 = new File("assets/sprites/creatures/BulletAnt4.png");
-        
-        try {
+
+	private Room room;
+
+	public WalkingEnemy(int x, int y, Creature target, Room room) {
+		super(x, y, 2, 10, target);
+		setBulletClass(Normal.class);
+		this.width = 20;
+		this.height = 20;
+		this.room = room; // Store reference to the room
+
+		file1 = new File("assets/sprites/creatures/BulletAnt1.png");
+		file2 = new File("assets/sprites/creatures/BulletAnt2.png");
+		file3 = new File("assets/sprites/creatures/BulletAnt3.png");
+		file4 = new File("assets/sprites/creatures/BulletAnt4.png");
+
+		try {
 			image1 = ImageIO.read(file1);
 			image2 = ImageIO.read(file2);
 			image3 = ImageIO.read(file3);
@@ -48,67 +53,105 @@ public class WalkingEnemy extends Enemy {
 		} catch (IOException e) {
 			spriteLoaded = false;
 		}
-    }
-    
-    @Override
-    public Rectangle getBounds() {
-        return new Rectangle(x, y, width, height);
-    }
+	}
 
-    @Override
-    public void update() {
-        if (health <= 0) {
-            onDeath();
-            return;
-        }
+	@Override
+	public Rectangle getBounds() {
+		return new Rectangle(x, y, width, height);
+	}
 
-        double angle = Math.atan2(target.getY() - y, target.getX() - x);
-        angle += (Math.random() - 0.5) * 0.4; // slight wobble
-        super.calculateSpeeds(angle);
-        super.move();
-        // shoot occasionally
-        if (Math.random() < 0.005) {
-            shoot(angle);
-        }
-
-        for (var b : bullets) {
-            b.update();
-        }
-    }
-
-    @Override
-    public void shoot(double angle) {
-        Bullet b = createBullet(angle, 2, 1);
-        if (b != null) bullets.add(b);
-    }
-
-    @Override
-    public void draw(Graphics2D g) {
-    	int scaleWidth = RoomLogic.getTileSize();
-		frameCount+=1;
-		if (spriteLoaded == true) {
-			if (frameCount <= 10) {
-			g.drawImage(image1, this.getX() - scaleWidth/2, this.getY() - scaleWidth/2, scaleWidth, scaleWidth, null);
-			} else if (frameCount > 10 && frameCount <= 20) {
-			g.drawImage(image2, this.getX() - scaleWidth/2, this.getY() - scaleWidth/2, scaleWidth, scaleWidth, null);
-			} else if (frameCount > 20 && frameCount <= 30) {
-			g.drawImage(image3, this.getX() - scaleWidth/2, this.getY() - scaleWidth/2, scaleWidth, scaleWidth, null);
-			} else if (frameCount > 30 && frameCount <= 40) {
-			g.drawImage(image4, this.getX() - scaleWidth/2, this.getY() - scaleWidth/2, scaleWidth, scaleWidth, null);
-				if (frameCount >= 40) frameCount=0;
-			}
-		} else {
-        g.setColor(Color.MAGENTA);
-        g.fillRect(x - 10, y - 10, 20, 20); // center the enemy
+	@Override
+	public void update() {
+		if (health <= 0) {
+			onDeath();
+			return;
 		}
 
-        for (var b : bullets) {
-            b.draw(g);
-        }
-    }
+		// use center of both enemy and target
+		double tx = target.getX();
+		double ty = target.getY();
+		double ex = this.getX();
+		double ey = this.getY();
 
-    @Override
-    public void onDeath() {
-        System.out.println("WalkingEnemy has died!");
-    }
+		double angle = Math.atan2(ty - ey, tx - ex);
+
+		// apply a slight angle variation to simulate imperfect tracking
+		//angle += (Math.random() - 0.5) * 0.4;
+
+		// update speed vector using calculated angle
+		super.calculateSpeeds(angle);
+
+		// move based on calculated vector
+		super.move();
+
+		// occasionally shoot at the player
+		if (Math.random() < 0.005) {
+			shoot(angle);
+		}
+
+		// bullet updates are now handled by Room, not here
+	}
+
+	@Override
+	public void shoot(double angle) {
+		Bullet b = createBullet(angle, 2, 1);
+		if (b != null && room != null) {
+			room.getEnemyBullets().add(b);
+		}
+	}
+
+	@Override
+	public void draw(Graphics2D g) {
+		int scaleWidth = RoomLogic.getTileSize();
+		frameCount += 1;
+
+		if (spriteLoaded == true) {
+			if (frameCount <= 10) {
+				g.drawImage(image1, this.getX() - scaleWidth / 2, this.getY() - scaleWidth / 2, scaleWidth, scaleWidth,
+						null);
+			} else if (frameCount > 10 && frameCount <= 20) {
+				g.drawImage(image2, this.getX() - scaleWidth / 2, this.getY() - scaleWidth / 2, scaleWidth, scaleWidth,
+						null);
+			} else if (frameCount > 20 && frameCount <= 30) {
+				g.drawImage(image3, this.getX() - scaleWidth / 2, this.getY() - scaleWidth / 2, scaleWidth, scaleWidth,
+						null);
+			} else if (frameCount > 30 && frameCount <= 40) {
+				g.drawImage(image4, this.getX() - scaleWidth / 2, this.getY() - scaleWidth / 2, scaleWidth, scaleWidth,
+						null);
+				if (frameCount >= 40)
+					frameCount = 0;
+			}
+		} else {
+			// fallback rendering if sprite is missing
+			g.setColor(Color.MAGENTA);
+			g.fillRect(x - 10, y - 10, 20, 20); // center the enemy
+		}
+
+		// draw a red line toward the target (player)
+		g.setColor(Color.RED);
+		int ex = this.getX();
+		int ey = this.getY();
+		int tx = target.getX();
+		int ty = target.getY();
+		g.drawLine(ex, ey, tx, ty);
+
+		// bullet drawing is now handled by Room, not here
+	}
+
+	@Override
+	public void onDeath() {
+		System.out.println("WalkingEnemy has died!");
+	}
+
+	@Override
+	public double getWidth() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double getHeight() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

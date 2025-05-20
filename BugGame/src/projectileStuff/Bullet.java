@@ -9,7 +9,7 @@ import effectStuff.Effect;
 import roomStuff.RoomLogic;
 
 public abstract class Bullet {
-    protected int x, y;
+    protected double x, y;
     protected double dx, dy;
     protected int speed;
     protected int damage;
@@ -21,10 +21,13 @@ public abstract class Bullet {
     protected int roomHeight = RoomLogic.getRoomHeight();
     protected int width = 10;
     protected int height = 10;
+    protected double angle;
 
-    public Bullet(int x, int y, double angle, int speed, int damage, Creature source) {
+
+    public Bullet(double x, double y, double angle, int speed, int damage, Creature source) {
         this.x = x;
         this.y = y;
+        this.angle = angle;
         this.speed = speed;
         this.damage = damage;
         this.source = source;
@@ -37,14 +40,14 @@ public abstract class Bullet {
         x += dx;
         y += dy;
 
-        // Offscreen logic moved here directly:
+        // offscreen logic moved here directly:
         if (x < 0 || x > roomWidth || y < 0 || y > roomHeight) {
             markForRemoval = true;
         }
     }
 
     public Rectangle getBounds() {
-        return new Rectangle(x - width / 2, y - height / 2, width, height);
+        return new Rectangle((int)x - width / 2, (int)y - height / 2, width, height);
     }
 
     public void setRoomBounds(int w, int h) {
@@ -70,8 +73,8 @@ public abstract class Bullet {
         return damage;
     }
 
-    public int getX() { return x; }
-    public int getY() { return y; }
+    public double getX() { return x; }
+    public double getY() { return y; }
 
     public void onHit(Creature target) {
     	System.out.println("Marked bullet for removal: " + this + " (" + System.identityHashCode(this) + ")");
@@ -83,7 +86,7 @@ public abstract class Bullet {
             }
         }
 
-        // Mark this bullet for removal after hit
+        // mark this bullet for removal after hit
         markForRemoval = true;
     }
 

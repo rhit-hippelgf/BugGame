@@ -4,6 +4,8 @@ import java.awt.Graphics;
 import java.awt.*;
 import java.awt.Rectangle;
 
+import roomStuff.Room;
+
 
 public abstract class Enemy extends Creature {
     protected Creature target; // usually the player
@@ -29,5 +31,11 @@ public abstract class Enemy extends Creature {
         health -= dmg;
         System.out.println("Enemy health now: " + health);
     }
+    
+    @Override
+    public void setRoom(Room r) {
+        super.setRoom(r);
+    }
+
 
 }

@@ -124,10 +124,11 @@ public class RoomLogic {
         this.setCurrentRoom(currentPoint,(TILE_SIZE * 13) / 2, (TILE_SIZE * 7) / 2);
 
         List<Enemy> enemyTypes = List.of(
-            new ZigZag(0, 0, hero),
-            new Predictive1(0, 0, hero),
-            new Suicide(0, 0, hero),
-            new WalkingEnemy(0, 0, hero));
+        	    new ZigZag(0, 0, hero, currentRoom),
+        	    // new Predictive1(0, 0, hero, currentRoom),
+        	    new Suicide(0, 0, hero, currentRoom),
+        	    new WalkingEnemy(0, 0, hero, currentRoom));
+
 
 //        for (int i1 = 0; i1 < 5; i1++) {
 //            int ex = rand.nextInt(TILE_SIZE * 13 - 100) + 50;

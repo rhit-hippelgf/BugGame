@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 import java.awt.Color;
 import projectileStuff.ZigZagBullet;
 import roomStuff.RoomLogic;
+import roomStuff.Room;
 import projectileStuff.Bullet;
 import effectStuff.poison; // default poison
 
@@ -26,9 +27,11 @@ public class ZigZag extends Enemy {
 	private BufferedImage image1;
 	private BufferedImage image2;
 
+    private Room room; // reference to Room
 
-    public ZigZag(int x, int y, Creature target) {
+    public ZigZag(int x, int y, Creature target, Room room) {
         super(x, y, 2, 5, target);
+        this.room = room;
 
         addEffect(new poison(3)); // built in poison
         addEffectChance(0.25); // 25% chance
@@ -46,6 +49,7 @@ public class ZigZag extends Enemy {
 			spriteLoaded = false;
 		}
     }
+
     @Override
     public Rectangle getBounds() {
         return new Rectangle(x, y, width, height);
@@ -58,49 +62,76 @@ public class ZigZag extends Enemy {
             return;
         }
 
-        double angle = Math.atan2(target.getY() - y, target.getX() - x);
+        // Use getters to avoid coordinate sync issues
+        double tx = target.getX();
+        double ty = target.getY();
+        double ex = this.getX();
+        double ey = this.getY();
+
+        double angle = Math.atan2(ty - ey, tx - ex);
         double offset = (zigzagCounter++ / 10 % 2 == 0) ? 0.3 : -0.3;
+
+        // Debug output
+//        System.out.println("[ZigZag Update]");
+//        System.out.println("Target: (" + tx + ", " + ty + ")");
+//        System.out.println("Enemy:  (" + ex + ", " + ey + ")");
+//        System.out.println("Angle:  " + angle);
+//        System.out.println("Offset: " + offset);
+//        System.out.println("Final Angle Used To Move: " + (angle + offset));
+
         super.calculateSpeeds(angle + offset);
         super.move();
+
         if (zigzagCounter % 50 == 0) {
-            shoot(angle);
+            System.out.println(">>> SHOOTING at angle: " + angle);
+            shoot(angle);  
         }
 
-        for (var b : bullets) {
-            b.update();
-        }
+        // bullets are now updated in Room, not here
     }
+
 
     @Override
     public void shoot(double angle) {
         Bullet b = createBullet(angle, 2, 1);
-        if (b != null) bullets.add(b); 
+        if (b != null && room != null) {
+            room.getEnemyBullets().add(b);
+        }
     }
 
     @Override
     public void draw(Graphics2D g) {
     	int scaleWidth = RoomLogic.getTileSize();
-		frameCount+=1;
+		frameCount += 1;
 		if (spriteLoaded == true) {
 			if (frameCount <= 15) {
-			g.drawImage(image1, this.getX() - scaleWidth/2, this.getY() - scaleWidth/2, scaleWidth, scaleWidth, null);
+				g.drawImage(image1, this.getX() - scaleWidth / 2, this.getY() - scaleWidth / 2, scaleWidth, scaleWidth, null);
 			} else if (frameCount > 15 && frameCount <= 30) {
-			g.drawImage(image2, this.getX() - scaleWidth/2, this.getY() - scaleWidth/2, scaleWidth, scaleWidth, null);
-			if (frameCount >= 30) frameCount=0;
+				g.drawImage(image2, this.getX() - scaleWidth / 2, this.getY() - scaleWidth / 2, scaleWidth, scaleWidth, null);
+				if (frameCount >= 30) frameCount = 0;
 			}
 		} else {
-    	
-    	g.setColor(poisoned ? Color.GREEN : Color.BLUE);
-        g.fillOval(x - 10, y - 10, 20, 20);
+			g.setColor(poisoned ? Color.GREEN : Color.BLUE);
+			g.fillOval(x - 10, y - 10, 20, 20);
 		}
-        for (var b : bullets) {
-            b.draw(g);
-        }
-		
+
+        // bullets are now drawn in Room, not here
     }
 
     @Override
     public void onDeath() {
         System.out.println("ZigZag enemy has died!");
     }
+
+	@Override
+	public double getWidth() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double getHeight() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

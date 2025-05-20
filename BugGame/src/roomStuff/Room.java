@@ -21,7 +21,7 @@ import roomComponents.Tile;
 
 import java.awt.Dimension;
 import java.awt.Color;
-import creatureStuff.*; // So it can access ZigZag, Suicide, etc.
+import creatureStuff.*; 
 
 public class Room extends JComponent {
 
@@ -31,6 +31,7 @@ public class Room extends JComponent {
 	private static final char HOLE = 'o';
 	private static final char ZIGZIG = 'z';
 	private static final char STANDARD_ENEMY = 'e';
+	private static final char LEGENDARY_ITEM = 'L';
 	private static final char EPIC_ITEM = 'E';
 	private static final char RARE_ITEM = 'R';
 	private static final char COMMON_ITEM = 'C';
@@ -50,6 +51,8 @@ public class Room extends JComponent {
 
     private final int TILE_SIZE;
     private int level;
+    private List<Bullet> playerBullets = new ArrayList<>();
+    private List<Bullet> enemyBullets = new ArrayList<>();
 
     // construc accepts dynamic square tile size
     public Room(boolean north, boolean east, boolean south, boolean west, int tileSize, int level, Creature player) {
@@ -73,7 +76,9 @@ public class Room extends JComponent {
     public void setPlayer(Player p) {
         this.player = p;
         this.control = new Controller(this, (Player) player);
-//        spawnEnemies(); // This method should be removed when room layout works
+        this.player.setRoom(this);
+        this.addMouseListener(control);
+        control.setRoom(this);
         }
     
     public void generateLayout() {
@@ -94,16 +99,16 @@ public class Room extends JComponent {
     				gridTiles[row][col] = hole;
     				Obsticles.add((Hole)hole);
     			} else if (i == 's') {
-    				gridTiles[row][col] = new Tile(x,y,level);
-    				Creature e = new Suicide(x,y,player);
+    				gridTiles[row][col] = new Tile(x, y, level);
+    				Creature e = new Suicide(x, y, player, this);
     				this.addEnemy(e);
     			} else if (i == 'z') {
-    				gridTiles[row][col] = new Tile(x,y,level);
-    				Creature e = new ZigZag(x,y,player);
+    				gridTiles[row][col] = new Tile(x, y, level);
+    				Creature e = new ZigZag(x, y, player, this);
     				this.addEnemy(e);
     			} else if (i == 'e') {
-    				gridTiles[row][col] = new Tile(x,y,level);
-    				Creature e = new WalkingEnemy(x,y,player);
+    				gridTiles[row][col] = new Tile(x, y, level);
+    				Creature e = new WalkingEnemy(x, y, player, this);
     				this.addEnemy(e);
     			} else {
     				gridTiles[row][col] = new Tile(x,y,level);
@@ -185,21 +190,19 @@ public class Room extends JComponent {
     }
     
     private void handleCollision() {
-//    	Starting handle collision method this will contain all collision logic
+//    	starting handle collision method this will contain all collision logic
     	this.goThroughDoor();
     }
 
     private void updateBullets() {
         List<Bullet> playerToRemove = new ArrayList<>();
+        List<Bullet> enemyToRemove = new ArrayList<>();
 
-        // Player Bullet Collision Update
-        for (Bullet b : player.getBullets()) {
+        // player bullet update and collision
+        for (Bullet b : playerBullets) {
             b.update();
             for (Creature e : enemies) {
-                System.out.println("Bullet bounds: " + b.getBounds());
-                System.out.println("Enemy bounds: " + e.getBounds());
                 if (b.getBounds().intersects(e.getBounds())) {
-                    System.out.println("COLLISION DETECTED!");
                     b.onHit(e);
                     playerToRemove.add(b);
                     break;
@@ -207,21 +210,18 @@ public class Room extends JComponent {
             }
         }
 
-        // Enemy Bullet Collision Update
-        for (Creature e : enemies) {
-            for (Bullet b : e.getBullets()) {
-                b.update();
-                if (b.getBounds().intersects(player.getBounds())) {
-                    b.onHit(player);
-                }
+        // enemy bullet update and collision
+        for (Bullet b : enemyBullets) {
+            b.update();
+            if (b.getBounds().intersects(player.getBounds())) {
+                b.onHit(player);
+                enemyToRemove.add(b);
             }
         }
 
-        // cleanup
-        player.getBullets().removeIf(Bullet::isMarkedForRemoval); 
-        for (Creature e : enemies) {
-            e.getBullets().removeIf(Bullet::isMarkedForRemoval);
-        }
+        // remove bullets marked for removal or manually added
+        playerBullets.removeIf(b -> b.isMarkedForRemoval() || playerToRemove.contains(b));
+        enemyBullets.removeIf(b -> b.isMarkedForRemoval() || enemyToRemove.contains(b));
     }
 
     @Override
@@ -240,18 +240,14 @@ public class Room extends JComponent {
         south.draw(g2);
         west.draw(g2);
         
-     // draw player b
-        if (player != null) {
-            for (Bullet b : player.getBullets()) {
-                b.draw(g2);
-            }
+     // draw player bullets
+        for (Bullet b : playerBullets) {
+        	b.draw(g2);
         }
 
-        // draw enemy b
-        for (Creature e : enemies) {
-            for (Bullet b : e.getBullets()) {
-                b.draw(g2);
-            }
+        // draw enemy bullets
+        for (Bullet b : enemyBullets) {
+        	b.draw(g2);
         }
 
 
@@ -325,4 +321,7 @@ public class Room extends JComponent {
     public int getTileSize(){
     	return TILE_SIZE;
     }
+    
+    public List<Bullet> getPlayerBullets() { return playerBullets; }
+    public List<Bullet> getEnemyBullets() { return enemyBullets; }
 }
