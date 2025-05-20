@@ -14,6 +14,7 @@ public class BackgroundHud extends JComponent {
 	private Player player;
 	private int health;
 	private int maxHealth;
+	private int level;
 	private boolean updateHud = false;
 	private ArrayList<Point> exploredMap = new ArrayList<>();
 	private Point currentRoom;
@@ -23,6 +24,7 @@ public class BackgroundHud extends JComponent {
 	private int sideGapY = (RoomLogic.getScreenHeight()-RoomLogic.getRoomHeight())/2;
 	private int mapPaintOX = RoomLogic.getRoomWidth() + sideGapX + mapPaintWidth/2;
 	private int mapPaintOY = sideGapY/2 - mapPaintHeight/2;
+	private boolean loading = false;
 
 	
 	public BackgroundHud(Player player) {
@@ -38,9 +40,14 @@ public class BackgroundHud extends JComponent {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
+		if (this.loading) {
+			g2.fillRect(0, 0, RoomLogic.getScreenWidth(), RoomLogic.getScreenHeight());
+			g2.drawString("Loading...", 400,400);
+		}
         
         g2.drawString("Current Health: " + health, 50, 50);
         g2.drawString("Max Health: " + health, 50, 70);
+        g2.drawString("Level: " + level, 500, 70);
         
         for (Point point : exploredMap) {
         	if (!point.equals(currentRoom)) {
@@ -62,6 +69,22 @@ public class BackgroundHud extends JComponent {
 			exploredMap.add(currLoc);
 		}
 		this.repaint();
+	}
+	
+	public void switchLoading() {
+		this.loading = !this.loading;
+		this.repaint();
+	}
+	
+	public boolean getLoading() {
+		return this.loading;
+	}
+	
+	public void switchFloor() {
+		level++;
+		exploredMap.clear();
+		this.updateRoom(new Point(0,0));
+		this.switchLoading();
 	}
 	
 	public void detectChange() {

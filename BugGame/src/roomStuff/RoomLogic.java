@@ -41,6 +41,7 @@ public class RoomLogic {
         SCREEN_HEIGHT = screenHeight;
         this.hero = new Player((TILE_SIZE * 13) / 2, (TILE_SIZE * 7) / 2, 8, 3);
         hud = new BackgroundHud((Player) hero);
+    	frame.add(hud);
 //        this.frame.add(hud);
         this.generateLayout(numRooms);
         System.out.println(this.roomLayout.keySet());
@@ -48,7 +49,6 @@ public class RoomLogic {
 
 
     private void generateLayout(int numRooms) {
-    	frame.add(hud);
     	System.out.println(level);
     	this.numRooms = numRooms;
         ArrayList<Point> rooms = new ArrayList<>();
@@ -93,6 +93,8 @@ public class RoomLogic {
 				}
 			}
 
+			Point bossLoc = this.setBossRoom(rooms);
+			rooms.add(bossLoc);
 			Point shopLoc = this.setShopRoom(rooms);
 			
 	        int i = 0;
@@ -114,6 +116,10 @@ public class RoomLogic {
 	            	r.setDoorColor('s', Color.YELLOW);
 	            	r.setDoorColor('w', Color.YELLOW);
 	            }
+	            
+	            if (temp.equals(bossLoc)) {
+	            	r.setFloorDoor();
+	            }
 	            roomLayout.put(temp, r);
 	            i++;
 		        currentRoom = r;
@@ -122,32 +128,6 @@ public class RoomLogic {
 
         currentPoint = new Point(0,0);
         this.setCurrentRoom(currentPoint,(TILE_SIZE * 13) / 2, (TILE_SIZE * 7) / 2);
-
-        List<Enemy> enemyTypes = List.of(
-        	    new ZigZag(0, 0, hero, currentRoom),
-        	    // new Predictive1(0, 0, hero, currentRoom),
-        	    new Suicide(0, 0, hero, currentRoom),
-        	    new WalkingEnemy(0, 0, hero, currentRoom));
-
-
-//        for (int i1 = 0; i1 < 5; i1++) {
-//            int ex = rand.nextInt(TILE_SIZE * 13 - 100) + 50;
-//            int ey = rand.nextInt(TILE_SIZE * 7 - 100) + 50;
-//
-//            Enemy template = enemyTypes.get(rand.nextInt(enemyTypes.size()));
-//            Enemy enemy;
-//            if (template instanceof ZigZag) {
-//                enemy = new ZigZag(ex, ey, hero);
-//            } else if (template instanceof Predictive1) {
-//                enemy = new Predictive1(ex, ey, hero);
-//            } else if (template instanceof Suicide) {
-//                enemy = new Suicide(ex, ey, hero);
-//            } else {
-//                enemy = new WalkingEnemy(ex, ey, hero);
-//            }
-//
-//            currentRoom.addEnemy(enemy);
-//        }
     }
 
     private boolean surroundingRoomsCheck(Point roomChoice, Point possibleLoc, ArrayList<Point> rooms) {
@@ -167,25 +147,27 @@ public class RoomLogic {
     }
     
     public void updateObjects() {
-        currentRoom.updateEntities();
-        this.goNextFloor(currentRoom.goThroughDoor());
-        this.switchRooms(currentRoom.goThroughDoor());
-//        currentRoom.updateEntities();
-//        currentRoom.updateBullets();   
+    	if (!hud.getLoading()) {
+	        currentRoom.updateEntities();
+	        this.goNextFloor(currentRoom.goThroughDoor());
+	        this.switchRooms(currentRoom.goThroughDoor());
+    	} else {
+    		this.generateLayout(this.numRooms+4+3*this.level);
+    		hud.switchFloor();
+    	}
+ 
     }
 
     public void drawScreen() {
         currentRoom.drawScreen();
-//    	hud.drawHud();
-//        System.out.println(currentPoint);
     }
 
     
     public void goNextFloor(char playerHitFloorDoor) {
     	if (Character.isUpperCase(playerHitFloorDoor)) {
     		this.level++;
+    		hud.switchLoading();
     		frame.remove(currentRoom);
-        	this.generateLayout(this.numRooms+4+3*this.level);
     	}
     }
     
@@ -216,6 +198,27 @@ public class RoomLogic {
     	}
     	Random rand = new Random();
     	return validPoints.get(rand.nextInt(validPoints.size()));
+    }
+    
+    private Point setBossRoom(ArrayList<Point> points) {
+    	ArrayList<Point> validPoints = new ArrayList<>();
+    	double maxDist = 0;
+    	for (Point point : points) {
+    		double dist = point.distance(new Point(0,0));
+    		if (dist > maxDist) {
+    			validPoints.clear();
+    			validPoints.add(point);
+    			maxDist = dist;
+    		} else if (dist == maxDist) {
+    			validPoints.add(point);
+    		}
+    	}
+    	Random rand = new Random();
+    	Point preBoss = validPoints.get(rand.nextInt(validPoints.size()));
+    	if (surroundingRoomsCheck(new Point(preBoss.x,preBoss.y+1),preBoss,points)) return new Point(preBoss.x,preBoss.y+1);
+    	else if (surroundingRoomsCheck(new Point(preBoss.x+1,preBoss.y),preBoss,points)) return new Point(preBoss.x+1,preBoss.y);
+    	else if (surroundingRoomsCheck(new Point(preBoss.x-1,preBoss.y),preBoss,points)) return new Point(preBoss.x-1,preBoss.y);
+    	else return new Point(preBoss.x,preBoss.y-1);
     }
     
     private void setCurrentRoom(Point point, int x, int y) {
