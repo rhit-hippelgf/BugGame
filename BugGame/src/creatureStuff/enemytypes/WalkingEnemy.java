@@ -35,8 +35,8 @@ public class WalkingEnemy extends Enemy {
 	public WalkingEnemy(int x, int y, Creature target, Room room) {
 		super(x, y, 2, 10, target);
 		setBulletClass(Normal.class);
-		this.width = 20;
-		this.height = 20;
+		this.width = RoomLogic.getTileSize();
+		this.height = RoomLogic.getTileSize();
 		this.room = room; // Store reference to the room
 
 		file1 = new File("assets/sprites/creatures/BulletAnt1.png");
@@ -57,7 +57,7 @@ public class WalkingEnemy extends Enemy {
 
 	@Override
 	public Rectangle getBounds() {
-		return new Rectangle(x, y, width, height);
+		return new Rectangle(x - width/2, y - width/2, width, height);
 	}
 
 	@Override
@@ -102,21 +102,21 @@ public class WalkingEnemy extends Enemy {
 
 	@Override
 	public void draw(Graphics2D g) {
-		int scaleWidth = RoomLogic.getTileSize();
+//		int scaleWidth = RoomLogic.getTileSize();
 		frameCount += 1;
 
 		if (spriteLoaded == true) {
 			if (frameCount <= 10) {
-				g.drawImage(image1, this.getX() - scaleWidth / 2, this.getY() - scaleWidth / 2, scaleWidth, scaleWidth,
+				g.drawImage(image1, this.getX() - width / 2, this.getY() - height / 2, width, height,
 						null);
 			} else if (frameCount > 10 && frameCount <= 20) {
-				g.drawImage(image2, this.getX() - scaleWidth / 2, this.getY() - scaleWidth / 2, scaleWidth, scaleWidth,
+				g.drawImage(image2, this.getX() - width / 2, this.getY() - height / 2, width, height,
 						null);
 			} else if (frameCount > 20 && frameCount <= 30) {
-				g.drawImage(image3, this.getX() - scaleWidth / 2, this.getY() - scaleWidth / 2, scaleWidth, scaleWidth,
+				g.drawImage(image3, this.getX() - width / 2, this.getY() - height / 2, width, height,
 						null);
 			} else if (frameCount > 30 && frameCount <= 40) {
-				g.drawImage(image4, this.getX() - scaleWidth / 2, this.getY() - scaleWidth / 2, scaleWidth, scaleWidth,
+				g.drawImage(image4, this.getX() - width / 2, this.getY() - height / 2, width, height,
 						null);
 				if (frameCount >= 40)
 					frameCount = 0;
