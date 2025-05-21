@@ -48,7 +48,7 @@ public class Player extends Creature {
     public Player(int startX, int startY, int startSpeed, int startHealth) {
         super(startX, startY, startSpeed, startHealth);
         width = RoomLogic.getTileSize()/2+30;
-        height = RoomLogic.getTileSize();
+        height = RoomLogic.getTileSize()-10;
         setBulletClass(Normal.class);
         fileIdle = new File("assets/sprites/creatures/Beetle1.png");
         fileLeft = new File("assets/sprites/creatures/Beetle2.png");
