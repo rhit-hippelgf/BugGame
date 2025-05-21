@@ -14,6 +14,7 @@ import java.awt.Rectangle;
 public abstract class Creature {
 	protected int x, y;
 	protected int width, height;
+	protected int drawWidth, drawHeight;
 	protected int speed;
 	protected double xspeed, yspeed;
 	protected int health;
@@ -95,20 +96,20 @@ public abstract class Creature {
 //	I don't want to implement falling into a pit and would rather treat it as an obstacle the player can't cross but bullets can
 //	We can add a wing item that allows the player to fly over holes and then this method will simply not be ran
 	public void checkValidSpeed(int[] xs, int[] ys) {
-		if (y + height/2-5> ys[0] && y+5 < ys[1]) {
-			if (xspeed < 0 && x-width/2 <= xs[1] && x+width/2 > xs[0]) {
+		if (y + height/2> ys[0] && y < ys[1]) {
+			if (xspeed < 0 && x-width/2 <= xs[1] && x > xs[1]) {
 				xspeed = 0;
 				x = width/2 + xs[1];
-			} else if (xspeed > 0 && x+width/2 >= xs[0] && x-width/2 < xs[1]) {
+			} else if (xspeed > 0 && x+width/2 >= xs[0] && x < xs[0]) {
 				xspeed = 0;
 				x = xs[0]- width/2;
 			}
 		}
-		if (x+width/2-5 > xs[0] && x-width/2+5 < xs[1]) {
-			if (yspeed < 0 && y <= ys[1] && y+height/2 > ys[0]) {
+		if (x+width/2 > xs[0] && x-width/2 < xs[1]) {
+			if (yspeed < 0 && y <= ys[1] && y > ys[0]) {
 				yspeed = 0;
 				y = ys[1];
-			} else if (yspeed > 0 && y+height/2 >= ys[0] && y < ys[1]) {
+			} else if (yspeed > 0 && y+height/2 >= ys[0] && y < ys[0]) {
 				yspeed = 0;
 				y = ys[0] - height/2;
 			}

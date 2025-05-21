@@ -35,8 +35,10 @@ public class WalkingEnemy extends Enemy {
 	public WalkingEnemy(int x, int y, Creature target, Room room) {
 		super(x, y, 2, 10, target);
 		setBulletClass(Normal.class);
-		this.width = RoomLogic.getTileSize();
-		this.height = RoomLogic.getTileSize();
+		drawWidth = RoomLogic.getTileSize()-10;
+		drawHeight = RoomLogic.getTileSize()-10;
+		this.width = drawWidth/2+10;
+		this.height = drawHeight - 10;
 		this.room = room; // Store reference to the room
 
 		file1 = new File("assets/sprites/creatures/BulletAnt1.png");
@@ -79,19 +81,17 @@ public class WalkingEnemy extends Enemy {
 		double mag = Math.sqrt(xTemp*xTemp + yTemp*yTemp);
 		double dx = xTemp/mag;
 		double dy = yTemp/mag;
-//		double angle = Math.atan2(ty - ey, tx - ex);
 
 		// apply a slight angle variation to simulate imperfect tracking
-		//angle += (Math.random() - 0.5) * 0.4;
 
 		// update speed vector using calculated angle
 		super.calculateSpeeds(dx, dy);
 
 		// move based on calculated vector
-		super.move();
+//		super.move();
 
 		// occasionally shoot at the player
-		if (Math.random() < 0.005) {
+		if (Math.random() < 0.01) {
 			shoot(dx, dy);
 		}
 
@@ -113,16 +113,16 @@ public class WalkingEnemy extends Enemy {
 
 		if (spriteLoaded == true) {
 			if (frameCount <= 10) {
-				g.drawImage(image1, this.getX() - width / 2, this.getY() - height / 2, width, height,
+				g.drawImage(image1, this.getX() - drawWidth / 2, this.getY() - drawHeight / 2, drawWidth, drawHeight,
 						null);
 			} else if (frameCount > 10 && frameCount <= 20) {
-				g.drawImage(image2, this.getX() - width / 2, this.getY() - height / 2, width, height,
+				g.drawImage(image2, this.getX() - drawWidth / 2, this.getY() - drawHeight / 2, drawWidth, drawHeight,
 						null);
 			} else if (frameCount > 20 && frameCount <= 30) {
-				g.drawImage(image3, this.getX() - width / 2, this.getY() - height / 2, width, height,
+				g.drawImage(image3, this.getX() - drawWidth / 2, this.getY() - drawHeight / 2, drawWidth, drawHeight,
 						null);
 			} else if (frameCount > 30 && frameCount <= 40) {
-				g.drawImage(image4, this.getX() - width / 2, this.getY() - height / 2, width, height,
+				g.drawImage(image4, this.getX() - drawWidth / 2, this.getY() - drawHeight / 2, drawWidth, drawHeight,
 						null);
 				if (frameCount >= 40)
 					frameCount = 0;
@@ -134,6 +134,7 @@ public class WalkingEnemy extends Enemy {
 		}
 
 		// draw a red line toward the target (player)
+		g.drawRect(x-width/2, y-height/2, width, height);
 		g.setColor(Color.RED);
 		int ex = this.getX();
 		int ey = this.getY();

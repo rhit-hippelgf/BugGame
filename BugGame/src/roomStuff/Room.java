@@ -186,7 +186,13 @@ public class Room extends JComponent {
             	this.roomCleared();
             }
         }
-        for (Creature e : enemies) e.update();
+        for (Creature e : enemies) {
+        	e.update();
+        	for (Hole o : Obsticles) {
+        		e.checkValidSpeed(o.getXs(), o.getYs());
+        	}
+        	e.move();
+        }
         enemies.removeIf(e -> e.getHealth() <= 0);
         this.handleCollision();
         this.updateBullets();

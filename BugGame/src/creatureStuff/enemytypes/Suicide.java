@@ -36,8 +36,10 @@ public class Suicide extends Enemy {
 
     public Suicide(int x, int y, Creature target, Room room) {
         super(x, y, 3, 5, target);
-        this.width = RoomLogic.getTileSize();
-        this.height = RoomLogic.getTileSize();
+        this.drawWidth = RoomLogic.getTileSize();
+        this.drawHeight = RoomLogic.getTileSize();
+        this.width = drawWidth - 20;
+        this.height = drawHeight - 40;
         this.room = room;
 
         file1 = new File("assets/sprites/creatures/BBeetle1.png");
@@ -83,9 +85,9 @@ public class Suicide extends Enemy {
             this.health = 0;       // suicide
             this.detonated = true; // explosion effect
         } else {
-//            double angle = Math.atan2(target.getY() - y, target.getX() - x);
+
             super.calculateSpeeds(xDist/dist,yDist/dist);
-            super.move();
+//            super.move();
         }
     }
 
@@ -100,15 +102,15 @@ public class Suicide extends Enemy {
         }
 		if (spriteLoaded == true) {
 			if (frameCount <= 10) {
-			g.drawImage(image1, this.getX() - width/2, this.getY() - height/2, width, height, null);
+			g.drawImage(image1, this.getX() - drawWidth/2, this.getY() - drawHeight/2, drawWidth, drawHeight, null);
 			} else if (frameCount > 10 && frameCount <= 20) {
-			g.drawImage(image2, this.getX() - width/2, this.getY() - height/2, width, height, null);
+			g.drawImage(image2, this.getX() - drawWidth/2, this.getY() - drawHeight/2, drawWidth, drawHeight, null);
 			} else if (frameCount > 20 && frameCount <= 30) {
-			g.drawImage(image3, this.getX() - width/2, this.getY() - height/2, width, height, null);
+			g.drawImage(image3, this.getX() - drawWidth/2, this.getY() - drawHeight/2, drawWidth, drawHeight, null);
 			} else if (frameCount > 30 && frameCount <= 40) {
-			g.drawImage(image4, this.getX() - width/2, this.getY() - height/2, width, height, null);
+			g.drawImage(image4, this.getX() - drawWidth/2, this.getY() - drawHeight/2, drawWidth, drawHeight, null);
 			} else if (frameCount > 40 && frameCount <= 50) {
-				g.drawImage(image5, this.getX() - width/2, this.getY() - height/2, width, height, null);
+				g.drawImage(image5, this.getX() - drawWidth/2, this.getY() - drawHeight/2, drawWidth, drawHeight, null);
 				if (frameCount >= 50) frameCount=0;
 			}
 		} else {
@@ -116,6 +118,7 @@ public class Suicide extends Enemy {
         g.setColor(Color.RED);
         g.fillOval(x - 10, y - 10, 20, 20); // enemy body
 		}
+		g.drawRect(x-width/2, y-height/2, width, height);
     }
 
     @Override

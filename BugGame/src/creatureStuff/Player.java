@@ -47,8 +47,10 @@ public class Player extends Creature {
 
     public Player(int startX, int startY, int startSpeed, int startHealth) {
         super(startX, startY, startSpeed, startHealth);
-        width = RoomLogic.getTileSize()/2+30;
-        height = RoomLogic.getTileSize()-10;
+        drawWidth = RoomLogic.getTileSize();
+        drawHeight = RoomLogic.getTileSize();
+        width = drawWidth/2+10;
+        height = drawHeight-10;
         setBulletClass(Normal.class);
         fileIdle = new File("assets/sprites/creatures/Beetle1.png");
         fileLeft = new File("assets/sprites/creatures/Beetle2.png");
@@ -129,22 +131,20 @@ public class Player extends Creature {
 
     @Override
     public void draw(Graphics2D g2) {
-//    	super.draw(g);
-//		java.awt.Graphics2D g2 = (java.awt.Graphics2D) g;
-		int scaleWidth = RoomLogic.getTileSize();
+    	
 		frameCount+=1;
 		
 		if (spriteLoaded == true && isWalking==false) {
 			//System.out.println("PLAYER DRAWN");
 			
-			g2.drawImage(idleImage, this.getX() - scaleWidth/2, this.getY() - scaleWidth/2, scaleWidth, scaleWidth, null);
+			g2.drawImage(idleImage, this.getX() - drawWidth/2, this.getY() - drawHeight/2, drawWidth, drawHeight, null);
 		} else if (spriteLoaded == true && isWalking==true) {
 			if (frameCount < 10) {
-			g2.drawImage(walkLeftImage, this.getX() - scaleWidth/2, this.getY() - scaleWidth/2, scaleWidth, scaleWidth, null);
+			g2.drawImage(walkLeftImage, this.getX() - drawWidth/2, this.getY() - drawHeight/2, drawWidth, drawHeight, null);
 			} else if (frameCount >= 10 && frameCount <= 20) {
-			g2.drawImage(idleImage, this.getX() - scaleWidth/2, this.getY() - scaleWidth/2, scaleWidth, scaleWidth, null);
+			g2.drawImage(idleImage, this.getX() - drawWidth/2, this.getY() - drawHeight/2, drawWidth, drawHeight, null);
 			} else if (frameCount > 20) {
-			g2.drawImage(walkRightImage, this.getX() - scaleWidth/2, this.getY() - scaleWidth/2, scaleWidth, scaleWidth, null);
+			g2.drawImage(walkRightImage, this.getX() - drawWidth/2, this.getY() - drawHeight/2, drawWidth, drawHeight, null);
 			if (frameCount >= 30) frameCount=0;
 			} 
 		} else {
@@ -152,7 +152,6 @@ public class Player extends Creature {
 			g2.setColor(Color.BLACK);
 			g2.fillOval(getX() - idleImage.getWidth()/2, getY() - idleImage.getHeight()/2, idleImage.getWidth(), idleImage.getHeight());
 		}
-    	
         //g.setColor(Color.BLACK); // draw player sprite
         //g.fillOval(x - width/2, y - height/2, width, height);
     }

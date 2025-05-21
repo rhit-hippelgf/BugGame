@@ -36,8 +36,10 @@ public class ZigZag extends Enemy {
         addEffect(new poison(3)); // built in poison
         addEffectChance(0.25); // 25% chance
         setBulletClass(ZigZagBullet.class);
-        this.width = RoomLogic.getTileSize();
-        this.height = RoomLogic.getTileSize();
+        this.drawWidth = RoomLogic.getTileSize();
+        this.drawHeight = RoomLogic.getTileSize();
+        this.width = drawWidth-20;
+        this.height = drawHeight-20;
         
         file1 = new File("assets/sprites/creatures/Moth1.png");
         file2 = new File("assets/sprites/creatures/Moth2.png");
@@ -85,7 +87,7 @@ public class ZigZag extends Enemy {
 //        System.out.println("Final Angle Used To Move: " + (angle + offset));
 
         super.calculateSpeeds(xTemp/mag,yTemp/mag);
-        super.move();
+//        super.move();
 
         if (zigzagCounter % 50 == 0) {
 //            System.out.println(">>> SHOOTING at angle: ");
@@ -110,15 +112,16 @@ public class ZigZag extends Enemy {
 		frameCount += 1;
 		if (spriteLoaded == true) {
 			if (frameCount <= 15) {
-				g.drawImage(image1, this.getX() - width / 2, this.getY() - height / 2, width, height, null);
+				g.drawImage(image1, this.getX() - drawWidth / 2, this.getY() - drawHeight / 2, drawWidth, drawHeight, null);
 			} else if (frameCount > 15 && frameCount <= 30) {
-				g.drawImage(image2, this.getX() - width / 2, this.getY() - height / 2, width, height, null);
+				g.drawImage(image2, this.getX() - drawWidth / 2, this.getY() - drawHeight / 2, drawWidth, drawHeight, null);
 				if (frameCount >= 30) frameCount = 0;
 			}
 		} else {
 			g.setColor(poisoned ? Color.GREEN : Color.BLUE);
 			g.fillOval(x - 10, y - 10, 20, 20);
 		}
+		g.drawRect(x-width/2, y-height/2, width, height);
 
         // bullets are now drawn in Room, not here
     }
