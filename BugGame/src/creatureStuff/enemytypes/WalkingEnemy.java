@@ -100,7 +100,7 @@ public class WalkingEnemy extends Enemy {
 
 	@Override
 	public void shoot(double dx, double dy) {
-		Bullet b = createBullet(dx, dy, 2, 1);
+		Bullet b = createBullet(dx, dy, 5, 1);
 		if (b != null && room != null) {
 			room.getEnemyBullets().add(b);
 		}
