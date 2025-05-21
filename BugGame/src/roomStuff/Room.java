@@ -175,6 +175,9 @@ public class Room extends JComponent {
         if (player != null) {
             player.update();
             control.moveIfPress();
+            for (Hole o : Obsticles) {
+            	player.checkValidSpeed(o.getXs(), o.getYs());
+            }
 //          Need line looping through an arrayList of Holes (Holes, and Rocks) to grap there xs and ys and run
 //          checkValidSpeed in creature class this is where we update player then below same for enemies
             player.move();
