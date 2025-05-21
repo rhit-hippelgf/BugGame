@@ -96,6 +96,8 @@ public class RoomLogic {
 			Point shopLoc = this.setShopRoom(rooms);
 			Point[] bossLoc = this.setBossRoom(rooms);
 			rooms.add(bossLoc[1]);
+			Point[] itemLoc = this.addItemRoom(rooms, bossLoc[1]);
+			rooms.add(itemLoc[1]);
 
 			
 	        int i = 0;
@@ -115,9 +117,12 @@ public class RoomLogic {
 	            	r = new BossRoom(north, east, south, west, TILE_SIZE, this.level, hero);
 	            } else if (temp.equals(shopLoc)) {
 	            	r = new ShopRoom(north, east, south, west, TILE_SIZE, this.level, hero);
+	            } else if (temp.equals(itemLoc[1])) {
+	            	r = new ItemRoom(north, east, south, west, TILE_SIZE, this.level, hero);
 	            } else {
 	            	r = new Room(north, east, south, west, TILE_SIZE, this.level, hero);
 	            }
+	            
 	            if (temp.equals(shopLoc)) {
 	            	r.setDoorColor('n', Color.YELLOW);
 	            	r.setDoorColor('e', Color.YELLOW);
@@ -125,9 +130,21 @@ public class RoomLogic {
 	            	r.setDoorColor('w', Color.YELLOW);
 	            }
 	            
+	            if (temp.equals(itemLoc[1])) {
+	            	r.setDoorColor('n', Color.GREEN);
+	            	r.setDoorColor('e', Color.GREEN);
+	            	r.setDoorColor('s', Color.GREEN);
+	            	r.setDoorColor('w', Color.GREEN);
+	            }
+	            
 	            if (temp.equals(bossLoc[0])) {
 	            	char dir = this.checkDirection(bossLoc[0], bossLoc[1]);
 	            	r.setDoorColor(dir, Color.BLUE);
+	            }
+	            
+	            if (temp.equals(itemLoc[0])) {
+	            	char dir = this.checkDirection(itemLoc[0], itemLoc[1]);
+	            	r.setDoorColor(dir, Color.GREEN);
 	            }
 	            
 	            if (temp.equals(bossLoc[1])) {
@@ -165,7 +182,7 @@ public class RoomLogic {
 	        this.goNextFloor(currentRoom.goThroughDoor());
 	        this.switchRooms(currentRoom.goThroughDoor());
     	} else {
-    		this.generateLayout(this.numRooms+4+3*this.level);
+    		this.generateLayout(4+2*this.level);
     		hud.switchFloor();
     	}
  
@@ -211,6 +228,31 @@ public class RoomLogic {
     	}
     	Random rand = new Random();
     	return validPoints.get(rand.nextInt(validPoints.size()));
+    }
+    
+    private Point[] addItemRoom(ArrayList<Point> points, Point bossLoc) {
+    	boolean check = false;
+    	Point[] itemLoc = new Point[2];
+    	while (!check) {
+    		check = true;
+	    	Point preItem = this.setShopRoom(points);
+	    	if (preItem.equals(bossLoc)) {
+	    		check = false;
+	    	}
+	    	itemLoc[0] = preItem;
+	    	if (surroundingRoomsCheck(preItem,new Point(preItem.x,preItem.y+1),points)) {
+	    		itemLoc[1] = new Point(preItem.x,preItem.y+1);	
+	    	} else if (surroundingRoomsCheck(preItem,new Point(preItem.x+1,preItem.y),points)) {
+	    		itemLoc[1] =  new Point(preItem.x+1,preItem.y);
+	    	} else if (surroundingRoomsCheck(preItem,new Point(preItem.x-1,preItem.y),points)) {
+	    		itemLoc[1] =  new Point(preItem.x-1,preItem.y);
+	    	} else if (surroundingRoomsCheck(preItem,new Point(preItem.x,preItem.y-1),points)) {
+	    		itemLoc[1] =  new Point(preItem.x,preItem.y-1);
+	    	} else {
+	    		check = false;
+	    	}
+    	}
+    	return itemLoc;
     }
     
     private Point[] setBossRoom(ArrayList<Point> points) {
