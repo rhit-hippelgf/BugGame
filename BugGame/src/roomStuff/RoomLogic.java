@@ -110,7 +110,14 @@ public class RoomLogic {
 	                else if (p.y == temp.y && p.x == temp.x - 1) west = true;
 	            }
 	
-	            Room r = new Room(north, east, south, west, TILE_SIZE, this.level, hero);
+	            Room r;
+	            if (temp.equals(bossLoc[1])) {
+	            	r = new BossRoom(north, east, south, west, TILE_SIZE, this.level, hero);
+	            } else if (temp.equals(shopLoc)) {
+	            	r = new ShopRoom(north, east, south, west, TILE_SIZE, this.level, hero);
+	            } else {
+	            	r = new Room(north, east, south, west, TILE_SIZE, this.level, hero);
+	            }
 	            if (temp.equals(shopLoc)) {
 	            	r.setDoorColor('n', Color.YELLOW);
 	            	r.setDoorColor('e', Color.YELLOW);
