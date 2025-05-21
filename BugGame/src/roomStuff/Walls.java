@@ -30,17 +30,18 @@ public class Walls {
 	private boolean spriteLoaded;
 	private boolean isCleared;
 	
-	public Walls(int x, int y, char nDoor, char eDoor, char sDoor, char wDoor) {
+	public Walls(int x, int y, char nDoor, char eDoor, char sDoor, char wDoor, boolean isCleared) {
 		this.x=x;
 		this.y=y;
 		this.nDoor=nDoor;
 		this.eDoor=eDoor;
 		this.sDoor=sDoor;
 		this.wDoor=wDoor;
+		this.isCleared=isCleared;
 		
 		try {
 			normalWalls = ImageIO.read(new File("assets/sprites/walls/baseWalls.png"));
-			
+			enemyWalls = ImageIO.read(new File("assets/sprites/walls/enemyWalls.png"));
 			if (nDoor == 'B') {
 			nBossDoor = ImageIO.read(new File("assets/sprites/walls/nBoss.png"));
 			} else if (eDoor == 'B') {
