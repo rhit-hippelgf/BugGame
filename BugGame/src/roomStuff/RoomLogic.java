@@ -94,8 +94,8 @@ public class RoomLogic {
 			}
 
 			Point shopLoc = this.setShopRoom(rooms);
-			Point bossLoc = this.setBossRoom(rooms);
-			rooms.add(bossLoc);
+			Point[] bossLoc = this.setBossRoom(rooms);
+			rooms.add(bossLoc[1]);
 
 			
 	        int i = 0;
@@ -118,7 +118,12 @@ public class RoomLogic {
 	            	r.setDoorColor('w', Color.YELLOW);
 	            }
 	            
-	            if (temp.equals(bossLoc)) {
+	            if (temp.equals(bossLoc[0])) {
+	            	char dir = this.checkDirection(bossLoc[0], bossLoc[1]);
+	            	r.setDoorColor(dir, Color.BLUE);
+	            }
+	            
+	            if (temp.equals(bossLoc[1])) {
 	            	r.setFloorDoor();
 	            }
 	            roomLayout.put(temp, r);
@@ -201,7 +206,7 @@ public class RoomLogic {
     	return validPoints.get(rand.nextInt(validPoints.size()));
     }
     
-    private Point setBossRoom(ArrayList<Point> points) {
+    private Point[] setBossRoom(ArrayList<Point> points) {
     	ArrayList<Point> validPoints = new ArrayList<>();
     	double maxDist = 0;
     	for (Point point : points) {
@@ -216,10 +221,26 @@ public class RoomLogic {
     	}
     	Random rand = new Random();
     	Point preBoss = validPoints.get(rand.nextInt(validPoints.size()));
-    	if (surroundingRoomsCheck(preBoss,new Point(preBoss.x,preBoss.y+1),points)) return new Point(preBoss.x,preBoss.y+1);
-    	else if (surroundingRoomsCheck(preBoss,new Point(preBoss.x+1,preBoss.y),points)) return new Point(preBoss.x+1,preBoss.y);
-    	else if (surroundingRoomsCheck(preBoss,new Point(preBoss.x-1,preBoss.y),points)) return new Point(preBoss.x-1,preBoss.y);
-    	else return new Point(preBoss.x,preBoss.y-1);
+    	Point[] bossLoc = new Point[2];
+    	bossLoc[0] = preBoss;
+    	if (surroundingRoomsCheck(preBoss,new Point(preBoss.x,preBoss.y+1),points)) {
+    		bossLoc[1] = new Point(preBoss.x,preBoss.y+1);	
+    	} else if (surroundingRoomsCheck(preBoss,new Point(preBoss.x+1,preBoss.y),points)) {
+    		bossLoc[1] =  new Point(preBoss.x+1,preBoss.y);
+    	} else if (surroundingRoomsCheck(preBoss,new Point(preBoss.x-1,preBoss.y),points)) {
+    		bossLoc[1] =  new Point(preBoss.x-1,preBoss.y);
+    	} else {
+    		bossLoc[1] =  new Point(preBoss.x,preBoss.y-1);
+    	}
+    	return bossLoc;
+    }
+    
+    private char checkDirection(Point preRoom, Point postRoom) {
+    	if (postRoom.y - preRoom.y == 1) return 'n';
+    	else if (postRoom.x - preRoom.x == 1) return 'e';
+    	else if (postRoom.y - preRoom.y == -1) return 's';
+    	else if (postRoom.x - preRoom.x == -1) return 'w';
+    	else return ' ';
     }
     
     private void setCurrentRoom(Point point, int x, int y) {
