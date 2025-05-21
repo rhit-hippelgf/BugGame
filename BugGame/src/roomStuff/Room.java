@@ -46,7 +46,7 @@ public class Room extends JComponent {
 
     private Door north, east, south, west;
     private Controller control;
-    private char[][] layout;
+    protected char[][] layout;
     private boolean roomCleared;
 
     private final int TILE_SIZE;
@@ -67,7 +67,6 @@ public class Room extends JComponent {
         this.TILE_SIZE = tileSize;
         this.level = level;
         this.player = player;
-        this.generateLayout();
         
 //      Temporary testing line remove when adding enimies adding to walk through doors
         this.roomCleared();
@@ -100,15 +99,15 @@ public class Room extends JComponent {
     				Obsticles.add((Hole)hole);
     			} else if (i == 's') {
     				gridTiles[row][col] = new Tile(x, y, level);
-    				Creature e = new Suicide(x, y, player, this);
+    				Creature e = new Suicide(x+TILE_SIZE/2, y+TILE_SIZE/2, player, this);
     				this.addEnemy(e);
     			} else if (i == 'z') {
     				gridTiles[row][col] = new Tile(x, y, level);
-    				Creature e = new ZigZag(x, y, player, this);
+    				Creature e = new ZigZag(x+TILE_SIZE/2, y+TILE_SIZE/2, player, this);
     				this.addEnemy(e);
     			} else if (i == 'e') {
     				gridTiles[row][col] = new Tile(x, y, level);
-    				Creature e = new WalkingEnemy(x, y, player, this);
+    				Creature e = new WalkingEnemy(x+TILE_SIZE/2, y+TILE_SIZE/2, player, this);
     				this.addEnemy(e);
     			} else {
     				gridTiles[row][col] = new Tile(x,y,level);

@@ -59,6 +59,7 @@ public class RoomLogic {
 //        	will put you in the begining room that will contain the door to start
 			rooms.add(new Point(0, 0));
             Room r = new Room(false, false, false, false, TILE_SIZE, this.level, hero);
+            r.generateLayout();
             currentRoom = r;
             r.setPlayer((Player) hero);
             roomLayout.put(rooms.get(0), r);
@@ -98,6 +99,7 @@ public class RoomLogic {
 			rooms.add(bossLoc[1]);
 			Point[] itemLoc = this.addItemRoom(rooms, bossLoc[1]);
 			rooms.add(itemLoc[1]);
+			System.out.println("shopLoc: " + shopLoc + " bossLoc: " + bossLoc[1] + " itemLoc: " + itemLoc[1]);
 
 			
 	        int i = 0;
@@ -122,6 +124,7 @@ public class RoomLogic {
 	            } else {
 	            	r = new Room(north, east, south, west, TILE_SIZE, this.level, hero);
 	            }
+	            r.generateLayout();
 	            
 	            if (temp.equals(shopLoc)) {
 	            	r.setDoorColor('n', Color.YELLOW);
@@ -249,6 +252,9 @@ public class RoomLogic {
 	    	} else if (surroundingRoomsCheck(preItem,new Point(preItem.x,preItem.y-1),points)) {
 	    		itemLoc[1] =  new Point(preItem.x,preItem.y-1);
 	    	} else {
+	    		check = false;
+	    	}
+	    	if (itemLoc[1].equals(bossLoc)) {
 	    		check = false;
 	    	}
     	}
