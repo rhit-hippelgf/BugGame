@@ -137,7 +137,6 @@ public class WalkingEnemy extends Enemy {
 		}
 
 		// draw a red line toward the target (player)
-		g.drawRect(x-width/2, y-height/2, width, height);
 		g.setColor(Color.RED);
 		int ex = this.getX();
 		int ey = this.getY();
