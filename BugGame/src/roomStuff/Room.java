@@ -115,45 +115,6 @@ public class Room extends JComponent {
     		}
     	}
     }
-    
-//    private void spawnEnemies() {
-//        if (player == null) return; // avoid null on early call
-//
-//        Dimension roomSize = getRoomSize();
-//        int roomWidth = roomSize.width;
-//        int roomHeight = roomSize.height;
-//
-//        Random rand = new Random();
-//        int numEnemies = rand.nextInt(5) + 3; // 3 to 7 enemies
-//
-//        for (int i = 0; i < numEnemies; i++) {
-//            int x = rand.nextInt(roomWidth - TILE_SIZE);  // avoid spawning partly out of bounds
-//            int y = rand.nextInt(roomHeight - TILE_SIZE);
-//
-//            Enemy enemy = getRandomEnemy(x, y);
-//            if (enemy != null) {
-//                enemies.add(enemy);
-//            }
-//        }
-//    }
-//
-////This seems like a temporary method until room can spawn grid layout
-//    private Enemy getRandomEnemy(int x, int y) {
-//        Random rand = new Random();
-//        int choice = rand.nextInt(3); // or however many enemy types you have
-//
-//        switch (choice) {
-//            case 0:
-//                return new WalkingEnemy(x, y, player);
-//            case 1:
-//                return new ZigZag(x, y, player);
-//            case 2:
-//                return new Suicide(x, y, player);
-//            default:
-//                return null;
-//        }
-//    }
-
 
     public void addEnemy(Creature e) {
         enemies.add(e);

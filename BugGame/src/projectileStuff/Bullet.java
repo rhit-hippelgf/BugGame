@@ -79,7 +79,7 @@ public abstract class Bullet {
     public double getY() { return y; }
 
     public void onHit(Creature target) {
-    	System.out.println("Marked bullet for removal: " + this + " (" + System.identityHashCode(this) + ")");
+    	System.out.println("Marked bullet for removal: " + target);
         target.takeDamage(damage);
 
         if (source != null && Math.random() < source.getEffectChance()) {

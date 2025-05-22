@@ -184,6 +184,7 @@ public class RoomLogic {
 	        currentRoom.updateEntities();
 	        this.goNextFloor(currentRoom.goThroughDoor());
 	        this.switchRooms(currentRoom.goThroughDoor());
+	        hud.detectChange();
     	} else {
     		this.generateLayout(4+2*this.level);
     		hud.switchFloor();
