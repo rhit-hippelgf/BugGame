@@ -216,6 +216,9 @@ public class Room extends JComponent {
                     break;
                 }
             }
+            for (Hole o : Obsticles) {
+            	if (o.bulletHitBoulder((int) b.getX(),(int) b.getY())) {b.markForRemoval();}
+            }
         }
 
         // enemy bullet update and collision

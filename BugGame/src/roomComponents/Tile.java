@@ -161,4 +161,8 @@ public class Tile {
 		return ys;
 	}
 	
+	public boolean bulletHitBoulder(int x, int y) {
+		return false;
+	}
+	
 }

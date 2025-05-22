@@ -47,4 +47,8 @@ public class Hole extends Tile {
 		g2.setColor(old);
 		}
 	}
+	
+	public boolean bulletHitBoulder(int x, int y) {
+		return false;
+	}
 }

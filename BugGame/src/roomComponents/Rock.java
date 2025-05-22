@@ -46,4 +46,9 @@ public class Rock extends Hole {
 		g2.setColor(old);
 		}
 	}
+	
+	public boolean bulletHitBoulder(int x, int y) {
+		if (x1 < x && x < x2 && y1 < y && y < y2) return true;
+		else return false;
+	}
 }
