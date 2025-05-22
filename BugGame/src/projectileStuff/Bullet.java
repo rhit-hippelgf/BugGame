@@ -2,7 +2,12 @@ package projectileStuff;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.io.File;
 import java.util.List;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 import creatureStuff.Creature;
 import effectStuff.Effect;
@@ -36,6 +41,7 @@ public abstract class Bullet {
 
         this.xspeed = speed * this.dx;
         this.yspeed = speed * this.dy;
+        playShootSound();
     }
 
     public void update() {
@@ -91,5 +97,21 @@ public abstract class Bullet {
         markForRemoval = true;
     }
 
+<<<<<<< HEAD
     public abstract void draw(Graphics2D g);
+=======
+    public abstract void draw(Graphics g);
+    
+    private void playShootSound() {
+        try {
+          AudioInputStream a = AudioSystem.getAudioInputStream(
+              new File("assets/sounds/pop.mp3"));
+          Clip clip = AudioSystem.getClip();
+          clip.open(a);
+          clip.start();
+        } catch (Exception e) {
+          System.err.println("Error playing sound: " + e.getMessage());
+        }
+    }
+>>>>>>> branch 'main' of https://github.com/rhit-hippelgf/BugGame.git
 }
