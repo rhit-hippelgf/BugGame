@@ -45,6 +45,7 @@ public class Room extends JComponent {
     private Creature player;
 
     private Door north, east, south, west;
+    private Walls[] walls = new Walls[4];
     private Controller control;
     protected char[][] layout;
     private boolean roomCleared;
@@ -62,6 +63,10 @@ public class Room extends JComponent {
         this.east = new Door(east,'e');
         this.south = new Door(south,'s');
         this.west = new Door(west,'w');
+        walls[0] = new Walls(north, 'n', false);
+        walls[1] = new Walls(east, 'e', false);
+        walls[2] = new Walls(south, 's', false);
+        walls[3] = new Walls(west, 'w', false);
         FileReader pickLayout = new FileReader(north, east, south, west, false, false, false, false, level);
         layout = pickLayout.getLayout();
         this.TILE_SIZE = tileSize;
@@ -292,10 +297,29 @@ public class Room extends JComponent {
     	east.openDoor();
     	west.openDoor();
     	south.openDoor();
+    	for (int i = 0; i < walls.length; i++) {
+    		walls[i].roomCleared();
+    	}
     }
     
     public int getTileSize(){
     	return TILE_SIZE;
+    }
+    
+    public void setPreBossWall(char dir) {
+    	if (dir == 'n') {
+    		this.walls[0] = new Walls(true, dir, true);
+    	} else if (dir == 'e') {
+    		this.walls[1] = new Walls(true, dir, true);
+    	} else if (dir == 's') {
+    		this.walls[2] = new Walls(true, dir, true);
+    	} else if (dir == 'w') {
+    		this.walls[3] = new Walls(true, dir, true);
+    	}
+    }
+    
+    public Walls[] getWalls() {
+    	return walls;
     }
     
     public List<Bullet> getPlayerBullets() { return playerBullets; }

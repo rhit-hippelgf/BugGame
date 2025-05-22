@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 import creatureStuff.Player;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.Color;
 
 public class BackgroundHud extends JComponent {
@@ -24,6 +25,7 @@ public class BackgroundHud extends JComponent {
 	private int sideGapY = (RoomLogic.getScreenHeight()-RoomLogic.getRoomHeight())/2;
 	private int mapPaintOX = RoomLogic.getRoomWidth() + sideGapX + mapPaintWidth/2;
 	private int mapPaintOY = sideGapY/2 - mapPaintHeight/2;
+	private Walls[] walls;
 	private boolean loading = false;
 
 	
@@ -46,6 +48,15 @@ public class BackgroundHud extends JComponent {
 			g2.drawString("Loading...", 400,400);
 			g2.setColor(Color.BLACK);
 		} else {
+			Color old = g2.getBackground();
+			g2.setColor(new Color(87, 66, 60));
+			g2.fillRect(0, 0, RoomLogic.getScreenWidth(), sideGapY);
+			g2.fillRect(0, RoomLogic.getScreenHeight()-sideGapY, RoomLogic.getScreenWidth(), sideGapY);
+			g2.setColor(old);
+			
+			for (int i = 0; i < walls.length; i++) {
+				walls[i].draw(g2);
+			}
 	        
 	        g2.drawString("Current Health: " + health, 50, 50);
 	        g2.drawString("Max Health: " + maxHealth, 50, 70);
@@ -66,8 +77,9 @@ public class BackgroundHud extends JComponent {
         
 	}
 	
-	public void updateRoom(Point currLoc) {
+	public void updateRoom(Point currLoc, Walls[] walls) {
 		this.currentRoom = currLoc;
+		this.walls = walls;
 		if (!exploredMap.contains(currLoc)) {
 			exploredMap.add(currLoc);
 		}
@@ -86,7 +98,7 @@ public class BackgroundHud extends JComponent {
 	public void switchFloor() {
 		level++;
 		exploredMap.clear();
-		this.updateRoom(new Point(0,0));
+		this.updateRoom(new Point(0,0), walls);
 		this.switchLoading();
 	}
 	

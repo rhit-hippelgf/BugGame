@@ -1,6 +1,6 @@
 package projectileStuff;
 
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.List;
 
@@ -91,5 +91,5 @@ public abstract class Bullet {
         markForRemoval = true;
     }
 
-    public abstract void draw(Graphics g);
+    public abstract void draw(Graphics2D g);
 }

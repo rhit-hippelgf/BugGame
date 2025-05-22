@@ -93,6 +93,7 @@ public class RoomLogic {
 						rooms.add(new Point(temp.x, temp.y + 1));
 					}
 				}
+				System.out.println("check 1");
 			}
 
 			Point shopLoc = this.setShopRoom(rooms);
@@ -310,7 +311,7 @@ public class RoomLogic {
         currentRoom.setPlayer((Player) hero);
         hero.setX(x);
         hero.setY(y);
-        hud.updateRoom(point);
+        hud.updateRoom(point, currentRoom.getWalls());
 //    	currentRoom.repaint();
     }
     
