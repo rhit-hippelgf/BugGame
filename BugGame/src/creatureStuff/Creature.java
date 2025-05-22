@@ -4,11 +4,18 @@ import java.awt.Graphics2D;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
+
 import projectileStuff.Bullet;
 import roomStuff.Room;
 import roomStuff.RoomLogic;
 import effectStuff.Effect;
 import java.awt.Rectangle;
+import java.io.File;
 
 
 public abstract class Creature {
@@ -31,6 +38,7 @@ public abstract class Creature {
 	
 	// bullet logic
 	protected Class<? extends Bullet> bulletClass;
+	protected int volume_int;
 
 	public Creature(int startX, int startY, int startSpeed, int startHealth) {
 		this.x = startX;
@@ -196,6 +204,24 @@ public abstract class Creature {
 	public abstract double getWidth();
 
 	public abstract double getHeight();
+	
+	protected void setVolume(int vol) {
+		this.volume_int=vol;
+	}
+	
+	protected void playShootSound() {
+        try {
+          AudioInputStream a = AudioSystem.getAudioInputStream(
+              new File("assets/sounds/pop.wav"));
+          Clip clip = AudioSystem.getClip();
+          clip.open(a);
+          FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+          volume.setValue(-1 * volume_int);
+          clip.start();
+        } catch (Exception e) {
+          System.err.println("Error playing sound: " + e.getMessage());
+        }
+    }
 }
 
 

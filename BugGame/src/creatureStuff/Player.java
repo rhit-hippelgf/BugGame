@@ -162,7 +162,7 @@ public class Player extends Creature {
     @Override
     public void shoot(double dx, double dy) {
         int baseDamage = 1;
-
+        
         if (new RngHandler().handleCheck(critChance)) {
             baseDamage *= 2;
         }
@@ -171,6 +171,7 @@ public class Player extends Creature {
 //        System.out.println("Calling shoot!");
         if (shootCount == 0) {
             b = createBullet(dx, dy, 5, baseDamage);
+            playShootSound();
             shootCount = 1;
         } else if (shootCount > shootCooldown) {
         	shootCount = 0;

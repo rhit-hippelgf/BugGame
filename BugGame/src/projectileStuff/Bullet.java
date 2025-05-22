@@ -41,7 +41,6 @@ public abstract class Bullet {
 
         this.xspeed = speed * this.dx;
         this.yspeed = speed * this.dy;
-        playShootSound();
     }
 
     public void update() {
@@ -99,15 +98,5 @@ public abstract class Bullet {
 
     public abstract void draw(Graphics2D g);
     
-    private void playShootSound() {
-        try {
-          AudioInputStream a = AudioSystem.getAudioInputStream(
-              new File("assets/sounds/pop.mp3"));
-          Clip clip = AudioSystem.getClip();
-          clip.open(a);
-          clip.start();
-        } catch (Exception e) {
-          System.err.println("Error playing sound: " + e.getMessage());
-        }
-    }
+    
 }
