@@ -9,6 +9,7 @@ public class ShopRoom extends Room {
 		super(north, east, south, west, tileSize, level, player);
 		FileReader pickLayout = new FileReader(north, east, south, west, false, false, true, false, level);
         layout = pickLayout.getLayout();
+        
 	}
 
 }

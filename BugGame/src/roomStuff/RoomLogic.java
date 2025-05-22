@@ -3,9 +3,14 @@ package roomStuff;
 import java.util.*;
 import java.util.List;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import javax.swing.JFrame;
 
 import java.awt.Point;
+import java.io.File;
 
 import creatureStuff.Creature;
 import creatureStuff.Enemy;
@@ -28,6 +33,9 @@ public class RoomLogic {
     private static int SCREEN_WIDTH, SCREEN_HEIGHT;
     private HashMap<Point, Room> roomLayout = new HashMap<>();
     private BackgroundHud hud;
+	//private ArrayList<Point> shopPoints;
+    private Point shopLoc;
+	public musicPlayer musicPlayer = new musicPlayer();
 
     public RoomLogic(int tileSize, int roomWidth, int roomHeight, int roomX, int roomY, JFrame frame, int screenWidth, int screenHeight) {
         this.numRooms = 0;
@@ -45,6 +53,9 @@ public class RoomLogic {
 //        this.frame.add(hud);
         this.generateLayout(numRooms);
         System.out.println(this.roomLayout.keySet());
+        
+        
+        musicPlayer.playBgm();
     }
 
 
@@ -96,7 +107,8 @@ public class RoomLogic {
 				System.out.println("check 1");
 			}
 
-			Point shopLoc = this.setShopRoom(rooms);
+			shopLoc = this.setShopRoom(rooms);
+			//this.shopPoints.add(shopLoc);
 			Point[] bossLoc = this.setBossRoom(rooms);
 			rooms.add(bossLoc[1]);
 			Point[] itemLoc = this.addItemRoom(rooms, bossLoc[1]);
@@ -121,6 +133,7 @@ public class RoomLogic {
 	            	r = new BossRoom(north, east, south, west, TILE_SIZE, this.level, hero);
 	            } else if (temp.equals(shopLoc)) {
 	            	r = new ShopRoom(north, east, south, west, TILE_SIZE, this.level, hero);
+	            	
 	            } else if (temp.equals(itemLoc[1])) {
 	            	r = new ItemRoom(north, east, south, west, TILE_SIZE, this.level, hero);
 	            } else {
@@ -312,8 +325,21 @@ public class RoomLogic {
         hero.setX(x);
         hero.setY(y);
         hud.updateRoom(point, currentRoom.getWalls());
+        
+        musicPlayer.playBgm();
+        if (point.equals(shopLoc) == true) {
+        	musicPlayer.pauseBgm();
+        	musicPlayer.playShop();
+        } else {
+        	musicPlayer.pauseShop();
+        }
+        
+        
 //    	currentRoom.repaint();
     }
+    
+    
+    
     
     public Room getCurrentRoom() {return currentRoom;}
     
