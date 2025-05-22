@@ -134,8 +134,8 @@ public class Controller implements MouseListener {
 //        double angle = Math.atan2(mouse.y - player.getY(), mouse.x - player.getX());
 
 
-        System.out.printf("Mouse local: (%d, %d), Player center: (%.2f, %.2f), Angle: %.3f\n",
-                          mouse.x, mouse.y, px, py, dx, dy);
+//        System.out.printf("Mouse local: (%d, %d), Player center: (%.2f, %.2f), Angle: %.3f\n",
+//                          mouse.x, mouse.y, px, py, dx, dy);
 
         player.shoot(dx, dy);
     }

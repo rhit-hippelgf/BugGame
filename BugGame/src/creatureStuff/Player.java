@@ -30,6 +30,8 @@ public class Player extends Creature {
     //private String damageType = "normal";
     private int lightingChance = 0;
     private boolean triShot = false;
+    private int shootCount;
+    private int shootCooldown = 30;
 
     // ref to Room component for screen coordinates and dimensions
 //    private Room currentRoom;
@@ -117,6 +119,7 @@ public class Player extends Creature {
     
     @Override
     public void update() {
+    	shootCount++;
         // placeholder for movement, status effects, cooldowns, etc.
     }
 
@@ -164,9 +167,16 @@ public class Player extends Creature {
             baseDamage *= 2;
         }
 
+        Bullet b = null;
 //        System.out.println("Calling shoot!");
+        if (shootCount == 0) {
+            b = createBullet(dx, dy, 5, baseDamage);
+            shootCount = 1;
+        } else if (shootCount > shootCooldown) {
+        	shootCount = 0;
+        }
 
-        Bullet b = createBullet(dx, dy, 5, baseDamage);
+
         System.out.println("Bullet created: " + b);
         if (b == null) System.out.println("Bullet creation failed!");
 
