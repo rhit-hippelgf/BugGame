@@ -48,7 +48,7 @@ public class BackgroundHud extends JComponent {
 		} else {
 	        
 	        g2.drawString("Current Health: " + health, 50, 50);
-	        g2.drawString("Max Health: " + health, 50, 70);
+	        g2.drawString("Max Health: " + maxHealth, 50, 70);
 	        g2.drawString("Level: " + level, 500, 70);
 	        
 	        for (Point point : exploredMap) {

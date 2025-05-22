@@ -15,6 +15,7 @@ public abstract class Creature {
 	protected int x, y;
 	protected int width, height;
 	protected int drawWidth, drawHeight;
+	protected int bulletSpeed;
 	protected int speed;
 	protected double xspeed, yspeed;
 	protected int health;
@@ -37,6 +38,7 @@ public abstract class Creature {
 		this.speed = startSpeed;
 		this.health = startHealth;
 		this.healthCap = startHealth;
+		this.bulletSpeed = 8;
 	}
 	
 	public Rectangle getBounds() {
@@ -72,16 +74,6 @@ public abstract class Creature {
 			yspeed = 0;
 			y = roomHeight - height/2;
 		}
-//		int[] topWallx = {0,roomWidth};
-//		int[] topWally = {-1,0};
-//		int[] bottomWally = {roomHeight, roomHeight+1};
-//		int[] rightWallx = {roomWidth,roomWidth+1};
-//		int[] leftWallx = {-1,0};
-//		int[] sideWally = {0,roomHeight};
-//		checkValidSpeed(topWallx,topWally);
-//		checkValidSpeed(rightWallx,sideWally);
-//		checkValidSpeed(topWallx,bottomWally);
-//		checkValidSpeed(leftWallx,sideWally);
 		
 	}
 	
@@ -132,7 +124,7 @@ public abstract class Creature {
 	    try {
 	        return bulletClass
 	            .getConstructor(double.class, double.class, double.class, double.class, int.class, int.class, Creature.class)
-	            .newInstance((double) x, (double) y, dx, dy, speed, damage, this);
+	            .newInstance((double) x, (double) y, dx, dy, bulletSpeed, damage, this);
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	        return null;
