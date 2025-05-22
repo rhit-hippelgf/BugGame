@@ -88,7 +88,7 @@ public class WalkingEnemy extends Enemy {
 		// apply a slight angle variation to simulate imperfect tracking
 
 		// update speed vector using calculated angle
-		super.calculateSpeeds(dx, dy);
+		super.calculateSpeeds(dx*Math.abs(dx), dy*Math.abs(dy));
 		
 		super.bounceOffPlayer();
 		
