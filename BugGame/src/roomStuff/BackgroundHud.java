@@ -8,6 +8,7 @@ import javax.swing.*;
 import creatureStuff.Player;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.BasicStroke;
 import java.awt.Color;
 
 public class BackgroundHud extends JComponent {
@@ -52,11 +53,15 @@ public class BackgroundHud extends JComponent {
 			g2.setColor(new Color(87, 66, 60));
 			g2.fillRect(0, 0, RoomLogic.getScreenWidth(), sideGapY);
 			g2.fillRect(0, RoomLogic.getScreenHeight()-sideGapY, RoomLogic.getScreenWidth(), sideGapY);
-			g2.setColor(old);
 			
 			for (int i = 0; i < walls.length; i++) {
 				walls[i].draw(g2);
 			}
+			g2.setColor(Color.BLACK);
+			g2.setStroke(new BasicStroke(4));
+			g2.drawRect(sideGapX-1, sideGapY-1, RoomLogic.getRoomWidth()+1, RoomLogic.getRoomHeight()+1);
+			g2.setColor(old);
+			
 	        
 	        g2.drawString("Current Health: " + health, 50, 50);
 	        g2.drawString("Max Health: " + maxHealth, 50, 70);

@@ -98,18 +98,13 @@ public class Walls {
 				if (preBoss) {
 					g2.drawImage(bossDoor, 0, 0, SCREENWIDTH, SCREENHEIGHT, null);
 				} else if (!doorExists) {
-					g2.draw(noDoor);
+					g2.fill(noDoor);
 				}
 			} else {
 			
-			Color old = g2.getBackground();
 			g2.setColor(color);
 			g2.fillRect(x, y, SCREENWIDTH, SCREENHEIGHT);
-			g2.setColor(old);
 			}
-			Color old = g2.getBackground();
-			g2.setColor(Color.BLACK);
-//			g2.drawLine()
 		}
 
 	public void roomCleared() {
