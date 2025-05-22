@@ -3,8 +3,11 @@ package creatureStuff;
 import java.awt.Graphics;
 import java.awt.*;
 import java.awt.Rectangle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import roomStuff.Room;
+import roomStuff.ViewerMain;
 
 
 public abstract class Enemy extends Creature {
@@ -27,15 +30,12 @@ public abstract class Enemy extends Creature {
     public abstract void update();
 
     public void takeDamage(int dmg) {
-        System.out.println("Enemy took " + dmg + " damage");
         health -= dmg;
-        System.out.println("Enemy health now: " + health);
     }
     
     @Override
     public void setRoom(Room r) {
         super.setRoom(r);
     }
-
 
 }

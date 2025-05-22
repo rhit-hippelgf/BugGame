@@ -148,6 +148,7 @@ public class Room extends JComponent {
         }
         for (Creature e : enemies) {
         	e.update();
+        	
         	for (Hole o : Obsticles) {
         		e.checkValidSpeed(o.getXs(), o.getYs());
         	}
@@ -188,6 +189,9 @@ public class Room extends JComponent {
             if (b.getBounds().intersects(player.getBounds())) {
                 b.onHit(player);
                 enemyToRemove.add(b);
+            }
+            for (Hole o : Obsticles) {
+            	if (o.bulletHitBoulder((int) b.getX(),(int) b.getY())) {b.markForRemoval();}
             }
         }
 

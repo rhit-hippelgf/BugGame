@@ -52,13 +52,14 @@ public class RoomLogic {
     	System.out.println(level);
     	this.numRooms = numRooms;
         ArrayList<Point> rooms = new ArrayList<>();
+        roomLayout.clear();
         Random rand = new Random();
 
         if (numRooms == 0) {
 //        	This is initial condition generating a Layout with 0 floors
 //        	will put you in the begining room that will contain the door to start
 			rooms.add(new Point(0, 0));
-            Room r = new Room(false, false, false, false, TILE_SIZE, this.level, hero);
+            Room r = new TutorialRoom(false, true, true, true, TILE_SIZE, this.level, hero);
             r.generateLayout();
             currentRoom = r;
             r.setPlayer((Player) hero);
@@ -255,7 +256,7 @@ public class RoomLogic {
 	    	} else {
 	    		check = false;
 	    	}
-	    	if (itemLoc[1].equals(bossLoc)) {
+	    	if (itemLoc[1].equals(bossLoc) && check == true) {
 	    		check = false;
 	    	}
     	}

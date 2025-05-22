@@ -20,8 +20,8 @@ public abstract class Bullet {
 
     protected static int roomWidth = RoomLogic.getRoomWidth();
     protected static int roomHeight = RoomLogic.getRoomHeight();
-    protected int width = 10;
-    protected int height = 10;
+    protected int width = 20;
+    protected int height = 20;
 //    protected double angle;
 
 

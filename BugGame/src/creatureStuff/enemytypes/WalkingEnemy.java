@@ -79,6 +79,9 @@ public class WalkingEnemy extends Enemy {
 		double xTemp = tx - ex;
 		double yTemp = ty - ey;
 		double mag = Math.sqrt(xTemp*xTemp + yTemp*yTemp);
+		if (mag < 0.00001) {
+			mag = 0.00001;
+		}
 		double dx = xTemp/mag;
 		double dy = yTemp/mag;
 
