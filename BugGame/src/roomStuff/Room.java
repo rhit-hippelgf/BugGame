@@ -254,15 +254,19 @@ public class Room extends JComponent {
     		char dir = directions[rand.nextInt(4)];
     		if (dir == 'n' && !this.north.getVisable()) {
     			this.north = new FloorDoor(true,'n');
+    			this.walls[0] = new Walls(true,'n',true);
     			pickedFloorDoor = true;
     		} else if (dir == 'e' && !this.east.getVisable()) {
     			this.east = new FloorDoor(true,'e');
+    			this.walls[1] = new Walls(true,'e',true);
     			pickedFloorDoor = true;
     		} else if (dir == 's' && !this.south.getVisable()) {
     			this.south = new FloorDoor(true,'s');
+    			this.walls[2] = new Walls(true,'s',true);
     			pickedFloorDoor = true;
     		} else if (dir == 'w' && !this.west.getVisable()) {
     			this.west = new FloorDoor(true,'w');
+    			this.walls[3] = new Walls(true,'w',true);
     			pickedFloorDoor = true;
     		}
     	}
