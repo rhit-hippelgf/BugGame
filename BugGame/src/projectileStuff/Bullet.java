@@ -97,10 +97,7 @@ public abstract class Bullet {
         markForRemoval = true;
     }
 
-<<<<<<< HEAD
     public abstract void draw(Graphics2D g);
-=======
-    public abstract void draw(Graphics g);
     
     private void playShootSound() {
         try {
@@ -113,5 +110,4 @@ public abstract class Bullet {
           System.err.println("Error playing sound: " + e.getMessage());
         }
     }
->>>>>>> branch 'main' of https://github.com/rhit-hippelgf/BugGame.git
 }
