@@ -118,7 +118,6 @@ public class Suicide extends Enemy {
         g.setColor(Color.RED);
         g.fillOval(x - 10, y - 10, 20, 20); // enemy body
 		}
-		g.drawRect(x-width/2, y-height/2, width, height);
     }
 
     @Override

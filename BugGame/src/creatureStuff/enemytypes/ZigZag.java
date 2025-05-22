@@ -108,7 +108,6 @@ public class ZigZag extends Enemy {
 
     @Override
     public void draw(Graphics2D g) {
-    	int scaleWidth = RoomLogic.getTileSize();
 		frameCount += 1;
 		if (spriteLoaded == true) {
 			if (frameCount <= 15) {
@@ -121,7 +120,6 @@ public class ZigZag extends Enemy {
 			g.setColor(poisoned ? Color.GREEN : Color.BLUE);
 			g.fillOval(x - 10, y - 10, 20, 20);
 		}
-		g.drawRect(x-width/2, y-height/2, width, height);
 
         // bullets are now drawn in Room, not here
     }
