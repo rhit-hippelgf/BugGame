@@ -256,8 +256,10 @@ public class RoomLogic {
 	    	} else {
 	    		check = false;
 	    	}
-	    	if (itemLoc[1].equals(bossLoc) && check == true) {
+	    	if (check == true) {
+	    		if (itemLoc[1].equals(bossLoc)) {
 	    		check = false;
+	    		}
 	    	}
     	}
     	return itemLoc;
