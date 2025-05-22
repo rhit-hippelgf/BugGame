@@ -48,8 +48,6 @@ public abstract class Creature {
 	}
 
 	public void takeDamage(int damage) {
-		System.out.println("damage is: " + damage);
-		System.out.println("health is: " + health);
 		health -= damage;
 	}
 	
