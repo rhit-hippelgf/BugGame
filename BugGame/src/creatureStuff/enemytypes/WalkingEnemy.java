@@ -89,9 +89,17 @@ public class WalkingEnemy extends Enemy {
 
 		// update speed vector using calculated angle
 		super.calculateSpeeds(dx, dy);
-
-		// move based on calculated vector
-//		super.move();
+		
+		super.bounceOffPlayer();
+		
+		if (super.recentlyHitPlayerTick > 0) {
+			super.xspeed = -super.xspeed;
+			super.yspeed = -super.yspeed;
+			super.recentlyHitPlayerTick++;
+			if (super.recentlyHitPlayerTick>60) {
+				super.recentlyHitPlayerTick = 0;
+			}
+		}
 
 		// occasionally shoot at the player
 		if (Math.random() < 0.01) {

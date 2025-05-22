@@ -87,7 +87,16 @@ public class ZigZag extends Enemy {
 //        System.out.println("Final Angle Used To Move: " + (angle + offset));
 
         super.calculateSpeeds(xTemp/mag,yTemp/mag);
-//        super.move();
+        super.bounceOffPlayer();
+		
+		if (super.recentlyHitPlayerTick > 0) {
+			super.xspeed = -super.xspeed;
+			super.yspeed = -super.yspeed;
+			super.recentlyHitPlayerTick++;
+			if (super.recentlyHitPlayerTick>60) {
+				super.recentlyHitPlayerTick = 0;
+			}
+		}
 
         if (zigzagCounter % 50 == 0) {
 //            System.out.println(">>> SHOOTING at angle: ");

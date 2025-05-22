@@ -12,6 +12,7 @@ import roomStuff.ViewerMain;
 
 public abstract class Enemy extends Creature {
     protected Creature target; // usually the player
+    protected int recentlyHitPlayerTick;
 
     public Enemy(int startX, int startY, int startSpeed, int startHealth, Creature target) {
         super(startX, startY, startSpeed, startHealth);
@@ -37,5 +38,8 @@ public abstract class Enemy extends Creature {
     public void setRoom(Room r) {
         super.setRoom(r);
     }
-
+    
+    public void bounceOffPlayer() {
+    	if (this.getBounds().intersects(target.getBounds())) this.recentlyHitPlayerTick = 1;
+    }
 }
