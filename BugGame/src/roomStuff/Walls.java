@@ -28,7 +28,6 @@ public class Walls {
 	private char dir;
 	private boolean spriteLoaded;
 	private boolean isCleared;
-	private Rectangle rect;
 	
 	public Walls(boolean doorExists, char dir, boolean preBoss) {
 		this.doorExists = doorExists;
@@ -41,13 +40,11 @@ public class Walls {
 			this.width = SIDEGAP;
 			this.height = SCREENHEIGHT - 2*TOPGAP;
 		} else if (dir == 'n') {
-			rect = new Rectangle(0,0,SCREENWIDTH,SCREENHEIGHT);
 			this.y = TOPGAP/3;
 			this.x = SIDEGAP;
 			this.width = SCREENWIDTH - 2*SIDEGAP;
 			this.height = 2*TOPGAP/3;
 		} else if (dir == 'e') {
-			
 			this.y = TOPGAP;
 			this.x = SCREENWIDTH-SIDEGAP;
 			this.width = SIDEGAP;
