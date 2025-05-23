@@ -78,7 +78,7 @@ public class RoomLogic {
             r.setFloorDoor();
             roomLayout.put(rooms.get(0), r);
             
-            Room r1 = new BlankRoom(true, false, false, false, TILE_SIZE, this.level, hero);
+            Room r1 = new highScoreRoom(true, false, false, false, TILE_SIZE, this.level, hero);
             r1.generateLayout();
             roomLayout.put(new Point(0,-1), r1);
             

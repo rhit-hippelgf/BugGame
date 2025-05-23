@@ -10,5 +10,6 @@ public class TutorialRoom extends Room {
 		FileReader pickLayout = new FileReader(north, east, south, west, false, false, false, true, false, level);
         layout = pickLayout.getLayout();
 	}
+	
 
 }
