@@ -32,7 +32,6 @@ public class RoomLogic {
     private static int ROOM_X, ROOM_Y;
     private static int SCREEN_WIDTH, SCREEN_HEIGHT;
     private HashMap<Point, Room> roomLayout = new HashMap<>();
-    private HashMap<Point, Room> tutorialLayout = new HashMap<>();
     private BackgroundHud hud;
 	//private ArrayList<Point> shopPoints;
     private Point shopLoc;
@@ -77,12 +76,10 @@ public class RoomLogic {
             currentRoom = r;
             r.setPlayer((Player) hero);
             r.setFloorDoor();
-            tutorialLayout.put(rooms.get(0), r);
             roomLayout.put(rooms.get(0), r);
             
             Room r1 = new BlankRoom(true, false, false, false, TILE_SIZE, this.level, hero);
             r1.generateLayout();
-            tutorialLayout.put(new Point(0,-1), r1);
             roomLayout.put(new Point(0,-1), r1);
             
 		} else {
@@ -205,18 +202,43 @@ public class RoomLogic {
     public void updateObjects() {
     	if (!hud.getLoading()) {
 	        currentRoom.updateEntities();
+	        if (((Player) hero).getIsDead()) {
+	        	this.handleDeadPlayer();
+	        }
 	        this.goNextFloor(currentRoom.goThroughDoor());
 	        this.switchRooms(currentRoom.goThroughDoor());
 	        hud.detectChange();
     	} else {
+    		if (this.level == 0) {
+    			this.generateLayout(0);
+    			currentPoint = new Point(0,-1);
+    	        this.setCurrentRoom(currentPoint,(TILE_SIZE * 13) / 2, (TILE_SIZE * 7) / 2);
+    		} else {
     		this.generateLayout(5+2*this.level);
+    		}
     		hud.switchFloor();
+    		if (hud.getLevel() != level) {
+    			hud.setLevel(level);
+    		}
     	}
  
     }
 
     public void drawScreen() {
         currentRoom.drawScreen();
+    }
+    
+    public void handleDeadPlayer() {
+//    	Add method in player or new class to grab information from player and save it and a state in hud to display the previous run
+        this.hero = new Player((TILE_SIZE * 13) / 2, (TILE_SIZE * 7) / 2, 8, 3);
+        frame.remove(currentRoom);
+        frame.remove(hud);
+        hud = new BackgroundHud((Player) hero);
+        frame.add(hud);
+        hud.switchLoading();
+        this.level = 0;
+        
+        
     }
 
     

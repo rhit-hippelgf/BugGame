@@ -27,6 +27,7 @@ public class Player extends Creature {
     private int fireRate = 1;
     private int dodgeChance = 0;
     private int lives = 1;
+    private boolean isDead;
     //private String damageType = "normal";
     private int lightingChance = 0;
     private boolean triShot = false;
@@ -120,6 +121,10 @@ public class Player extends Creature {
     @Override
     public void update() {
     	shootCount++;
+    	if (health <= 0) {
+    		this.isDead = true;
+    		System.out.println("dead");
+    	}
         // placeholder for movement, status effects, cooldowns, etc.
     }
 
@@ -210,6 +215,10 @@ public class Player extends Creature {
 
 	public double getHeight() {
 	    return this.height;
+	}
+	
+	public boolean getIsDead() {
+		return isDead;
 	}
 	
 	

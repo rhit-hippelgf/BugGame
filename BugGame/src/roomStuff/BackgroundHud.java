@@ -122,4 +122,13 @@ public class BackgroundHud extends JComponent {
 		}
 	}
 	
+	public int getLevel() {
+		return level;
+	}
+	
+	public void setLevel(int level) {
+		this.level = level;
+		this.repaint();
+	}
+	
 }
