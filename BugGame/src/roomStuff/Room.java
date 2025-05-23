@@ -67,7 +67,7 @@ public class Room extends JComponent {
         walls[1] = new Walls(east, 'e', false);
         walls[2] = new Walls(south, 's', false);
         walls[3] = new Walls(west, 'w', false);
-        FileReader pickLayout = new FileReader(north, east, south, west, false, false, false, false, level);
+        FileReader pickLayout = new FileReader(north, east, south, west, false, false, false, false, false, level);
         layout = pickLayout.getLayout();
         this.TILE_SIZE = tileSize;
         this.level = level;

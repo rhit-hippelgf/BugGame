@@ -32,6 +32,7 @@ public class RoomLogic {
     private static int ROOM_X, ROOM_Y;
     private static int SCREEN_WIDTH, SCREEN_HEIGHT;
     private HashMap<Point, Room> roomLayout = new HashMap<>();
+    private HashMap<Point, Room> tutorialLayout = new HashMap<>();
     private BackgroundHud hud;
 	//private ArrayList<Point> shopPoints;
     private Point shopLoc;
@@ -75,8 +76,11 @@ public class RoomLogic {
             r.generateLayout();
             currentRoom = r;
             r.setPlayer((Player) hero);
-            roomLayout.put(rooms.get(0), r);
             r.setFloorDoor();
+            tutorialLayout.put(rooms.get(0), r);
+            roomLayout.put(rooms.get(0), r);
+            
+            Room r1 = new BlankRoom(true, false, false, false, TILE_SIZE, this.level, hero);
 		} else {
 			rooms.add(new Point(0, 0));
 			while (rooms.size() <= numRooms) {
@@ -134,6 +138,8 @@ public class RoomLogic {
 	            	
 	            } else if (temp.equals(itemLoc[1])) {
 	            	r = new ItemRoom(north, east, south, west, TILE_SIZE, this.level, hero);
+	            } else if (temp.equals(new Point(0,0))) {
+	            	r = new BlankRoom(north, east, south, west, TILE_SIZE, this.level, hero);
 	            } else {
 	            	r = new Room(north, east, south, west, TILE_SIZE, this.level, hero);
 	            }

@@ -26,7 +26,7 @@ public class FileReader {
 	private boolean north, east, south, west;
 	private int level;
 	
-	public FileReader(boolean north, boolean east, boolean south, boolean west, boolean bossRoom, boolean itemRoom, boolean shopRoom, boolean TutorialRoom, int level) {
+	public FileReader(boolean north, boolean east, boolean south, boolean west, boolean bossRoom, boolean itemRoom, boolean shopRoom, boolean TutorialRoom, boolean BlankRoom, int level) {
 		this.north = north;
 		this.east = south;
 		this.south = south;
@@ -56,7 +56,13 @@ public class FileReader {
 				this.loadLayouts("TutorialLayout");
 			} catch (IOException e) {
 				e.printStackTrace();
-			}	
+			} 
+		} else if (BlankRoom) {
+			try {
+				this.loadLayouts("BlankLayout");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		} else {
 			try {
 				this.loadLayouts("GenericLayouts");
