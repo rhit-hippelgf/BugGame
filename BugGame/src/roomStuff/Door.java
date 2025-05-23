@@ -47,6 +47,8 @@ public class Door {
 				this.y2 = y1 + length;
 				this.rect = new Rectangle(0,y1-length/12,10,7*length/6);
 			}
+		} else {
+			this.rect = new Rectangle(0,0,0,0);
 		}
 	}
 	

@@ -93,7 +93,7 @@ public class Walls {
 				g2.drawImage(normalWall, x, y, width, height, null);
 				if (isCleared==false) g2.drawImage(closeWall, x, y, width, height, null);
 				if (preBoss) {
-					g2.drawImage(bossDoor, 0, y, SCREENWIDTH, SCREENHEIGHT, null);
+//					g2.drawImage(bossDoor, 0, y, SCREENWIDTH, SCREENHEIGHT, null);
 				} else if (!doorExists) {
 					g2.fill(noDoor);
 				}

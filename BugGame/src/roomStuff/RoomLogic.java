@@ -81,6 +81,10 @@ public class RoomLogic {
             roomLayout.put(rooms.get(0), r);
             
             Room r1 = new BlankRoom(true, false, false, false, TILE_SIZE, this.level, hero);
+            r1.generateLayout();
+            tutorialLayout.put(new Point(0,-1), r1);
+            roomLayout.put(new Point(0,-1), r1);
+            
 		} else {
 			rooms.add(new Point(0, 0));
 			while (rooms.size() <= numRooms) {
