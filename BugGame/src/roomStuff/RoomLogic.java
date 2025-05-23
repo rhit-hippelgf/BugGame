@@ -36,6 +36,7 @@ public class RoomLogic {
 	//private ArrayList<Point> shopPoints;
     private Point shopLoc;
 	public musicPlayer musicPlayer = new musicPlayer();
+	private Point bossPoint;
 
     public RoomLogic(int tileSize, int roomWidth, int roomHeight, int roomX, int roomY, JFrame frame, int screenWidth, int screenHeight) {
         this.numRooms = 0;
@@ -108,8 +109,8 @@ public class RoomLogic {
 			}
 
 			shopLoc = this.setShopRoom(rooms);
-			//this.shopPoints.add(shopLoc);
 			Point[] bossLoc = this.setBossRoom(rooms);
+			bossPoint = bossLoc[1];
 			rooms.add(bossLoc[1]);
 			Point[] itemLoc = this.addItemRoom(rooms, bossLoc[1]);
 			rooms.add(itemLoc[1]);
@@ -327,11 +328,17 @@ public class RoomLogic {
         hud.updateRoom(point, currentRoom.getWalls());
         
         musicPlayer.playBgm();
-        if (point.equals(shopLoc) == true) {
+        if (shopLoc != null && point.equals(shopLoc) == true) {
         	musicPlayer.pauseBgm();
+        	musicPlayer.pauseBoss();
         	musicPlayer.playShop();
+        } else if (bossPoint!=null && point.equals(bossPoint) == true) {
+        	musicPlayer.pauseBgm();
+        	musicPlayer.pauseShop();
+        	musicPlayer.playBoss();
         } else {
         	musicPlayer.pauseShop();
+        	musicPlayer.pauseBoss();
         }
         
         

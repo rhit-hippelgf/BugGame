@@ -12,6 +12,7 @@ public class musicPlayer {
 	public Clip shop;
 	public Clip bgm;
 	int volume_int = 0;
+	public Clip boss;
 	public musicPlayer() {
 		try {
          AudioInputStream a = AudioSystem.getAudioInputStream(
@@ -24,7 +25,12 @@ public class musicPlayer {
         		 new File("assets/sounds/accordion.wav"));
          shop = AudioSystem.getClip();
          shop.open(a2);
+         AudioInputStream a3 = AudioSystem.getAudioInputStream(
+        		 new File("assets/sounds/8m.wav"));
+         boss = AudioSystem.getClip();
+         boss.open(a3);
          volume.setValue(-1 * volume_int );
+
          
        } catch (Exception e) {
          System.err.println("Error playing sound: " + e.getMessage());
@@ -44,6 +50,14 @@ public class musicPlayer {
   }
 public void pauseShop() {
 	shop.stop();
+	
+}
+	public void playBoss() {
+	  boss.start();
+    boss.loop(bgm.LOOP_CONTINUOUSLY);
+}
+	public void pauseBoss() {
+	boss.stop();
 	
 }
 }
