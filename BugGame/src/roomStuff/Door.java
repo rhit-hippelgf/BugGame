@@ -2,6 +2,7 @@ package roomStuff;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 
 public class Door {
 
@@ -9,6 +10,7 @@ public class Door {
 	protected Boolean state;
 	protected char dir;
 	private int x1, y1, x2, y2;
+	private Rectangle rect;
 	private int length, width;
 	protected Color color;
 	
@@ -25,21 +27,25 @@ public class Door {
 				this.y1 = 0;
 				this.x2 = x1 + length;
 				this.y2 = width;
+				this.rect = new Rectangle(x1-length/6,y1,4*length/3,10);
 			} else if (dir == 'e') {
 				this.x1 = 13*length - width;
 				this.y1 = 3*length;
 				this.x2 = x1 + width;
 				this.y2 = y1 + length;
+				this.rect = new Rectangle(x1+width-10,y1-length/12,10,7*length/6);
 			} else if (dir == 's') {
 				this.x1 = 6*length;
 				this.y1 = 7*length - width;
 				this.x2 = x1 + length;
 				this.y2 = y1 + width;
+				this.rect = new Rectangle(x1-length/6,y1+width-10,4*length/3,10);
 			} else if (dir == 'w') {
 				this.x1 = 0;
 				this.y1 = 3*length;
 				this.x2 = width;
 				this.y2 = y1 + length;
+				this.rect = new Rectangle(0,y1-length/12,10,7*length/6);
 			}
 		}
 	}
@@ -54,7 +60,8 @@ public class Door {
     public void draw(Graphics2D g) {
     	Color old = g.getBackground();
         g.setColor(color); // draw player sprite
-        g.fillRect(x1, y1, x2-x1, y2-y1);
+        g.fill(rect);
+//        g.fillRect(x1, y1, x2-x1, y2-y1);
         g.setColor(old);
 	}
     

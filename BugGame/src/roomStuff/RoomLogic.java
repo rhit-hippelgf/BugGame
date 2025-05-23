@@ -105,7 +105,6 @@ public class RoomLogic {
 						rooms.add(new Point(temp.x, temp.y + 1));
 					}
 				}
-				System.out.println("check 1");
 			}
 
 			shopLoc = this.setShopRoom(rooms);
@@ -114,8 +113,6 @@ public class RoomLogic {
 			rooms.add(bossLoc[1]);
 			Point[] itemLoc = this.addItemRoom(rooms, bossLoc[1]);
 			rooms.add(itemLoc[1]);
-			System.out.println("shopLoc: " + shopLoc + " bossLoc: " + bossLoc[1] + " itemLoc: " + itemLoc[1]);
-
 			
 	        int i = 0;
 	        while (i < rooms.size()) {
@@ -202,7 +199,7 @@ public class RoomLogic {
 	        this.switchRooms(currentRoom.goThroughDoor());
 	        hud.detectChange();
     	} else {
-    		this.generateLayout(4+2*this.level);
+    		this.generateLayout(5+2*this.level);
     		hud.switchFloor();
     	}
  
