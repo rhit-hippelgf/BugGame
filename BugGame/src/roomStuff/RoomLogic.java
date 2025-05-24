@@ -48,7 +48,7 @@ public class RoomLogic {
         ROOM_Y = roomY;
         SCREEN_WIDTH = screenWidth;
         SCREEN_HEIGHT = screenHeight;
-        this.hero = new Player((TILE_SIZE * 13) / 2, (TILE_SIZE * 7) / 2, 8, 3);
+        this.hero = new Player((TILE_SIZE * 13) / 2, (TILE_SIZE * 7) / 2, 8, 5);
         hud = new BackgroundHud((Player) hero);
     	frame.add(hud);
 //        this.frame.add(hud);
