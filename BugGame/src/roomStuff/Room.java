@@ -296,7 +296,7 @@ public class Room extends JComponent {
     	if (dir == 'w') {west.setColor(color);}
     }
     
-    private void roomCleared() {
+    public void roomCleared() {
     	north.openDoor();
     	east.openDoor();
     	west.openDoor();

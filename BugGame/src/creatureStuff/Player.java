@@ -32,7 +32,7 @@ public class Player extends Creature {
     private int lightingChance = 0;
     private boolean triShot = false;
     private int shootCount;
-    private int shootCooldown = 30;
+    private int shootCooldown = 15;
 
     // ref to Room component for screen coordinates and dimensions
 //    private Room currentRoom;
@@ -182,14 +182,8 @@ public class Player extends Creature {
         	shootCount = 0;
         }
 
-
-        System.out.println("Bullet created: " + b);
-        if (b == null) System.out.println("Bullet creation failed!");
-
         if (b != null && room != null) {
             room.getPlayerBullets().add(b);
-        } else {
-            System.out.println("Room is null in Player");
         }
     }
 
