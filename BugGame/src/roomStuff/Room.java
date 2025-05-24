@@ -104,7 +104,7 @@ public class Room extends JComponent {
     				Obsticles.add((Hole)hole);
     			} else if (i == 's') {
     				gridTiles[row][col] = new Tile(x, y, level);
-    				Creature e = new Suicide(x+TILE_SIZE/2, y+TILE_SIZE/2, player, this);
+    				Creature e = new Suicide(x+TILE_SIZE/2, y+TILE_SIZE/2, player, this,2+level,1+level*2,10);
     				this.addEnemy(e);
     			} else if (i == 'z') {
     				gridTiles[row][col] = new Tile(x, y, level);

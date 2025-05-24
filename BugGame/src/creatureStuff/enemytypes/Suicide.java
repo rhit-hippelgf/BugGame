@@ -13,9 +13,13 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 
 public class Suicide extends Enemy {
-    private int detonationRange = 30;
+    private int detonationRange = 50;
     private boolean detonated = false;
     private int explosionX = 0;
     private int explosionY = 0;
@@ -33,15 +37,20 @@ public class Suicide extends Enemy {
 	private BufferedImage image5;
 
 	private Room room; // reference to room
+	private int boomDamage;
 
-    public Suicide(int x, int y, Creature target, Room room) {
+    public Suicide(int x, int y, Creature target, Room room, int startHp, int startDamage, int startSpeed) {
         super(x, y, 3, 5, target);
         this.drawWidth = RoomLogic.getTileSize();
         this.drawHeight = RoomLogic.getTileSize();
         this.width = drawWidth - 20;
         this.height = drawHeight - 40;
         this.room = room;
-
+        xspeed = startSpeed;
+        yspeed = startSpeed;
+        healthCap = startHp;
+        health = startHp;
+        boomDamage = startDamage;
         file1 = new File("assets/sprites/creatures/BBeetle1.png");
         file2 = new File("assets/sprites/creatures/BBeetle2.png");
         file3 = new File("assets/sprites/creatures/BBeetle3.png");
@@ -79,11 +88,12 @@ public class Suicide extends Enemy {
         double dist = Math.hypot(xDist, yDist);
 
         if (dist <= detonationRange) {
-            target.takeDamage(10);
+            target.takeDamage(boomDamage);
             explosionX = x;
             explosionY = y;
             this.health = 0;       // suicide
             this.detonated = true; // explosion effect
+            playBoom();
         } else {
 
             super.calculateSpeeds(xDist/dist,yDist/dist);
@@ -91,7 +101,21 @@ public class Suicide extends Enemy {
         }
     }
 
-    @Override
+    private void playBoom() {
+            try {
+              AudioInputStream a = AudioSystem.getAudioInputStream(
+                  new File("assets/sounds/boom.wav"));
+              Clip clip = AudioSystem.getClip();
+              clip.open(a);
+              FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+              volume.setValue(5);
+              clip.start();
+            } catch (Exception e) {
+              System.err.println("Error playing sound: " + e.getMessage());
+            }
+	}
+
+	@Override
     public void draw(Graphics2D g) {
 //    	int scaleWidth = RoomLogic.getTileSize();
 		frameCount+=1;
