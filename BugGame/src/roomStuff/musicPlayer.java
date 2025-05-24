@@ -11,16 +11,15 @@ import javax.sound.sampled.FloatControl;
 public class musicPlayer {
 	public Clip shop;
 	public Clip bgm;
-	int volume_int = 0;
+	int volumeInt = 0;
 	public Clip boss;
 	public musicPlayer() {
+		
 		try {
          AudioInputStream a = AudioSystem.getAudioInputStream(
              new File("assets/sounds/tunnels.wav"));
          bgm = AudioSystem.getClip();
          bgm.open(a);
-         FloatControl volume = (FloatControl) bgm.getControl(FloatControl.Type.MASTER_GAIN);
-         
          AudioInputStream a2 = AudioSystem.getAudioInputStream(
         		 new File("assets/sounds/accordion.wav"));
          shop = AudioSystem.getClip();
@@ -29,7 +28,12 @@ public class musicPlayer {
         		 new File("assets/sounds/8m.wav"));
          boss = AudioSystem.getClip();
          boss.open(a3);
-         volume.setValue(-1 * volume_int );
+         FloatControl bgmVolume = (FloatControl) bgm.getControl(FloatControl.Type.MASTER_GAIN);
+         bgmVolume.setValue(-1 * volumeInt );
+         FloatControl shopVolume = (FloatControl) shop.getControl(FloatControl.Type.MASTER_GAIN);
+         shopVolume.setValue(-1 * volumeInt);
+         FloatControl bossVolume = (FloatControl) boss.getControl(FloatControl.Type.MASTER_GAIN);
+         bossVolume.setValue(-1 * volumeInt -10);
 
          
        } catch (Exception e) {
@@ -53,11 +57,10 @@ public void pauseShop() {
 	
 }
 	public void playBoss() {
-	  boss.start();
+	boss.start();
     boss.loop(bgm.LOOP_CONTINUOUSLY);
 }
 	public void pauseBoss() {
 	boss.stop();
-	
 }
 }
