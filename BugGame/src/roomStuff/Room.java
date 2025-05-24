@@ -104,11 +104,11 @@ public class Room extends JComponent {
     				Obsticles.add((Hole)hole);
     			} else if (i == 's') {
     				gridTiles[row][col] = new Tile(x, y, level);
-    				Creature e = new Suicide(x+TILE_SIZE/2, y+TILE_SIZE/2, player, this,2+level,1+level*2,10);
+    				Creature e = new Suicide(x+TILE_SIZE/2, y+TILE_SIZE/2, player, this,2+level,1+level*2,8+level*2);
     				this.addEnemy(e);
     			} else if (i == 'z') {
     				gridTiles[row][col] = new Tile(x, y, level);
-    				Creature e = new ZigZag(x+TILE_SIZE/2, y+TILE_SIZE/2, player, this);
+    				Creature e = new ZigZag(x+TILE_SIZE/2, y+TILE_SIZE/2, player, this,2+level,level,4,1+Math.floorDiv(level, 3),0.2+0.05*level);
     				this.addEnemy(e);
     			} else if (i == 'e') {
     				gridTiles[row][col] = new Tile(x, y, level);

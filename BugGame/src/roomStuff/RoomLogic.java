@@ -230,7 +230,7 @@ public class RoomLogic {
     
     public void handleDeadPlayer() {
 //    	Add method in player or new class to grab information from player and save it and a state in hud to display the previous run
-        this.hero = new Player((TILE_SIZE * 13) / 2, (TILE_SIZE * 7) / 2, 8, 3);
+        this.hero = new Player((TILE_SIZE * 13) / 2, (TILE_SIZE * 7) / 2, 8, 5);
         frame.remove(currentRoom);
         frame.remove(hud);
         hud = new BackgroundHud((Player) hero);

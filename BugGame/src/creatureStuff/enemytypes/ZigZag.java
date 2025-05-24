@@ -28,13 +28,18 @@ public class ZigZag extends Enemy {
 	private BufferedImage image2;
 
     private Room room; // reference to Room
+	private int damage;
 
-    public ZigZag(int x, int y, Creature target, Room room) {
+    public ZigZag(int x, int y, Creature target, Room room, int startHp, int startDamage, int startSpeed, int poisonDamage, double poisonChance) {
         super(x, y, 2, 5, target);
         this.room = room;
-
-        addEffect(new poison(3)); // built in poison
-        addEffectChance(0.25); // 25% chance
+        this.health=startHp;
+        this.healthCap=startHp;
+        this.damage=startDamage;
+        this.xspeed=startSpeed;
+        this.yspeed=startSpeed;
+        addEffect(new poison(poisonDamage)); // built in poison
+        addEffectChance(poisonChance); // 25% chance
         setBulletClass(ZigZagBullet.class);
         this.drawWidth = RoomLogic.getTileSize();
         this.drawHeight = RoomLogic.getTileSize();
@@ -109,7 +114,7 @@ public class ZigZag extends Enemy {
 
     @Override
     public void shoot(double dx, double dy) {
-        Bullet b = createBullet(dx, dy, 2, 1);
+        Bullet b = createBullet(dx, dy, 2, damage);
         if (b != null && room != null) {
             room.getEnemyBullets().add(b);
         }
