@@ -42,9 +42,12 @@ public class Room extends JComponent {
 	private ArrayList<Hole> Obsticles = new ArrayList<>();
 	private ArrayList<Rock> BulletObsticles = new ArrayList<>(); // could use previous list but don't know how to differentiate between hole and rock
     private ArrayList<Creature> enemies = new ArrayList<>();
-    private Creature player;
+    protected Creature player;
 
-    private Door north, east, south, west;
+    protected Door north;
+	private Door east;
+	private Door south;
+	private Door west;
     private Walls[] walls = new Walls[4];
     private Controller control;
     protected char[][] layout;
