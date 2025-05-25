@@ -248,8 +248,8 @@ public class RoomLogic {
 //    	Add method in player or new class to grab information from player and save it and a state in hud to display the previous run
     	if (mgr.addScore(((Player)hero).getScore())) {
             mgr.save();
+            scores = mgr.getHighScores();
     	}
-    	mgr.addScore(((Player)hero).getScore());
         this.hero = new Player((TILE_SIZE * 13) / 2, (TILE_SIZE * 7) / 2, 8, 5);
         frame.remove(currentRoom);
         frame.remove(hud);
