@@ -29,16 +29,16 @@ public class highScoreRoom extends Room {
         Graphics2D g2 = (Graphics2D) g;
         
         Color old = g2.getBackground();
-        g2.setColor(Color.BLACK);
+        g2.setColor(Color.DARK_GRAY);
         g2.fillRect(0, 0, RoomLogic.getRoomWidth(), RoomLogic.getRoomHeight());
         
         g2.setColor(Color.RED);
-        Font font = new Font("Times New Roman", Font.BOLD, 40);
+        Font font = new Font("Calibri", Font.BOLD, 40);
         g2.setFont(font);
         
         g2.drawString("Highscores:", getTileSize()*55/10,getTileSize());
         
-        Font font2 = new Font("Times New Roman", Font.PLAIN, 30);
+        Font font2 = new Font("Calibri", Font.PLAIN, 30);
         g2.setFont(font2);
         for (int i = 1; i<=5; i++) {
         	if (scores.get(i-1).equals(recentScore)) {
