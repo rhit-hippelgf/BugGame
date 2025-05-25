@@ -25,6 +25,7 @@ public class Suicide extends Enemy {
     private int explosionY = 0;
 	private boolean spriteLoaded;
 	private int frameCount;
+	private int score = 50;
 	private File file1;
 	private File file2;
 	private File file3;
@@ -40,7 +41,7 @@ public class Suicide extends Enemy {
 	private int boomDamage;
 
     public Suicide(int x, int y, Creature target, Room room, int startHp, int startDamage, int startSpeed) {
-        super(x, y, 3, 5, target);
+        super(x, y, 3, 2, target);
         this.drawWidth = RoomLogic.getTileSize();
         this.drawHeight = RoomLogic.getTileSize();
         this.width = drawWidth - 20;
@@ -164,5 +165,9 @@ public class Suicide extends Enemy {
 	public double getHeight() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	public int getScore() {
+		return score;
 	}
 }

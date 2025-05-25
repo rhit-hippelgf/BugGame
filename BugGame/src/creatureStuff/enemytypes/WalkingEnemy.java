@@ -21,6 +21,7 @@ public class WalkingEnemy extends Enemy {
 
 	private boolean spriteLoaded;
 	private int frameCount;
+	private int score = 100;
 	private File file1;
 	private File file2;
 	private File file3;
@@ -33,7 +34,7 @@ public class WalkingEnemy extends Enemy {
 	private Room room;
 
 	public WalkingEnemy(int x, int y, Creature target, Room room) {
-		super(x, y, 2, 10, target);
+		super(x, y, 2, 3, target);
 		setBulletClass(Normal.class);
 		drawWidth = RoomLogic.getTileSize()-10;
 		drawHeight = RoomLogic.getTileSize()-10;
@@ -157,7 +158,7 @@ public class WalkingEnemy extends Enemy {
 
 	@Override
 	public void onDeath() {
-		System.out.println("WalkingEnemy has died!");
+//		System.out.println("WalkingEnemy has died!");
 	}
 
 	@Override
@@ -170,5 +171,9 @@ public class WalkingEnemy extends Enemy {
 	public double getHeight() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	public int getScore() {
+		return score;
 	}
 }

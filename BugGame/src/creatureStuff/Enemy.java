@@ -13,6 +13,7 @@ import roomStuff.ViewerMain;
 public abstract class Enemy extends Creature {
     protected Creature target; // usually the player
     protected int recentlyHitPlayerTick;
+    protected int score;
 
     public Enemy(int startX, int startY, int startSpeed, int startHealth, Creature target) {
         super(startX, startY, startSpeed, startHealth);
@@ -42,4 +43,6 @@ public abstract class Enemy extends Creature {
     public void bounceOffPlayer() {
     	if (this.getBounds().intersects(target.getBounds())) this.recentlyHitPlayerTick = 1;
     }
+    
+    public abstract int getScore();
 }

@@ -33,6 +33,7 @@ public class Player extends Creature {
     private boolean triShot = false;
     private int shootCount;
     private int shootCooldown = 15;
+    private int score;
 
     // ref to Room component for screen coordinates and dimensions
 //    private Room currentRoom;
@@ -215,6 +216,13 @@ public class Player extends Creature {
 		return isDead;
 	}
 	
+	public int getScore() {
+		return score;
+	}
+	
+	public void addScore(int score) {
+		this.score += score;
+	}
 	
 
 

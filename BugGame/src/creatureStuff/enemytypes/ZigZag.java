@@ -22,6 +22,7 @@ public class ZigZag extends Enemy {
     private boolean poisoned = false;
     private boolean spriteLoaded;
 	private int frameCount;
+	private int score = 150;
 	private File file1;
 	private File file2;
 	private BufferedImage image1;
@@ -153,5 +154,9 @@ public class ZigZag extends Enemy {
 	public double getHeight() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	public int getScore() {
+		return score;
 	}
 }

@@ -161,7 +161,11 @@ public class Room extends JComponent {
         		e.checkValidSpeed(o.getXs(), o.getYs());
         	}
         	e.move();
+        	if (e.getHealth() <= 0) {
+        		((Player)player).addScore(((Enemy)e).getScore());
+        	}
         }
+        
         enemies.removeIf(e -> e.getHealth() <= 0);
         this.handleCollision();
         this.updateBullets();

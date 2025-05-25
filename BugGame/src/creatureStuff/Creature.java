@@ -68,20 +68,6 @@ public abstract class Creature {
 		this.yspeed = speed * dy;
 
 //		Below is code for wall collisions to prevent duplications using separate method if performance is bad keep this instead
-		if (xspeed < 0 && x <= width/2) {
-			xspeed = 0;
-			x = width/2;
-		} else if (xspeed > 0 && x + width/2 >= roomWidth) {
-			xspeed = 0;
-			x = roomWidth-width/2;
-		}
-		if (yspeed < 0 && y <= height/2) {
-			yspeed = 0;
-			y = height/2;
-		} else if (yspeed > 0 && y + height/2 >= roomHeight) {
-			yspeed = 0;
-			y = roomHeight - height/2;
-		}
 		
 	}
 	
@@ -96,6 +82,20 @@ public abstract class Creature {
 //	I don't want to implement falling into a pit and would rather treat it as an obstacle the player can't cross but bullets can
 //	We can add a wing item that allows the player to fly over holes and then this method will simply not be ran
 	public void checkValidSpeed(int[] xs, int[] ys) {
+		if (xspeed < 0 && x <= width/2) {
+			xspeed = 0;
+			x = width/2;
+		} else if (xspeed > 0 && x + width/2 >= roomWidth) {
+			xspeed = 0;
+			x = roomWidth-width/2;
+		}
+		if (yspeed < 0 && y <= height/2) {
+			yspeed = 0;
+			y = height/2;
+		} else if (yspeed > 0 && y + height/2 >= roomHeight) {
+			yspeed = 0;
+			y = roomHeight - height/2;
+		}
 		if (y + height/2> ys[0] && y < ys[1]) {
 			if (xspeed < 0 && x-width/2 <= xs[1] && x > xs[1]) {
 				xspeed = 0;
@@ -105,6 +105,7 @@ public abstract class Creature {
 				x = xs[0]- width/2;
 			}
 		}
+		
 		if (x+width/2 > xs[0] && x-width/2 < xs[1]) {
 			if (yspeed < 0 && y <= ys[1] && y > ys[0]) {
 				yspeed = 0;
@@ -113,8 +114,7 @@ public abstract class Creature {
 				yspeed = 0;
 				y = ys[0] - height/2;
 			}
-		}
-		
+		}	
 	}
 
 	// bullet access
