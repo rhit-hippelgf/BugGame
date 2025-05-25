@@ -33,6 +33,7 @@ public class RoomLogic {
     private static int ROOM_X, ROOM_Y;
     private static int SCREEN_WIDTH, SCREEN_HEIGHT;
     private List<Integer> scores;
+    private int lastScore;
     private HighScoreManager mgr;
     private HashMap<Point, Room> roomLayout = new HashMap<>();
     private BackgroundHud hud;
@@ -43,6 +44,7 @@ public class RoomLogic {
 
     public RoomLogic(int tileSize, int roomWidth, int roomHeight, int roomX, int roomY, JFrame frame, int screenWidth, int screenHeight) {
         this.numRooms = 0;
+        lastScore = 1;
         this.frame = frame;
         TILE_SIZE = tileSize; // square tiles, so X and Y are equal
         ROOM_WIDTH = roomWidth;
@@ -84,7 +86,7 @@ public class RoomLogic {
             r.roomCleared();
             roomLayout.put(rooms.get(0), r);
             
-            Room r1 = new highScoreRoom(true, false, false, false, TILE_SIZE, this.level, hero, scores);
+            Room r1 = new highScoreRoom(true, false, false, false, TILE_SIZE, this.level, hero, scores, lastScore);
             r1.generateLayout();
             r1.roomCleared();
             roomLayout.put(new Point(0,-1), r1);
@@ -249,6 +251,7 @@ public class RoomLogic {
     	if (mgr.addScore(((Player)hero).getScore())) {
             mgr.save();
             scores = mgr.getHighScores();
+            lastScore = ((Player)hero).getScore();
     	}
         this.hero = new Player((TILE_SIZE * 13) / 2, (TILE_SIZE * 7) / 2, 8, 5);
         frame.remove(currentRoom);

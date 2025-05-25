@@ -12,13 +12,15 @@ import creatureStuff.Creature;
 public class highScoreRoom extends Room {
 	HighScoreManager mgr;
 	List<Integer> scores;
+	int recentScore;
 
 	public highScoreRoom(boolean north, boolean east, boolean south, boolean west, int tileSize, int level,
-			Creature player, List<Integer> scores) {
+			Creature player, List<Integer> scores, int recentScore) {
 		super(north, east, south, west, tileSize, level, player);
 		FileReader pickLayout = new FileReader(north, east, south, west, false, false, false, false, true, level);
         layout = pickLayout.getLayout();
         this.scores = scores;
+        this.recentScore = recentScore;
 	}
 
    @Override
@@ -39,8 +41,15 @@ public class highScoreRoom extends Room {
         Font font2 = new Font("Times New Roman", Font.PLAIN, 30);
         g2.setFont(font2);
         for (int i = 1; i<=5; i++) {
+        	if (scores.get(i-1).equals(recentScore)) {
+        		g2.setColor(Color.GREEN);
+        	} else {
+        		g2.setColor(Color.RED);
+        	}
         	g2.drawString(i + ":     " + scores.get(i-1), getTileSize()*55/10, getTileSize()*i + getTileSize());
+        	
         }
+        g2.setColor(old);
         
         north.draw(g2);
         if (player != null) player.draw(g2);
