@@ -16,6 +16,7 @@ import creatureStuff.enemytypes.WalkingEnemy;
 import creatureStuff.enemytypes.ZigZag;
 import projectileStuff.Bullet;
 import roomComponents.Hole;
+import roomComponents.Items;
 import roomComponents.Rock;
 import roomComponents.Tile;
 
@@ -31,6 +32,7 @@ public class Room extends JComponent {
 	private static final char HOLE = 'o';
 	private static final char ZIGZIG = 'z';
 	private static final char STANDARD_ENEMY = 'e';
+	private static final char ITEM = 'I';
 	private static final char LEGENDARY_ITEM = 'L';
 	private static final char EPIC_ITEM = 'E';
 	private static final char RARE_ITEM = 'R';
@@ -42,6 +44,7 @@ public class Room extends JComponent {
 	private ArrayList<Hole> Obsticles = new ArrayList<>();
 	private ArrayList<Rock> BulletObsticles = new ArrayList<>(); // could use previous list but don't know how to differentiate between hole and rock
     private ArrayList<Creature> enemies = new ArrayList<>();
+    private ArrayList<Items> items = new ArrayList<>();
     protected Creature player;
 
     protected Door north;
@@ -77,7 +80,7 @@ public class Room extends JComponent {
         this.player = player;
         
 //      Temporary testing line remove when adding enimies adding to walk through doors
-//        this.roomCleared();
+        this.roomCleared();
     }
 
     public void setPlayer(Player p) {
@@ -117,6 +120,11 @@ public class Room extends JComponent {
     				gridTiles[row][col] = new Tile(x, y, level);
     				Creature e = new WalkingEnemy(x+TILE_SIZE/2, y+TILE_SIZE/2, player, this);
     				this.addEnemy(e);
+    			} else if (i == 'I') {
+    				Tile item = new Items(x,y,level);
+    				gridTiles[row][col] = item;
+    				items.add((Items) item);
+//    				gridTiles[row][col] = new Tile(x,y,level);
     			} else {
     				gridTiles[row][col] = new Tile(x,y,level);
     			}
@@ -138,6 +146,18 @@ public class Room extends JComponent {
         int height = layout.length * TILE_SIZE;
         return new Dimension(width, height);
     } 
+    
+    private void changeToTile(Tile objectToChange) {
+    	for (int row = 0; row < gridTiles.length; row++) {
+    		for (int col = 0; col < gridTiles[0].length; col++) {
+    			if (gridTiles[row][col].equals(objectToChange)) {
+    				int y = row*TILE_SIZE;
+        			int x = col*TILE_SIZE;
+    				gridTiles[row][col] = new Tile(x,y,level);
+    			}
+    		}
+    	}
+    }
 
     public void updateEntities() {
         if (player != null) {
@@ -146,6 +166,13 @@ public class Room extends JComponent {
             player.checkWallCollision();
             for (Hole o : Obsticles) {
             	player.checkValidSpeed(o.getXs(), o.getYs());
+            }
+            for (int i = 0; i < items.size(); i++) {
+            	if (items.get(i).getBounds().intersects(player.getBounds())) {
+            		((Player)player).simpleItemEffect(items.get(i).itemType());
+            		items.remove(i);
+            		this.changeToTile(items.get(i));
+            	}
             }
 //          Need line looping through an arrayList of Holes (Holes, and Rocks) to grap there xs and ys and run
 //          checkValidSpeed in creature class this is where we update player then below same for enemies

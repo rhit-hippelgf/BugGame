@@ -119,6 +119,18 @@ public class Player extends Creature {
         }
     }
     
+    public void simpleItemEffect(String effect) {
+    	if (effect.equals("small health")) {
+    		
+    	} else if (effect.equals("speed up")) {
+    		
+    	} else if (effect.equals("damage up")) {
+    		
+    	} else if (effect.equals("big health")) {
+    		
+    	}
+    }
+    
     @Override
     public void update() {
     	shootCount++;
