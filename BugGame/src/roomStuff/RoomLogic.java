@@ -61,7 +61,6 @@ public class RoomLogic {
 
 
     private void generateLayout(int numRooms) {
-    	System.out.println(level);
     	this.numRooms = numRooms;
         ArrayList<Point> rooms = new ArrayList<>();
         roomLayout.clear();
@@ -153,6 +152,11 @@ public class RoomLogic {
 	            	r.setDoorColor('e', Color.YELLOW);
 	            	r.setDoorColor('s', Color.YELLOW);
 	            	r.setDoorColor('w', Color.YELLOW);
+	            }
+	            
+	            if (this.checkDirection(temp, shopLoc) != ' ') {
+	            	char dir = this.checkDirection(temp, shopLoc);
+	            	r.setDoorColor(dir, Color.YELLOW);
 	            }
 	            
 	            if (temp.equals(itemLoc[1])) {
@@ -341,10 +345,10 @@ public class RoomLogic {
     }
     
     private char checkDirection(Point preRoom, Point postRoom) {
-    	if (postRoom.y - preRoom.y == 1) return 'n';
-    	else if (postRoom.x - preRoom.x == 1) return 'e';
-    	else if (postRoom.y - preRoom.y == -1) return 's';
-    	else if (postRoom.x - preRoom.x == -1) return 'w';
+    	if (postRoom.y - preRoom.y == 1 && postRoom.x == preRoom.x) return 'n';
+    	else if (postRoom.x - preRoom.x == 1 && postRoom.y == preRoom.y) return 'e';
+    	else if (postRoom.y - preRoom.y == -1 && postRoom.x == preRoom.x) return 's';
+    	else if (postRoom.x - preRoom.x == -1 && postRoom.y == preRoom.y) return 'w';
     	else return ' ';
     }
     

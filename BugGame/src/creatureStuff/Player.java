@@ -124,7 +124,6 @@ public class Player extends Creature {
     	shootCount++;
     	if (health <= 0) {
     		this.isDead = true;
-    		System.out.println("dead");
     	}
         // placeholder for movement, status effects, cooldowns, etc.
     }
