@@ -17,6 +17,7 @@ public class BackgroundHud extends JComponent {
 	private int health;
 	private int maxHealth;
 	private int level;
+	private int score;
 	private boolean updateHud = false;
 	private ArrayList<Point> exploredMap = new ArrayList<>();
 	private Point currentRoom;
@@ -33,6 +34,7 @@ public class BackgroundHud extends JComponent {
 	public BackgroundHud(Player player) {
 		this.player = player;
 		this.health = player.getCurrentHealth();
+		this.score = player.getScore();
 		this.maxHealth = player.getMaxHealth();
 		this.setBounds(0, 0, RoomLogic.getScreenWidth(), RoomLogic.getScreenHeight());
 
@@ -65,7 +67,8 @@ public class BackgroundHud extends JComponent {
 	        
 	        g2.drawString("Current Health: " + health, 50, 50);
 	        g2.drawString("Max Health: " + maxHealth, 50, 70);
-	        g2.drawString("Level: " + level, 500, 70);
+	        g2.drawString("Level: " + level, 500, 50);
+	        g2.drawString("Score: " + score, 500, 70);
 	        
 	        for (Point point : exploredMap) {
 	        	if (!point.equals(currentRoom)) {
@@ -115,6 +118,10 @@ public class BackgroundHud extends JComponent {
 		if (this.maxHealth != player.getMaxHealth()) {
 			updateHud = true;
 			maxHealth = player.getMaxHealth();
+		}
+		if (this.score != player.getScore()) {
+			updateHud = true;
+			score = player.getScore();
 		}
 		if (updateHud) {
 			this.repaint();
