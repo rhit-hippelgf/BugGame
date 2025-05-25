@@ -20,6 +20,7 @@ public abstract class Bullet {
     protected int speed;
     protected int damage;
     protected Creature source;
+    protected boolean isCrit = false;
 
     protected boolean markForRemoval = false;
 
@@ -95,7 +96,15 @@ public abstract class Bullet {
         // mark this bullet for removal after hit
         markForRemoval = true;
     }
+    
+    public void setCrit(boolean crit) {
+        this.isCrit = crit;
+    }
 
+    public boolean isCrit() {
+        return isCrit;
+    }
+    
     public abstract void draw(Graphics2D g);
     
     

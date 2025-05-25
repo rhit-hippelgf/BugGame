@@ -179,15 +179,19 @@ public class Player extends Creature {
     @Override
     public void shoot(double dx, double dy) {
     	int damage=baseDamage;
+    	boolean crit = new RngHandler().handleCheck(critChance);
         
-        if (new RngHandler().handleCheck(critChance)) {
+        if (crit) {
             damage *= 2;
         }
-
+        
         Bullet b = null;
 //        System.out.println("Calling shoot!");
         if (shootCount == 0) {
             b = createBullet(dx, dy, 5, damage);
+            if (b != null && crit) {
+                b.setCrit(true);
+            }
             playShootSound();
             shootCount = 1;
         } else if (shootCount > shootCooldown) {

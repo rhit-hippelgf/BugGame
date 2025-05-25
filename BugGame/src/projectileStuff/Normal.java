@@ -7,14 +7,16 @@ import creatureStuff.Player;
 public class Normal extends Bullet {
 	private Color color;
 
-    public Normal(double x, double y, double dx, double dy, int speed, int damage, Creature source) {
-        super(x, y, dx, dy, speed, damage, source);
-        if (source instanceof Player) {
-        	color = Color.BLUE;
-        } else {
-        	color = Color.RED;
-        }
-    }
+	public Normal(double x, double y, double dx, double dy, int speed, int damage, Creature source) {
+	    super(x, y, dx, dy, speed, damage, source);
+
+	    if (source instanceof Player) {
+	        color = isCrit ? Color.YELLOW : Color.BLUE;  
+	    } else {
+	        color = Color.RED;
+	    }
+	}
+
 
 
     // Optional overloaded constructor (e.g., for effects)
@@ -24,9 +26,16 @@ public class Normal extends Bullet {
 
     @Override
     public void draw(Graphics2D g) {
-    	Color old = g.getColor();
-        g.setColor(color);
+        Color old = g.getColor();
+
+        if (isCrit) {
+            g.setColor(Color.YELLOW); 
+        } else {
+            g.setColor(color); 
+        }
+
         g.fillOval((int)x - width / 2, (int)y - height / 2, width, height);
         g.setColor(old);
     }
+
 }
