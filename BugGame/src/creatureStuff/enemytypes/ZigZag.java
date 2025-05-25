@@ -32,7 +32,7 @@ public class ZigZag extends Enemy {
 	private int damage;
 
     public ZigZag(int x, int y, Creature target, Room room, int startHp, int startDamage, int startSpeed, int poisonDamage, double poisonChance) {
-        super(x, y, 2, 5, target);
+        super(x, y, startSpeed, startHp, target);
         this.room = room;
         this.health=startHp;
         this.healthCap=startHp;

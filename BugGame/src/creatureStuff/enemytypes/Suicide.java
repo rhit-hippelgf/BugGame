@@ -41,7 +41,7 @@ public class Suicide extends Enemy {
 	private int boomDamage;
 
     public Suicide(int x, int y, Creature target, Room room, int startHp, int startDamage, int startSpeed) {
-        super(x, y, 3, 2, target);
+        super(x, y, startSpeed, startHp, target);
         this.drawWidth = RoomLogic.getTileSize();
         this.drawHeight = RoomLogic.getTileSize();
         this.width = drawWidth - 20;

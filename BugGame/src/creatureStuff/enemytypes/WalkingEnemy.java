@@ -32,15 +32,19 @@ public class WalkingEnemy extends Enemy {
 	private BufferedImage image4;
 
 	private Room room;
+	private int projectileSpeed;
+	private int damage;
 
-	public WalkingEnemy(int x, int y, Creature target, Room room) {
-		super(x, y, 2, 3, target);
+	public WalkingEnemy(int x, int y, Creature target, Room room, int hp, int damage, int projectileSpeed) {
+		super(x, y, 2, hp, target);
 		setBulletClass(Normal.class);
 		drawWidth = RoomLogic.getTileSize()-10;
 		drawHeight = RoomLogic.getTileSize()-10;
 		this.width = drawWidth/2+10;
 		this.height = drawHeight - 10;
 		this.room = room; // Store reference to the room
+		this.projectileSpeed = projectileSpeed;
+        this.damage = damage;
 
 		file1 = new File("assets/sprites/creatures/BulletAnt1.png");
 		file2 = new File("assets/sprites/creatures/BulletAnt2.png");
@@ -112,7 +116,7 @@ public class WalkingEnemy extends Enemy {
 
 	@Override
 	public void shoot(double dx, double dy) {
-		Bullet b = createBullet(dx, dy, 5, 1);
+		Bullet b = createBullet(dx, dy, projectileSpeed, damage);
 		if (b != null && room != null) {
 			room.getEnemyBullets().add(b);
 		}
