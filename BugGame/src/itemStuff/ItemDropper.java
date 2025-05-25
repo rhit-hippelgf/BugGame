@@ -12,6 +12,8 @@ public class ItemDropper {
     static {
         // ✅ Common Items
         common.add((x, y) -> new SpeedShoes(x, y));
+        common.add((x, y) -> new Battery(x, y));
+
         // common.add((x, y) -> new SomeOtherCommonItem(x, y));
 
         // Rare Items

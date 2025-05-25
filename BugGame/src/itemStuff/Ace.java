@@ -2,22 +2,22 @@ package itemStuff;
 
 import creatureStuff.Player;
 
-public class SpeedShoes extends Item {
+public class Ace extends Item {
 
-    private static final int STAT_BOOST = 1;
+    private static final int STAT_BOOST = 10;  
 
-    public SpeedShoes(int x, int y) {
-        super(x, y, "assets/sprites/items/Bread.png", STAT_BOOST);
+    public Ace(int x, int y) {
+        super(x, y, "assets/sprites/items/Ace.png", STAT_BOOST); 
     }
 
     @Override
     public void applyEffect(Player player) {
-        player.addItem(this);  // Triggers stat logic in Player
+        player.addItem(this);  
     }
 
     @Override
     public String getStatCat() {
-        return "speed";
+        return "blockChance";
     }
 
     @Override
@@ -27,6 +27,6 @@ public class SpeedShoes extends Item {
 
     @Override
     public Rarity getRarity() {
-        return Rarity.COMMON;
+        return Rarity.RARE;  
     }
 }

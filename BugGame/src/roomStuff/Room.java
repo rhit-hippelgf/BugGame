@@ -25,6 +25,7 @@ import roomComponents.Tile;
 
 import java.awt.Dimension;
 import java.awt.Color;
+import java.awt.Font;
 import creatureStuff.*; 
 
 public class Room extends JComponent {
@@ -385,4 +386,9 @@ public class Room extends JComponent {
     
     public List<Bullet> getPlayerBullets() { return playerBullets; }
     public List<Bullet> getEnemyBullets() { return enemyBullets; }
+    
+    public void spawnText(String text, int x, int y, Color color) {
+        activeTexts.add(new FloatingText(text, x, y, color));
+    }
+
 }

@@ -2,22 +2,22 @@ package itemStuff;
 
 import creatureStuff.Player;
 
-public class SpeedShoes extends Item {
+public class Battery extends Item {
 
-    private static final int STAT_BOOST = 1;
+    private static final int STAT_BOOST = 2;
 
-    public SpeedShoes(int x, int y) {
-        super(x, y, "assets/sprites/items/Bread.png", STAT_BOOST);
+    public Battery(int x, int y) {
+        super(x, y, "assets/sprites/items/battery.png", STAT_BOOST);  // Ensure this sprite exists
     }
 
     @Override
     public void applyEffect(Player player) {
-        player.addItem(this);  // Triggers stat logic in Player
+        player.addItem(this);  // Player will interpret fireRate
     }
 
     @Override
     public String getStatCat() {
-        return "speed";
+        return "fireRate";
     }
 
     @Override
