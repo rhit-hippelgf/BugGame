@@ -4,10 +4,14 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import creatureStuff.Player;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.awt.BasicStroke;
 import java.awt.Color;
 
@@ -31,6 +35,9 @@ public class BackgroundHud extends JComponent {
 	private boolean loading = false;
 	private int autoUpdate = 0;
 	private int autoUpdateMax = 120;
+	private BufferedImage heartCase;
+	private BufferedImage heartL;
+	private BufferedImage heartR;
 
 	
 	public BackgroundHud(Player player) {
@@ -40,7 +47,12 @@ public class BackgroundHud extends JComponent {
 		this.maxHealth = player.getMaxHealth();
 		this.setBounds(0, 0, RoomLogic.getScreenWidth(), RoomLogic.getScreenHeight());
 
-		
+		try {
+			heartCase = ImageIO.read(new File("assets/sprites/ui/Heart.png"));
+			heartL = ImageIO.read(new File("assets/sprites/ui/HeartL.png"));
+			heartR = ImageIO.read(new File("assets/sprites/ui/HeartR.png"));
+		} catch (IOException e) {
+		}
 	}
 	
 	@Override
@@ -67,8 +79,17 @@ public class BackgroundHud extends JComponent {
 			g2.setColor(old);
 			
 	        
-	        g2.drawString("Current Health: " + health, 50, 50);
-	        g2.drawString("Max Health: " + maxHealth, 50, 70);
+	        //g2.drawString("Current Health: " + health, 50, 50);
+	        //g2.drawString("Max Health: " + maxHealth, 50, 70);
+			for (int i =0; i<(Math.ceilDiv(maxHealth,2));i++) {
+				g2.drawImage(heartCase, 30+60*i, 30, 60, 60, null);
+			}
+			for (int i = 0; i<(Math.ceilDiv(health,2));i++) {
+				g2.drawImage(heartL, 30+60*i, 30, 60, 60, null);
+			}
+			for (int i = 0; i<(Math.floorDiv(health,2));i++) {
+				g2.drawImage(heartR, 30+60*i, 30, 60, 60, null);
+			}
 	        g2.drawString("Level: " + level, 500, 50);
 	        g2.drawString("Score: " + score, 500, 70);
 	        
