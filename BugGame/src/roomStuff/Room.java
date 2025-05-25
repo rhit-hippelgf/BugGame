@@ -77,7 +77,7 @@ public class Room extends JComponent {
         this.player = player;
         
 //      Temporary testing line remove when adding enimies adding to walk through doors
-        this.roomCleared();
+//        this.roomCleared();
     }
 
     public void setPlayer(Player p) {
@@ -169,6 +169,7 @@ public class Room extends JComponent {
         }
         
         enemies.removeIf(e -> e.getHealth() <= 0);
+        if (enemies.isEmpty()) this.roomCleared();
         this.handleCollision();
         this.updateBullets();
     }

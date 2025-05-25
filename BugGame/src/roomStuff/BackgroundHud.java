@@ -29,6 +29,8 @@ public class BackgroundHud extends JComponent {
 	private int mapPaintOY = sideGapY/2 - mapPaintHeight/2;
 	private Walls[] walls;
 	private boolean loading = false;
+	private int autoUpdate = 0;
+	private int autoUpdateMax = 120;
 
 	
 	public BackgroundHud(Player player) {
@@ -61,7 +63,7 @@ public class BackgroundHud extends JComponent {
 			}
 			g2.setColor(Color.BLACK);
 			g2.setStroke(new BasicStroke(4));
-			g2.drawRect(sideGapX-1, sideGapY-1, RoomLogic.getRoomWidth()+1, RoomLogic.getRoomHeight()+1);
+			g2.drawRect(sideGapX-1, sideGapY-1, RoomLogic.getRoomWidth()+2, RoomLogic.getRoomHeight()+2);
 			g2.setColor(old);
 			
 	        
@@ -122,6 +124,12 @@ public class BackgroundHud extends JComponent {
 		if (this.score != player.getScore()) {
 			updateHud = true;
 			score = player.getScore();
+		}
+		if (autoUpdate >= autoUpdateMax) {
+			updateHud = true;
+			autoUpdate = 0;
+		} else {
+			autoUpdate++;
 		}
 		if (updateHud) {
 			this.repaint();

@@ -146,12 +146,12 @@ public class WalkingEnemy extends Enemy {
 		}
 
 		// draw a red line toward the target (player)
-		g.setColor(Color.RED);
-		int ex = this.getX();
-		int ey = this.getY();
-		int tx = target.getX();
-		int ty = target.getY();
-		g.drawLine(ex, ey, tx, ty);
+//		g.setColor(Color.RED);
+//		int ex = this.getX();
+//		int ey = this.getY();
+//		int tx = target.getX();
+//		int ty = target.getY();
+//		g.drawLine(ex, ey, tx, ty);
 
 		// bullet drawing is now handled by Room, not here
 	}

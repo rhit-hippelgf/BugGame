@@ -2,12 +2,20 @@ package projectileStuff;
 
 import java.awt.*;
 import creatureStuff.Creature;
+import creatureStuff.Player;
 
 public class Normal extends Bullet {
+	private Color color;
 
     public Normal(double x, double y, double dx, double dy, int speed, int damage, Creature source) {
         super(x, y, dx, dy, speed, damage, source);
+        if (source instanceof Player) {
+        	color = Color.BLUE;
+        } else {
+        	color = Color.RED;
+        }
     }
+
 
     // Optional overloaded constructor (e.g., for effects)
     public Normal(double x, double y, double dx, double dy, int speed, int damage) {
@@ -17,7 +25,7 @@ public class Normal extends Bullet {
     @Override
     public void draw(Graphics2D g) {
     	Color old = g.getColor();
-        g.setColor(Color.BLUE);
+        g.setColor(color);
         g.fillOval((int)x - width / 2, (int)y - height / 2, width, height);
         g.setColor(old);
     }
