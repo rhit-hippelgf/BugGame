@@ -3,8 +3,11 @@ package itemStuff;
 import creatureStuff.Player;
 
 public class SpeedShoes extends Item {
+
+    private static final int STAT_BOOST = 5;
+
     public SpeedShoes(int x, int y) {
-        super(x, y, "assets/sprites/items/speedShoes.png");
+        super(x, y, "assets/sprites/items/Bread.png", STAT_BOOST);
     }
 
     @Override
@@ -19,7 +22,7 @@ public class SpeedShoes extends Item {
 
     @Override
     public int getStatBoost() {
-        return 5;
+        return STAT_BOOST;
     }
 
     @Override

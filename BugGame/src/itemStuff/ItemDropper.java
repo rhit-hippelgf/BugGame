@@ -1,6 +1,7 @@
 package itemStuff;
 
 import java.util.*;
+import itemStuff.ItemDropper.ItemFactory;
 
 public class ItemDropper {
     private static final List<ItemFactory> common = new ArrayList<>();
@@ -9,27 +10,23 @@ public class ItemDropper {
     private static final List<ItemFactory> legendary = new ArrayList<>();
 
     static {
-        // Register items for each rarity using lambdas
-        common.add((x, y) -> new BugEyeGoggles(x, y));
-        common.add((x, y) -> new something(x, y));
-        common.add((x, y) -> new something(x, y));
-        common.add((x, y) -> new something(x, y));
-        common.add((x, y) -> new something(x, y));
-        common.add((x, y) -> new something(x, y));
-        
-        
-        // common.add((x, y) -> new SpeedBoots(x, y));
-        rare.add((x, y) -> new STFU(x, y));
-        
-        epic.add((x, y) -> new poison(x, y));
-        
-        legendary.add((x, y) -> new trishot(x, y));
+        // ✅ Common Items
+        common.add((x, y) -> new SpeedShoes(x, y));
+        // common.add((x, y) -> new SomeOtherCommonItem(x, y));
+
+        // Rare Items
+        rare.add((x, y) -> new BugEyeGoggles(x, y));
+
+
+        // Epic Items
+        // epic.add((x, y) -> new Poison(x, y)); // uncomment when real class exists
+
+        // Legendary Items
+        // legendary.add((x, y) -> new TriShot(x, y)); // uncomment when real class exists
     }
 
     public static Item getRandomItem(Rarity rarity, int x, int y) {
-        Random rand = new Random();
         List<ItemFactory> pool;
-
         switch (rarity) {
             case COMMON: pool = common; break;
             case RARE: pool = rare; break;
@@ -39,9 +36,11 @@ public class ItemDropper {
         }
 
         if (pool.isEmpty()) return null;
-        return pool.get(rand.nextInt(pool.size())).create(x, y);
+
+        return pool.get(new Random().nextInt(pool.size())).create(x, y);
     }
 
+    @FunctionalInterface
     public interface ItemFactory {
         Item create(int x, int y);
     }

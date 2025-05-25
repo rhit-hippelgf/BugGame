@@ -81,7 +81,7 @@ public class Player extends Creature {
                 health += item.getStatBoost();
                 break;
             case "speed":
-                speed += 5;
+                speed += item.getStatBoost();
                 break;
             case "healthCap":
                 healthCap += item.getStatBoost();

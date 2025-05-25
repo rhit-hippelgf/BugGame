@@ -14,9 +14,12 @@ import creatureStuff.Player;
 import creatureStuff.enemytypes.Suicide;
 import creatureStuff.enemytypes.WalkingEnemy;
 import creatureStuff.enemytypes.ZigZag;
+import itemStuff.Item;
+import itemStuff.ItemDropper;
+import itemStuff.Rarity;
 import projectileStuff.Bullet;
 import roomComponents.Hole;
-import roomComponents.Items;
+//import roomComponents.Items;
 import roomComponents.Rock;
 import roomComponents.Tile;
 
@@ -44,7 +47,7 @@ public class Room extends JComponent {
 	private ArrayList<Hole> Obsticles = new ArrayList<>();
 	private ArrayList<Rock> BulletObsticles = new ArrayList<>(); // could use previous list but don't know how to differentiate between hole and rock
     private ArrayList<Creature> enemies = new ArrayList<>();
-    private ArrayList<Items> items = new ArrayList<>();
+    private ArrayList<itemStuff.Item> items = new ArrayList<>();
     protected Creature player;
 
     protected Door north;
@@ -120,10 +123,20 @@ public class Room extends JComponent {
     				gridTiles[row][col] = new Tile(x, y, level);
     				Creature e = new WalkingEnemy(x+TILE_SIZE/2, y+TILE_SIZE/2, player, this,4+level+Math.floorDiv(level, 2),1+Math.floorDiv(level, 2),5+2*level);
     				this.addEnemy(e);
-    			} else if (i == 'I') {
-    				Tile item = new Items(x,y,level);
-    				gridTiles[row][col] = item;
-    				items.add((Items) item);
+    			} else if (i == 'I' || i == 'C' || i == 'R' || i == 'E' || i == 'L') {
+    			    Rarity rarity = switch (i) {
+    			        case 'L' -> Rarity.LEGENDARY;
+    			        case 'E' -> Rarity.EPIC;
+    			        case 'R' -> Rarity.RARE;
+    			        case 'C', 'I' -> Rarity.COMMON;
+    			        default -> Rarity.COMMON;
+    			    };
+
+    			    itemStuff.Item dropped = ItemDropper.getRandomItem(rarity, x + TILE_SIZE / 2, y + TILE_SIZE / 2);
+    			    if (dropped != null) {
+    			        items.add(dropped);
+    			    }
+    			    gridTiles[row][col] = new Tile(x, y, level);
 //    				gridTiles[row][col] = new Tile(x,y,level);
     			} else {
     				gridTiles[row][col] = new Tile(x,y,level);
@@ -168,12 +181,11 @@ public class Room extends JComponent {
             	player.checkValidSpeed(o.getXs(), o.getYs());
             }
             for (int i = 0; i < items.size(); i++) {
-                if (items.get(i).getBounds().intersects(player.getBounds())) {
-                    Items pickedUp = items.get(i);  // Save reference
-                    ((Player) player).simpleItemEffect(pickedUp.itemType());
+                itemStuff.Item pickedUp = items.get(i);  
+                if (pickedUp.getBounds().intersects(player.getBounds())) {
+                    pickedUp.applyEffect((Player) player);
                     items.remove(i);
-                    this.changeToTile(pickedUp);  // Use saved reference
-                    break; // optional: if you only want one pickup per frame
+                    break;  // Only pick up one per frame
                 }
             }
 //          Need line looping through an arrayList of Holes (Holes, and Rocks) to grap there xs and ys and run
@@ -260,6 +272,11 @@ public class Room extends JComponent {
         east.draw(g2);
         south.draw(g2);
         west.draw(g2);
+        
+        for (itemStuff.Item item : items) {
+            item.draw((Graphics2D) g);  // uses draw method inside each item class
+        }
+
         
      // draw player bullets
         for (Bullet b : playerBullets) {
