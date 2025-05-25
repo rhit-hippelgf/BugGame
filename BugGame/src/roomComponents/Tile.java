@@ -54,10 +54,11 @@ public class Tile {
 		this.x2 = x1+TILE;
 		this.y2 = y1+TILE;
 		this.color = Color.WHITE;
+		this.level = level;
 		r = new Random();
-		if (level <= 2) {
+		if (level <= 1) {
 			n = r.nextInt(8);
-		} else if (level <= 4 && level >= 3) {
+		} else if (level <= 3 && level >= 2) {
 			n = r.nextInt(4);
 		} else {
 			n = r.nextInt(7);
@@ -95,7 +96,7 @@ public class Tile {
 	public void draw(Graphics2D g2) {
 		
 		if (spriteLoaded == true) {
-			if (level <= 2) {
+			if (level <= 1) {
 			
 				if (n==0) {
 					g2.drawImage(dirt1, x1, y1, TILE, TILE, null);
@@ -114,7 +115,7 @@ public class Tile {
 				} else {
 					g2.drawImage(dirt8, x1, y1, TILE, TILE, null);
 				} 
-			} else if (level <= 4 && level >= 3) {
+			} else if (level <= 3 && level >= 2) {
 				
 				if (n==0) {
 					g2.drawImage(stone1, x1, y1, TILE, TILE, null);

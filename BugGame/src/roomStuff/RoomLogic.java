@@ -205,7 +205,7 @@ public class RoomLogic {
     	if (!hud.getLoading()) {
 	        currentRoom.updateEntities();
 	        if (((Player) hero).getIsDead()) {
-	        	this.handleDeadPlayer();
+//	        	this.handleDeadPlayer();
 	        }
 	        this.goNextFloor(currentRoom.goThroughDoor());
 	        this.switchRooms(currentRoom.goThroughDoor());
