@@ -34,7 +34,7 @@ public class Player extends Creature {
     private int shootCount;
     private int shootCooldown = 15;
     private int score;
-
+    private int baseDamage=1;
     // ref to Room component for screen coordinates and dimensions
 //    private Room currentRoom;
     
@@ -178,16 +178,16 @@ public class Player extends Creature {
 
     @Override
     public void shoot(double dx, double dy) {
-        int baseDamage = 1;
+    	int damage=baseDamage;
         
         if (new RngHandler().handleCheck(critChance)) {
-            baseDamage *= 2;
+            damage *= 2;
         }
 
         Bullet b = null;
 //        System.out.println("Calling shoot!");
         if (shootCount == 0) {
-            b = createBullet(dx, dy, 5, baseDamage);
+            b = createBullet(dx, dy, 5, damage);
             playShootSound();
             shootCount = 1;
         } else if (shootCount > shootCooldown) {

@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 
 public class BackgroundHud extends JComponent {
 
@@ -60,9 +61,11 @@ public class BackgroundHud extends JComponent {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 		if (this.loading) {
+			g2.setColor(Color.DARK_GRAY);
 			g2.fillRect(0, 0, RoomLogic.getScreenWidth(), RoomLogic.getScreenHeight());
 			g2.setColor(Color.WHITE);
-			g2.drawString("Loading...", 400,400);
+			g2.setFont(new Font("Calibri", Font.PLAIN, 100)); 
+			g2.drawString("Loading...", RoomLogic.getScreenWidth()/2-200,RoomLogic.getScreenHeight()/2-50);
 			g2.setColor(Color.BLACK);
 		} else {
 			Color old = g2.getBackground();
@@ -79,8 +82,6 @@ public class BackgroundHud extends JComponent {
 			g2.setColor(old);
 			
 	        
-	        //g2.drawString("Current Health: " + health, 50, 50);
-	        //g2.drawString("Max Health: " + maxHealth, 50, 70);
 			for (int i =0; i<(Math.ceilDiv(maxHealth,2));i++) {
 				g2.drawImage(heartCase, 30+60*i, 30, 60, 60, null);
 			}
@@ -90,8 +91,10 @@ public class BackgroundHud extends JComponent {
 			for (int i = 0; i<(Math.floorDiv(health,2));i++) {
 				g2.drawImage(heartR, 30+60*i, 30, 60, 60, null);
 			}
-	        g2.drawString("Level: " + level, 500, 50);
-	        g2.drawString("Score: " + score, 500, 70);
+	        
+	        g2.setFont(new Font("Calibri", Font.PLAIN, 25)); 
+	        g2.drawString("Level: " + level, 604, 50);
+	        g2.drawString("Score: " + score, 600, 100);
 	        
 	        for (Point point : exploredMap) {
 	        	if (!point.equals(currentRoom)) {
