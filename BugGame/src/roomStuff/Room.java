@@ -168,11 +168,13 @@ public class Room extends JComponent {
             	player.checkValidSpeed(o.getXs(), o.getYs());
             }
             for (int i = 0; i < items.size(); i++) {
-            	if (items.get(i).getBounds().intersects(player.getBounds())) {
-            		((Player)player).simpleItemEffect(items.get(i).itemType());
-            		items.remove(i);
-            		this.changeToTile(items.get(i));
-            	}
+                if (items.get(i).getBounds().intersects(player.getBounds())) {
+                    Items pickedUp = items.get(i);  // Save reference
+                    ((Player) player).simpleItemEffect(pickedUp.itemType());
+                    items.remove(i);
+                    this.changeToTile(pickedUp);  // Use saved reference
+                    break; // optional: if you only want one pickup per frame
+                }
             }
 //          Need line looping through an arrayList of Holes (Holes, and Rocks) to grap there xs and ys and run
 //          checkValidSpeed in creature class this is where we update player then below same for enemies
