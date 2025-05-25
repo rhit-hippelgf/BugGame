@@ -267,6 +267,7 @@ public class RoomLogic {
     
     public void goNextFloor(char playerHitFloorDoor) {
     	if (Character.isUpperCase(playerHitFloorDoor)) {
+    		((Player)hero).raiseHealthCap();
     		this.level++;
     		hud.switchLoading();
     		frame.remove(currentRoom);

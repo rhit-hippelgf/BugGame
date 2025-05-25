@@ -223,6 +223,15 @@ public class Player extends Creature {
 		this.score += score;
 	}
 	
+	public void heal() {
+		if (health < healthCap) health++;
+	}
+	
+	public void raiseHealthCap() {
+		healthCap++;
+		health++;
+	}
+	
 
 
 

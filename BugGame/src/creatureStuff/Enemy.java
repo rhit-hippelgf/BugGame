@@ -3,6 +3,7 @@ package creatureStuff;
 import java.awt.Graphics;
 import java.awt.*;
 import java.awt.Rectangle;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -42,6 +43,11 @@ public abstract class Enemy extends Creature {
     
     public void bounceOffPlayer() {
     	if (this.getBounds().intersects(target.getBounds())) this.recentlyHitPlayerTick = 1;
+    }
+    
+    public boolean healPlayer() {
+    	if (Math.random() <= 0.05) return true;
+    	else return false;
     }
     
     public abstract int getScore();

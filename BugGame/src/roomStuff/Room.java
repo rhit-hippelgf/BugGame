@@ -165,6 +165,7 @@ public class Room extends JComponent {
         	e.move();
         	if (e.getHealth() <= 0) {
         		((Player)player).addScore(((Enemy)e).getScore());
+        		if (((Enemy)e).healPlayer()) ((Player)player).heal();
         	}
         }
         
