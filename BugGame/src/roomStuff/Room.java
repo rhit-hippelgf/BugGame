@@ -143,6 +143,7 @@ public class Room extends JComponent {
         if (player != null) {
             player.update();
             control.moveIfPress();
+            player.checkWallCollision();
             for (Hole o : Obsticles) {
             	player.checkValidSpeed(o.getXs(), o.getYs());
             }
@@ -156,6 +157,7 @@ public class Room extends JComponent {
         }
         for (Creature e : enemies) {
         	e.update();
+        	e.checkWallCollision();
         	
         	for (Hole o : Obsticles) {
         		e.checkValidSpeed(o.getXs(), o.getYs());

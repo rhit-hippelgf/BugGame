@@ -71,17 +71,7 @@ public abstract class Creature {
 		
 	}
 	
-	public void move() {
-		x += xspeed;
-		y += yspeed;
-		xspeed = 0;
-		yspeed = 0;
-	}
-	
-//	This method is to check if the creature is moving at a valid speed based on locations of rocks and holes in room
-//	I don't want to implement falling into a pit and would rather treat it as an obstacle the player can't cross but bullets can
-//	We can add a wing item that allows the player to fly over holes and then this method will simply not be ran
-	public void checkValidSpeed(int[] xs, int[] ys) {
+	public void checkWallCollision() {
 		if (xspeed < 0 && x <= width/2) {
 			xspeed = 0;
 			x = width/2;
@@ -96,6 +86,19 @@ public abstract class Creature {
 			yspeed = 0;
 			y = roomHeight - height/2;
 		}
+	}
+	
+	public void move() {
+		x += xspeed;
+		y += yspeed;
+		xspeed = 0;
+		yspeed = 0;
+	}
+	
+//	This method is to check if the creature is moving at a valid speed based on locations of rocks and holes in room
+//	I don't want to implement falling into a pit and would rather treat it as an obstacle the player can't cross but bullets can
+//	We can add a wing item that allows the player to fly over holes and then this method will simply not be ran
+	public void checkValidSpeed(int[] xs, int[] ys) {
 		if (y + height/2> ys[0] && y < ys[1]) {
 			if (xspeed < 0 && x-width/2 <= xs[1] && x > xs[1]) {
 				xspeed = 0;

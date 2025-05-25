@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 
 import java.awt.Point;
 import java.io.File;
+import java.io.IOException;
 
 import creatureStuff.Creature;
 import creatureStuff.Enemy;
@@ -31,6 +32,8 @@ public class RoomLogic {
     private static int ROOM_HEIGHT;
     private static int ROOM_X, ROOM_Y;
     private static int SCREEN_WIDTH, SCREEN_HEIGHT;
+    private List<Integer> scores;
+    private HighScoreManager mgr;
     private HashMap<Point, Room> roomLayout = new HashMap<>();
     private BackgroundHud hud;
 	//private ArrayList<Point> shopPoints;
@@ -51,11 +54,14 @@ public class RoomLogic {
         this.hero = new Player((TILE_SIZE * 13) / 2, (TILE_SIZE * 7) / 2, 8, 5);
         hud = new BackgroundHud((Player) hero);
     	frame.add(hud);
-//        this.frame.add(hud);
+        try {
+			mgr = new HighScoreManager();
+			scores = mgr.getHighScores();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
         this.generateLayout(numRooms);
-        System.out.println(this.roomLayout.keySet());
-        
-        
+
         musicPlayer.playBgm();
     }
 
@@ -78,7 +84,7 @@ public class RoomLogic {
             r.roomCleared();
             roomLayout.put(rooms.get(0), r);
             
-            Room r1 = new highScoreRoom(true, false, false, false, TILE_SIZE, this.level, hero);
+            Room r1 = new highScoreRoom(true, false, false, false, TILE_SIZE, this.level, hero, scores);
             r1.generateLayout();
             r1.roomCleared();
             roomLayout.put(new Point(0,-1), r1);
@@ -209,7 +215,11 @@ public class RoomLogic {
     	if (!hud.getLoading()) {
 	        currentRoom.updateEntities();
 	        if (((Player) hero).getIsDead()) {
-//	        	this.handleDeadPlayer();
+	        	try {
+					this.handleDeadPlayer();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 	        }
 	        this.goNextFloor(currentRoom.goThroughDoor());
 	        this.switchRooms(currentRoom.goThroughDoor());
@@ -234,8 +244,12 @@ public class RoomLogic {
         currentRoom.drawScreen();
     }
     
-    public void handleDeadPlayer() {
+    public void handleDeadPlayer() throws IOException {
 //    	Add method in player or new class to grab information from player and save it and a state in hud to display the previous run
+    	if (mgr.addScore(((Player)hero).getScore())) {
+            mgr.save();
+    	}
+    	mgr.addScore(((Player)hero).getScore());
         this.hero = new Player((TILE_SIZE * 13) / 2, (TILE_SIZE * 7) / 2, 8, 5);
         frame.remove(currentRoom);
         frame.remove(hud);

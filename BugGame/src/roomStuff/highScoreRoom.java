@@ -14,16 +14,11 @@ public class highScoreRoom extends Room {
 	List<Integer> scores;
 
 	public highScoreRoom(boolean north, boolean east, boolean south, boolean west, int tileSize, int level,
-			Creature player) {
+			Creature player, List<Integer> scores) {
 		super(north, east, south, west, tileSize, level, player);
 		FileReader pickLayout = new FileReader(north, east, south, west, false, false, false, false, true, level);
         layout = pickLayout.getLayout();
-        try {
-			mgr = new HighScoreManager();
-			scores = mgr.getHighScores();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+        this.scores = scores;
 	}
 
    @Override

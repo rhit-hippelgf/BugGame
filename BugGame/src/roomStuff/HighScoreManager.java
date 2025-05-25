@@ -65,16 +65,11 @@ public class HighScoreManager {
 		}
 	}
 	
-	public static void main(String[] args) throws IOException {
-        HighScoreManager mgr = new HighScoreManager();
-        System.out.println("Current top scores: " + mgr.getHighScores());
-        int score = new Random().nextInt(2000);
-        System.out.println("Adding new score: " + score);
-        if (mgr.addScore(score)) {
-            mgr.save();
-            System.out.println("New high‐score list: " + mgr.getHighScores());
-        } else {
-            System.out.println("Did not make top " + MAX_SCORES);
-        }
-    }
+//	This main method resets leaderboard planning to add way in game 
+//	public static void main(String[] args) throws IOException {
+//        HighScoreManager mgr = new HighScoreManager();
+//        mgr.addScore(0);
+//        mgr.save();
+//        System.out.println("Current top scores: " + mgr.getHighScores());
+//    }
 }
