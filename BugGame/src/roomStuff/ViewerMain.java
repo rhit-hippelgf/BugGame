@@ -1,5 +1,11 @@
 package roomStuff;
-
+/**
+ * Class: ViewerMain, this class is the main class ran, it creates the instance of RoomLogic and the Jframe.
+ * If we were to do this in the future maybe better OOD principles could have been used for this class and
+ * RoomLogic, as they are very similar and this passes much of the information to RoomLogic. 
+ * 
+ * @author team 1
+ */
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
