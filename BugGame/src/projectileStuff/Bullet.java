@@ -89,7 +89,7 @@ public abstract class Bullet {
 
     public void onHit(Creature target) {
         if (source instanceof Player player) {
-            // roll for lightning chance
+            // roll for lightning chanc
             if (new RngHandler().handleCheck(player.getLightingChance())) {
                 target.takeDamage(Integer.MAX_VALUE);  // instakill
                 if (player.getRoom() != null) {
