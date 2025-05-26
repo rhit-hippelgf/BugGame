@@ -35,6 +35,8 @@ public class Player extends Creature {
     private int shootCooldown = 25;
     private int score;
     private int baseDamage=1;
+    private int currency = 0;
+    
     // ref to Room component for screen coordinates and dimensions
 //    private Room currentRoom;
     
@@ -282,6 +284,23 @@ public class Player extends Creature {
 	public void raiseHealthCap() {
 		healthCap++;
 		health++;
+	}
+	
+	public int getCurrency() {
+	    return currency;
+	}
+
+	public void addCurrency(int amount) {
+	    currency += amount;
+	    System.out.println("[DEBUG] Added " + amount + "G → Total: " + currency);
+	}
+
+	public boolean spendCurrency(int amount) {
+	    if (currency >= amount) {
+	        currency -= amount;
+	        return true;
+	    }
+	    return false;
 	}
 	
 	public int getCritChance() { return critChance; }

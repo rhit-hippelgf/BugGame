@@ -78,7 +78,7 @@ public class Suicide extends Enemy {
     @Override
     public void update() {
         if (health <= 0) {
-            onDeath();
+            onDeath(room);
             return;
         }
 
@@ -151,7 +151,8 @@ public class Suicide extends Enemy {
     }
 
     @Override
-    public void onDeath() {
+    public void onDeath(Room room) {
+    	super.onDeath(room);
         System.out.println("Suicide enemy has detonated and died!");
     }
 

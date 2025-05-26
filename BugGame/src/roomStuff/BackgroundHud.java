@@ -113,6 +113,10 @@ public class BackgroundHud extends JComponent {
 	        }
 	        g2.setColor(Color.RED);
 	        g2.fillRect(mapPaintOX + mapPaintWidth*currentRoom.x, mapPaintOY - mapPaintHeight*currentRoom.y, mapPaintWidth, mapPaintHeight);
+	        
+	        g.setColor(Color.YELLOW);
+	        g.setFont(new Font("Arial", Font.BOLD, 18));
+	        g.drawString("Gold: " + player.getCurrency(), 20, 30);
 		}
         
         

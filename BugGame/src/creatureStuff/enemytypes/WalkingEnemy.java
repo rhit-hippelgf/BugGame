@@ -70,7 +70,7 @@ public class WalkingEnemy extends Enemy {
 	@Override
 	public void update() {
 		if (health <= 0) {
-			onDeath();
+			onDeath(room);
 			return;
 		}
 		
@@ -161,7 +161,8 @@ public class WalkingEnemy extends Enemy {
 	}
 
 	@Override
-	public void onDeath() {
+	public void onDeath(Room room) {
+		super.onDeath(room);
 //		System.out.println("WalkingEnemy has died!");
 	}
 

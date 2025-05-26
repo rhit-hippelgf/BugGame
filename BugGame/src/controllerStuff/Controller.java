@@ -58,6 +58,10 @@ public class Controller implements MouseListener {
 
         bind(im, am, "pressed D", () -> kPress.add(KeyEvent.VK_D));
         bind(im, am, "released D", () -> kPress.remove(KeyEvent.VK_D));
+        
+        bind(im, am, "pressed G", () -> kPress.add(KeyEvent.VK_G));
+        bind(im, am, "released G", () -> kPress.remove(KeyEvent.VK_G));
+
     }
 
     private void bind(InputMap im, ActionMap am, String keyStroke, Runnable action) {
@@ -71,6 +75,11 @@ public class Controller implements MouseListener {
     }
 
     public void moveIfPress() {
+    	if (kPress.contains(KeyEvent.VK_G)) {
+    	    player.addCurrency(10);
+    	    System.out.println("[DEBUG] G pressed → adding 10 gold.");
+    	}
+
         boolean w = kPress.contains(KeyEvent.VK_W);
         boolean a = kPress.contains(KeyEvent.VK_A);
         boolean s = kPress.contains(KeyEvent.VK_S);

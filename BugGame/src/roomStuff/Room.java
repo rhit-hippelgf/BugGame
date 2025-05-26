@@ -210,13 +210,20 @@ public class Room extends JComponent {
         		e.checkValidSpeed(o.getXs(), o.getYs());
         	}
         	e.move();
-        	if (e.getHealth() <= 0) {
+        	if (e.getHealth() <= 0&& e instanceof Enemy enemy && !enemy.isDead()) {
+        		((Enemy)e).markAsDead();
         		((Player)player).addScore(((Enemy)e).getScore());
         		if (((Enemy)e).healPlayer()) ((Player)player).heal();
+        		((Enemy)e).onDeath(this);
+
         	}
         }
         
-        enemies.removeIf(e -> e.getHealth() <= 0);
+        enemies.removeIf(e ->
+        e instanceof Enemy enemy
+            ? e.getHealth() <= 0 && enemy.isDead()
+            : e.getHealth() <= 0
+            );
         if (enemies.isEmpty()) this.roomCleared();
         this.handleCollision();
         this.updateBullets();
@@ -424,6 +431,11 @@ public class Room extends JComponent {
     public void spawnLightning(int x, int y) {
         lightningStrikes.add(new LightningStrike(x, y));
     }
+
+    public Player getPlayer() {
+        return (Player) player;
+    }
+
 
 
 }

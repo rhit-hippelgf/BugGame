@@ -66,7 +66,7 @@ public class ZigZag extends Enemy {
     @Override
     public void update() {
         if (health <= 0) {
-            onDeath();
+            onDeath(room);
             return;
         }
 
@@ -140,7 +140,8 @@ public class ZigZag extends Enemy {
     }
 
     @Override
-    public void onDeath() {
+    public void onDeath(Room room) {
+    	super.onDeath(room);
         System.out.println("ZigZag enemy has died!");
     }
 

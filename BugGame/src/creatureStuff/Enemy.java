@@ -8,6 +8,7 @@ package creatureStuff;
  * @author team 1
  */
 import java.awt.Graphics;
+
 import java.awt.*;
 import java.awt.Rectangle;
 import java.util.Random;
@@ -22,14 +23,27 @@ public abstract class Enemy extends Creature {
     protected Creature target; // usually the player
     protected int recentlyHitPlayerTick;
     protected int score;
+    protected int goldValue = 5;
+    private boolean isDead = false;
+
 
     public Enemy(int startX, int startY, int startSpeed, int startHealth, Creature target) {
         super(startX, startY, startSpeed, startHealth);
         this.target = target;
     }
 
-    public void onDeath() {
-        // Default: no action
+    public void onDeath(Room room) {
+        Player player = room.getPlayer();
+        player.addCurrency(goldValue);
+        room.spawnText("+" + (goldValue + 5) + "G", (int) this.getX(), (int) this.getY(), Color.YELLOW);
+    }
+    
+    public int getGoldValue() {
+        return goldValue;
+    }
+
+    public void setGoldValue(int value) {
+        this.goldValue = value;
     }
     
     @Override
@@ -58,4 +72,12 @@ public abstract class Enemy extends Creature {
     }
     
     public abstract int getScore();
+
+	public void markAsDead() {
+		isDead = true;
+	}
+	
+	public boolean isDead() {
+	    return isDead;
+	}
 }
