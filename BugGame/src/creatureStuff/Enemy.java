@@ -1,5 +1,12 @@
 package creatureStuff;
-
+/**
+ * Abstract class: Enemy is a creature and a super class to many different specific enemies.
+ * All enemies will act in this general manner but the specific implementation is done in each enemy.
+ * This class exists to remove duplication of code to not deal with the 3 subclasses and allows
+ * for generic methods from this class.
+ * 
+ * @author team 1
+ */
 import java.awt.Graphics;
 import java.awt.*;
 import java.awt.Rectangle;

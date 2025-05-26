@@ -1,9 +1,11 @@
 package roomComponents;
 /**
- * This class will be the base of all floor components, boulder will extend tile but load a different image and have collision logic
+ * Class: Tile, this class will be the base of all floor components, boulder will extend tile but load a different image and have collision logic
  * The painting logic will all be the same so that will be done in this tile class whose only method is to draw itself, in this case a
  * white square and boulder and hole will be different color squares until we get sprites implemented. x1,x2,y1,y2 represent the binding box
- * for easier access in collisions t
+ * for easier access in collisions.
+ * 
+ * @author team 1
  */
 import roomStuff.RoomLogic;
 import java.awt.Graphics2D;
