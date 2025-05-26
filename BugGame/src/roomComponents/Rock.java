@@ -31,9 +31,9 @@ public class Rock extends Hole {
 	public void draw(Graphics2D g2) {
 		
 		if (spriteLoaded == true) {
-			if (level <= 2) {
+			if (level <= 1) {
 				g2.drawImage(rock1, x1, y1, TILE, TILE, null);
-			} else if (level <= 4 && level >= 3) {
+			} else if (level <= 3 && level >= 2) {
 				g2.drawImage(rock2, x1, y1, TILE, TILE, null);
 			} else {
 				g2.drawImage(rock3, x1, y1, TILE, TILE, null);

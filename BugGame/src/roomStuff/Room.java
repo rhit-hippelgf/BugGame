@@ -1,5 +1,12 @@
 package roomStuff;
-
+/**
+ * Class: Room, this class is the main component and runs each individual on the frame.
+ * Room has several different subclasses for different layouts, and uses the FileReader
+ * to pick its layout. It loads a grid of objects and prints the player when the specific
+ * room is selected.
+ * 
+ * @author team 1
+ */
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
