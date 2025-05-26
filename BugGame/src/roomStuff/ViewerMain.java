@@ -1,4 +1,3 @@
-// ✅ ViewerMain.java (with square tiles)
 package roomStuff;
 
 import javax.swing.*;
