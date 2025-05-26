@@ -1,5 +1,10 @@
 package roomStuff;
-
+/**
+ * class: Walls, this is a component for the HUD and needs room logic for door and door states but needs
+ * to be printed in HUD. It has the ability to be visable or not, and can show opended and closed doors.
+ * 
+ * @author team 1
+ */
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
