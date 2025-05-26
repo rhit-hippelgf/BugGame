@@ -1,6 +1,7 @@
 package projectileStuff;
 
 import java.awt.Graphics2D;
+import java.awt.Color;
 import java.awt.Rectangle;
 import java.io.File;
 import java.util.List;
@@ -10,7 +11,9 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
 import creatureStuff.Creature;
+import creatureStuff.Player;
 import effectStuff.Effect;
+import handlingStuff.RngHandler;
 import roomStuff.RoomLogic;
 
 public abstract class Bullet {
@@ -85,6 +88,19 @@ public abstract class Bullet {
     public double getY() { return y; }
 
     public void onHit(Creature target) {
+        if (source instanceof Player player) {
+            // roll for lightning chance
+            if (new RngHandler().handleCheck(player.getLightingChance())) {
+                target.takeDamage(Integer.MAX_VALUE);  // instakill
+                if (player.getRoom() != null) {
+                    player.getRoom().spawnText("⚡ ZAP!", target.getX(), target.getY(), Color.YELLOW);
+                }
+                // spawn lightning visual here
+                markForRemoval = true;
+                return;
+            }
+        }
+
         target.takeDamage(damage);
 
         if (source != null && Math.random() < source.getEffectChance()) {
@@ -93,9 +109,9 @@ public abstract class Bullet {
             }
         }
 
-        // mark this bullet for removal after hit
         markForRemoval = true;
     }
+
     
     public void setCrit(boolean crit) {
         this.isCrit = crit;
