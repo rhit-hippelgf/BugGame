@@ -1,23 +1,26 @@
 package roomStuff;
-
-import java.util.*;
+/**
+ * Class: RoomLogic, this class controls the logic of the game state, it randomly creates
+ * a hashmap of Room components with points. Each Room is its own JComponent with each room
+ * containing its own components, and RoomLogic switched between rooms depending on doors. 
+ * Each room has set bounds in the middle of the frame so this also creates a HUD 
+ * displaying everything outside of those bounds. 
+ * 
+ * @author team 1
+ * Restriction: only one instance will ever be created so several variables are static for static getters.
+ */
+import java.awt.Color;
+import java.awt.Point;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.FloatControl;
 import javax.swing.JFrame;
 
-import java.awt.Point;
-import java.io.File;
-import java.io.IOException;
-
 import creatureStuff.Creature;
-import creatureStuff.Enemy;
 import creatureStuff.Player;
-import creatureStuff.enemytypes.*;
-import java.awt.*;
 
 public class RoomLogic {
 

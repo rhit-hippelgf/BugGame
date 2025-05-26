@@ -8,7 +8,7 @@ import java.util.Random;
 import java.nio.file.Path;
 
 /**
- * @author carioltl
+ * @author team 1
  * This file reads from all of the text files from the file called RoomTextFiles 
  * The text files contain room layouts and this class picks a random layout
  * out of possible layouts. It also handles conditions like if the room is special
