@@ -10,7 +10,7 @@ public class ItemDropper {
     private static final List<ItemFactory> legendary = new ArrayList<>();
 
     static {
-        // ✅ Common Items
+        // Common Items
         common.add((x, y) -> new SpeedShoes(x, y));
         common.add((x, y) -> new Battery(x, y));
 
@@ -18,6 +18,7 @@ public class ItemDropper {
 
         // Rare Items
         rare.add((x, y) -> new BugEyeGoggles(x, y));
+        rare.add((x, y) -> new Ace(x, y));
 
 
         // Epic Items

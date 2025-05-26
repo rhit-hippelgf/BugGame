@@ -25,7 +25,7 @@ import roomStuff.RoomLogic;
 public class Player extends Creature {
     private int critChance = 0;
     private int fireRate = 1;
-    private int blockChance = 50;
+    private int blockChance = 0;
     private int lives = 1;
     private boolean isDead;
     //private String damageType = "normal";
@@ -217,7 +217,7 @@ public class Player extends Creature {
     public void takeDamage(int amount) {
         if (new RngHandler().handleCheck(blockChance)) {
             if (room != null) {
-                room.spawnText("Dodged!", getX(), getY() - 20, Color.CYAN);
+                room.spawnText("Blocked!", getX(), getY() - 20, Color.CYAN);
             }
             return;
         }

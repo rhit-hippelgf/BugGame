@@ -48,7 +48,9 @@ public class Room extends JComponent {
 	private ArrayList<Hole> Obsticles = new ArrayList<>();
 	private ArrayList<Rock> BulletObsticles = new ArrayList<>(); // could use previous list but don't know how to differentiate between hole and rock
     private ArrayList<Creature> enemies = new ArrayList<>();
-    private ArrayList<itemStuff.Item> items = new ArrayList<>();
+    private ArrayList<Item> items = new ArrayList<>();
+    private List<FloatingText> activeTexts = new ArrayList<>();
+
     protected Creature player;
 
     protected Door north;
@@ -215,6 +217,15 @@ public class Room extends JComponent {
         if (enemies.isEmpty()) this.roomCleared();
         this.handleCollision();
         this.updateBullets();
+        
+        List<FloatingText> toRemove = new ArrayList<>();
+        for (FloatingText ft : activeTexts) {
+            ft.update();
+            if (ft.isExpired()) {
+                toRemove.add(ft);
+            }
+        }
+        activeTexts.removeAll(toRemove);
     }
     
     private void handleCollision() {
@@ -293,6 +304,9 @@ public class Room extends JComponent {
         if (player != null) player.draw(g2);
         for (Creature e : enemies) e.draw(g2);
         
+        for (FloatingText ft : activeTexts) {
+            ft.draw(g2);
+        }
 
     }
 
