@@ -26,7 +26,7 @@ public class Player extends Creature {
     private int critChance = 0;
     private int fireRate = 1;
     private int blockChance = 0;
-    private int lives = 1;
+    private int lives = 0;
     private boolean isDead;
     //private String damageType = "normal";
     private int lightingChance = 0;
@@ -97,6 +97,7 @@ public class Player extends Creature {
                 break;
             case "lives":
                 lives += item.getStatBoost();
+                System.out.println("Gained 1 life. Total lives: " + lives);
                 break;
             case "poison":
                 //damageType = "poison";
@@ -223,8 +224,17 @@ public class Player extends Creature {
         }
 
         super.takeDamage(amount);
+
         if (health <= 0) {
-            isDead = true;
+            if (lives > 0) {
+                lives--;
+                health = healthCap;
+                if (room != null) {
+                    room.spawnText("1UP!", getX(), getY(), Color.GREEN);
+                }
+            } else {
+                isDead = true;
+            }
         }
     }
 

@@ -22,7 +22,7 @@ public class ItemDropper {
 
 
         // Epic Items
-        // epic.add((x, y) -> new Poison(x, y)); // uncomment when real class exists
+        epic.add((x, y) -> new OneUp(x, y));
 
         // Legendary Items
         // legendary.add((x, y) -> new TriShot(x, y)); // uncomment when real class exists
