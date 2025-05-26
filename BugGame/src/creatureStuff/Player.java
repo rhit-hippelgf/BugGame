@@ -69,7 +69,7 @@ public class Player extends Creature {
 		}
     }
 
-    // linking player to its room for despawn bounds 
+    // linking player to its room for despawn bounds  
 //    Removed as the player should not need to know what room but the room knows the player is in its room.
 //    public void setCurrentRoom(Room room) {
 //        this.currentRoom = room;
