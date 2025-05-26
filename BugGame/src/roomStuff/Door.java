@@ -1,5 +1,12 @@
 package roomStuff;
-
+/**
+ * Class: Door, this class exists in every room on all sides but the boolean visable
+ * allows for only doors that connect to other rooms to be visable. This door only sends
+ * information to a higher class to tell it what is happening. It is also prints a skinny
+ * rectangle at the base of each door creating effects for specific rooms. 
+ * 
+ * @author team 1
+ */
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
