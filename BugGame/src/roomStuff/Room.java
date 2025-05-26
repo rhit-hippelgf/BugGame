@@ -63,7 +63,7 @@ public class Room extends JComponent {
     private Walls[] walls = new Walls[4];
     private Controller control;
     protected char[][] layout;
-   // private boolean roomCleared;
+    private boolean roomCleared;
 
     private final int TILE_SIZE;
     private int level;
@@ -198,7 +198,7 @@ public class Room extends JComponent {
 //          checkValidSpeed in creature class this is where we update player then below same for enemies
             player.move();
             if (enemies.size() == 0) {
-            	//roomCleared = true;
+            	roomCleared = true;
             	this.roomCleared();
             }
         }
