@@ -1,5 +1,10 @@
 package roomStuff;
-
+/**
+ * This class allows us to tell room logic to both update all objects and draw itself.
+ * A time is connected to the method actionPerformed.
+ * 
+ * @author team 1
+ */
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
