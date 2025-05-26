@@ -93,7 +93,8 @@ public abstract class Bullet {
             if (new RngHandler().handleCheck(player.getLightingChance())) {
                 target.takeDamage(Integer.MAX_VALUE);  // instakill
                 if (player.getRoom() != null) {
-                    player.getRoom().spawnText("⚡ ZAP!", target.getX(), target.getY(), Color.YELLOW);
+                    player.getRoom().spawnText("ZAP!", target.getX(), target.getY(), Color.YELLOW);
+                    player.getRoom().spawnLightning(target.getX(), target.getY());
                 }
                 // spawn lightning visual here
                 markForRemoval = true;

@@ -25,7 +25,7 @@ public class ItemDropper {
         epic.add((x, y) -> new OneUp(x, y));
 
         // Legendary Items
-        // legendary.add((x, y) -> new TriShot(x, y)); // uncomment when real class exists
+        legendary.add((x, y) -> new Lightning(x, y));
     }
 
     public static Item getRandomItem(Rarity rarity, int x, int y) {

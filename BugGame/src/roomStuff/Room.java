@@ -14,6 +14,7 @@ import creatureStuff.Player;
 import creatureStuff.enemytypes.Suicide;
 import creatureStuff.enemytypes.WalkingEnemy;
 import creatureStuff.enemytypes.ZigZag;
+import effectStuff.LightningStrike;
 import itemStuff.Item;
 import itemStuff.ItemDropper;
 import itemStuff.Rarity;
@@ -50,6 +51,8 @@ public class Room extends JComponent {
     private ArrayList<Creature> enemies = new ArrayList<>();
     private ArrayList<Item> items = new ArrayList<>();
     private List<FloatingText> activeTexts = new ArrayList<>();
+    private List<LightningStrike> lightningStrikes = new ArrayList<>();
+
 
     protected Creature player;
 
@@ -226,6 +229,14 @@ public class Room extends JComponent {
             }
         }
         activeTexts.removeAll(toRemove);
+        
+        List<LightningStrike> lightningToRemove = new ArrayList<>();
+        for (LightningStrike strike : lightningStrikes) {
+            strike.update();
+            if (strike.isExpired()) lightningToRemove.add(strike);
+        }
+        lightningStrikes.removeAll(lightningToRemove);
+
     }
     
     private void handleCollision() {
@@ -307,6 +318,11 @@ public class Room extends JComponent {
         for (FloatingText ft : activeTexts) {
             ft.draw(g2);
         }
+        
+        for (LightningStrike strike : lightningStrikes) {
+            strike.draw((Graphics2D) g);
+        }
+
 
     }
 
@@ -404,5 +420,10 @@ public class Room extends JComponent {
     public void spawnText(String text, int x, int y, Color color) {
         activeTexts.add(new FloatingText(text, x, y, color));
     }
+    
+    public void spawnLightning(int x, int y) {
+        lightningStrikes.add(new LightningStrike(x, y));
+    }
+
 
 }

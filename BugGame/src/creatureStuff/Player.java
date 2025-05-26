@@ -97,7 +97,7 @@ public class Player extends Creature {
                 break;
             case "lives":
                 lives += item.getStatBoost();
-                System.out.println("Gained 1 life. Total lives: " + lives);
+                System.out.println("Gained 1 life. Total lives: " + (lives + 1));
                 break;
             case "poison":
                 //damageType = "poison";
