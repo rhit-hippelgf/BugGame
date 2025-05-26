@@ -1,5 +1,10 @@
 package controllerStuff;
-
+/**
+ * Class: Controller, this class takes in the player instance and keyboard interactions.
+ * It runs methods on the player instance depending on keyboard inputs.
+ * 
+ * @author team 1
+ */
 import javax.swing.*;
 import creatureStuff.Player;
 import java.awt.Point;

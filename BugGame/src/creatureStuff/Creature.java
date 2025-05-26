@@ -1,5 +1,11 @@
 package creatureStuff;
-
+/**
+ * Class: Creature, this class is the overarching class for players and enemies.
+ * This class allows for easier interaction between the two, and the two
+ *  have very similar methods.
+ *  
+ *  @author team 1
+ */
 import java.awt.Graphics2D;
 
 import java.util.ArrayList;
