@@ -9,7 +9,7 @@ public class OneUp extends Item {
     public OneUp(int x, int y) {
         super(x, y, "assets/sprites/items/Honey.png", STAT_BOOST);  
     }
-
+//AHHHHH
     @Override
     public void applyEffect(Player player) {
         player.addItem(this);  
