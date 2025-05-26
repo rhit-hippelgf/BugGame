@@ -1,5 +1,12 @@
 package roomStuff;
-
+/**
+ * Class: BackgroundHud, this class is responsible for painting everything outside of the Room
+ * Binding box. It takes in the player instance to detect changes and runs a 2 second timer
+ * to ensure states are proper. It generates a map layout depending on visited rooms and gives
+ * a visual indicator of visited rooms, and current room.
+ * 
+ * @author team 1
+ */
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
@@ -78,7 +85,7 @@ public class BackgroundHud extends JComponent {
 			}
 			g2.setColor(Color.BLACK);
 			g2.setStroke(new BasicStroke(4));
-			g2.drawRect(sideGapX-1, sideGapY-1, RoomLogic.getRoomWidth()+2, RoomLogic.getRoomHeight()+2);
+			g2.drawRect(sideGapX-2, sideGapY-2, RoomLogic.getRoomWidth()+3, RoomLogic.getRoomHeight()+3);
 			g2.setColor(old);
 			
 	        

@@ -1,5 +1,11 @@
 package roomStuff;
-
+/**
+ * Class: HighScoreManager, this class manages highscores which can be ran once the player dies.
+ * This allows the top 5 highscores to be managed and accessed for the highscore room which is the
+ * default room on death.
+ * 
+ * @author team 1
+ */
 import java.io.*;
 import java.util.*;
 
